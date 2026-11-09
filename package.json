@@ -1,0 +1,47 @@
+{
+  "name": "homelab-blog",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.22.2"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "links": "node scripts/check-links.mjs",
+    "test": "playwright test",
+    "validate": "npm run format:check && npm run lint && npm run check && npm run build && npm run links && npm run test:guards && npm test",
+    "deploy:production": "node scripts/await-ci.mjs && wrangler deploy",
+    "deploy:preview": "wrangler versions upload",
+    "test:guards": "node scripts/test-guards.mjs"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.42.10",
+    "astro": "7.4.8",
+    "starlight-blog": "0.30.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "@axe-core/playwright": "4.14.0",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.65.0",
+    "eslint": "10.14.0",
+    "globals": "17.14.0",
+    "linkedom": "0.18.15",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.2",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.2",
+    "wrangler": "4.159.0"
+  },
+  "overrides": {
+    "minimatch": "11.0.5"
+  }
+}

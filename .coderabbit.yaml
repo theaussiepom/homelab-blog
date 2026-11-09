@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: en-AU
+early_access: false
+enable_free_tier: true
+inheritance: false
+reviews:
+  profile: chill
+  request_changes_workflow: false
+  high_level_summary: true
+  high_level_summary_in_walkthrough: true
+  review_info: true
+  poem: false
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    auto_pause_after_reviewed_commits: 0
+    drafts: false
+  finishing_touches:
+    docstrings:
+      enabled: false
+    unit_tests:
+      enabled: false
+    simplify:
+      enabled: false
+    autofix:
+      enabled: false
+    fix_ci:
+      enabled: false
+    resolve_merge_conflict:
+      enabled: false
+  path_instructions:
+    - path: '**/*'
+      instructions: >-
+        This repository is permanently public technical publishing source. Flag
+        credentials, private addresses, account identifiers, operational data,
+        sensitive screenshots and real infrastructure access mechanisms. Use
+        synthetic examples only. Check Australian English, accurate claims,
+        primary sources, reproducible commands and explicit validation limits.
+        Preserve static generation and independence from private services.
+        Check exact dependency and Action pins, least-privilege CI, fork safety,
+        complete-history secret scanning and fail-closed production CI gating.
+        Distinguish configuration presence, local tests and live acceptance.
+        No automatic fixes, commits, deployment or dependency merging. Do not
+        suggest broad scanner exclusions or weakened checks to get green.
+issue_enrichment:
+  auto_enrich:
+    enabled: false
