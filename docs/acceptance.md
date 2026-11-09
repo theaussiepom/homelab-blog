@@ -24,8 +24,20 @@ The public repository is [theaussiepom/homelab-blog](https://github.com/theaussi
 - Dependabot executed and opened an Actions update pull request; no automatic merging is enabled.
 - The initial native-deploy gate rejected a feature-branch revision. The selected final delivery uses GitHub job dependencies and deployment environments; its live deployment verification remains pending.
 
-## Pending operational verification
+## Cloudflare delivery verified
 
-CodeRabbit app execution and the selected GitHub Actions deployment: single-Worker account token, encrypted secrets, disabled native Builds, preview, production hostname/HTTPS/search and rollback. Native Cloudflare Builds was evaluated and a native preview build succeeded, but the user selected GitHub Actions because the native user token could not be restricted to this Worker. No production hostname verification is claimed yet.
+- [Final PR validation and preview upload](https://github.com/theaussiepom/homelab-blog/actions/runs/42719298839) passed all four checks and the GitHub preview deployment job. The production job was skipped on the PR.
+- The [actual preview URL](https://1e5a4e55-homelab-blog.theaussiepom.workers.dev/) rendered the placeholder homepage over HTTPS.
+- [First production run](https://github.com/theaussiepom/homelab-blog/actions/runs/42719885147) passed validation, source safety and dependency audit before its production job succeeded. The PR-only jobs were skipped on main.
+- [Production](https://theaussiepom.me/) and the [Cloudflare hostname](https://homelab-blog.theaussiepom.workers.dev/) are configured. Eleven representative public-domain routes/assets returned HTTP 200 with certificate verification enabled, including XML-valid RSS and sitemaps. The homepage supplied all four configured security headers.
+- Live browser search on the Cloudflare production hostname found the distinctive synthetic phrase and navigated to the placeholder guide. The guide's navigation and table of contents rendered.
+- Cloudflare's token review confirmed Individual Workers Editor access for `homelab-blog` only. GitHub secret metadata confirms both deployment secret names exist; no secret values or private account identifiers are committed.
+- Native Cloudflare Git Builds was fully disconnected. GitHub Actions is the sole automatic deployment authority.
+- The production environment permits only main; the preview environment permits PR merge references. Fork/bot deployment is excluded by workflow conditions. A real fork PR was not exercised.
+- GitHub enforces SHA pinning for Actions and permits only GitHub-owned Actions. The Actions update PR was superseded by the incorporated current stable pins and is closed.
 
-The CodeRabbit configuration is present, but no CodeRabbit review has been observed on the verification PR. Dependabot execution has been observed. Commit signing is not configured; the ruleset must not claim it is enforced.
+## Remaining verification and limits
+
+The CodeRabbit configuration is present; app access and an actual review remain pending. Dependabot has executed and produced an Actions update; its npm update initially encountered the unsupported TypeScript major, now excluded until the Astro validator supports it. A later weekly npm update run has not been observed.
+
+Rollback commands and UI are documented, but a controlled rollback has not yet been exercised. Cross-region availability and every browser/assistive-technology combination have not been tested. Public-route verification is distinct from local-client DNS configuration. Commit signing is not configured or enforced.
