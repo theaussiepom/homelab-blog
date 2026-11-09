@@ -7,7 +7,7 @@ Evidence recorded on 10 November 2026. Configuration presence is distinguished f
 - Clean `npm ci` on pinned Node 24.22.2 installed the committed dependency graph.
 - Formatting, ESLint, Astro/TypeScript checks, production build and all internal page/fragment/asset links passed.
 - Twelve Chromium tests passed: eight representative routes with automated WCAG A/AA checks, functional search, documentation metadata/table of contents, mobile navigation, RSS and sitemap.
-- Invalid content frontmatter caused Astro validation to fail. Broken links and fragments caused the link validator to fail.
+- Invalid content frontmatter caused Astro validation to fail. Broken relative/absolute same-origin links and fragments caused the link validator to fail. External URLs are intentionally outside this internal-link check.
 - Gitleaks 8.30.1 passed current-tree and reachable-history scans; its isolated random synthetic token was detected. No real secret was introduced.
 - `npm audit --audit-level=low` reported zero vulnerabilities after the documented build-tool minimatch override.
 - Wrangler 4.159.0 dry-run accepted the static assets-only package, with no application bindings or server code.
