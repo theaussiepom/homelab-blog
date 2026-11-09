@@ -22,10 +22,10 @@ The public repository is [theaussiepom/homelab-blog](https://github.com/theaussi
 - [Pull-request CI](https://github.com/theaussiepom/homelab-blog/actions/runs/42716812721) passed all four checks, including dependency review.
 - Active protected-main rules require those exact four GitHub Actions checks, an up-to-date branch, a pull request, resolved review threads and squash/linear history. There are no bypass actors; deletion and force pushes are blocked. Signing is not enforced.
 - Dependabot executed and opened an Actions update pull request; no automatic merging is enabled.
-- The production gate was exercised on a feature-branch commit and correctly rejected it rather than accepting the successful main CI run.
+- The initial native-deploy gate rejected a feature-branch revision. The selected final delivery uses GitHub job dependencies and deployment environments; its live deployment verification remains pending.
 
 ## Pending operational verification
 
-CodeRabbit app execution, Cloudflare Git integration, preview, production hostname/HTTPS/search and rollback. The Cloudflare setup is prepared, with explicit CI-gated production and non-promoting preview commands; build-token permissions require an account-owner decision before creation. No deployment is claimed.
+CodeRabbit app execution and the selected GitHub Actions deployment: single-Worker account token, encrypted secrets, disabled native Builds, preview, production hostname/HTTPS/search and rollback. Native Cloudflare Builds was evaluated and a native preview build succeeded, but the user selected GitHub Actions because the native user token could not be restricted to this Worker. No production hostname verification is claimed yet.
 
 The CodeRabbit configuration is present, but no CodeRabbit review has been observed on the verification PR. Dependabot execution has been observed. Commit signing is not configured; the ruleset must not claim it is enforced.
