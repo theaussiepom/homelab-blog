@@ -18,7 +18,7 @@
     "links": "node scripts/check-links.mjs",
     "test": "playwright test",
     "validate": "npm run format:check && npm run lint && npm run check && npm run build && npm run links && npm run test:guards && npm test",
-    "deploy:production": "node scripts/await-ci.mjs && wrangler deploy",
+    "deploy:production": "wrangler deploy",
     "deploy:preview": "wrangler versions upload",
     "test:guards": "node scripts/test-guards.mjs"
   },

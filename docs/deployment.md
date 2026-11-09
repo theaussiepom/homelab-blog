@@ -1,48 +1,47 @@
 # Cloudflare deployment and rollback
 
-## Ownership and setup
+## Architecture and credentials
 
-Cloudflare Workers Static Assets is the sole deployment system. GitHub Actions validates; it contains no Cloudflare token. Use the existing account's Free plan and the selected `theaussiepom.me` domain. Do not enable paid add-ons.
+GitHub Actions is the sole deployment authority. Native Cloudflare Workers Builds must be disabled. Cloudflare Workers Static Assets serves `dist/` from the Free plan, without application server code or storage bindings. The selected production hostname is `theaussiepom.me`.
 
-Connect `theaussiepom/homelab-blog` to a Worker named `homelab-blog` through Workers Builds:
+The account-owned API token has **Editor** access scoped only to the existing `homelab-blog` Worker. It must not have account-wide Worker permissions, other service permissions or zone routes/DNS access. Add custom domains through the dashboard using the owner's existing access. Do not add domain routes to Wrangler configuration, since the deployment credential should not manage them.
 
-| Setting               | Value                                       |
-| --------------------- | ------------------------------------------- |
-| Production branch     | `main`                                      |
-| Root                  | repository root                             |
-| Build                 | `npm ci && npm run build && npm run links`  |
-| Deploy                | `npm run deploy:production`                 |
-| Non-production deploy | `npm run deploy:preview`                    |
-| Node                  | `24.22.2` (set `NODE_VERSION` if necessary) |
-| Build variable        | `SITE_URL=https://theaussiepom.me`          |
-| Preview URLs          | enabled                                     |
+Store `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as encrypted GitHub Actions secrets. Never paste their values into Git, issues, logs or documentation. Node is pinned to 24.22.2. `astro.config.mjs` defaults to the selected public canonical origin; `SITE_URL` can explicitly override it with an HTTPS origin.
 
-Install the Cloudflare GitHub integration with access to this repository only, where possible. Do not expose build credentials to untrusted fork PRs. Enable native previews for trusted same-repository branches; fork PRs receive read-only GitHub CI and need a maintainer-reviewed branch for a Cloudflare preview. Disable any duplicate GitHub deployment integration.
+## Production and previews
 
-`wrangler.json` contains only public build settings and no account ID. It serves `dist/` with no Worker script. Preview uses `wrangler versions upload`, which creates a version URL without changing production. The production script first requires a successful CI push run on the exact current main commit; missing or failed checks, API errors and timeout prevent deployment. Keep GitHub rules active without bypass actors, requiring the verified check names.
+The CI workflow's production deployment job runs only for a push to `main`, after publication validation, source safety and dependency audit pass. It uses the `production` environment, restricted to main. Protected-main rules additionally require all four verified CI checks before a PR can merge. Failed or cancelled validation blocks deployment through GitHub job dependencies.
 
-Before adding the apex custom domain, inspect existing apex DNS, redirects and Worker routes. Stop for a decision if an existing service would be displaced. Leave all other DNS records and services unchanged. Add the custom domain through the Worker settings, then verify HTTPS, pages, RSS, sitemap and search on the real hostname. A public Worker URL and a verified custom domain are separate acceptance items.
+The preview deployment job runs after all four checks, only for PRs from this repository authored by its owner. It checks out the immutable PR head, builds and runs `wrangler versions upload`. This creates a version URL without promoting production. Fork and bot PRs receive validation only, with no deployment secret. Maintainers can review an external contribution and create their own trusted branch if a preview is required. Do not enable `pull_request_target` or pass secrets to untrusted code.
+
+The account's Workers subdomain must have version preview URLs enabled. Read the actual Wrangler output for each URL; do not infer or invent it. Version URLs share the Worker's configured resources, but this Worker has no application bindings.
+
+Local validation commands are documented in the README. Deployment scripts require the account token and identifier from a secure runtime environment; do not store production environment files in the repository.
+
+## Custom domain
+
+Inspect apex DNS, redirects and Worker routes before attaching `theaussiepom.me`. Do not displace another service. Preserve unrelated records and security rules. Add the custom domain through the Worker's Domains settings and verify HTTPS, representative routes, RSS, sitemap and search on the real hostname. A Worker URL and a working custom domain are distinct acceptance items.
 
 ## Rollback
 
-Use the Worker's Deployments screen to select a previously verified version and roll back to it, or use the pinned local Wrangler CLI after authentication:
+From the Worker's Deployments screen, select a previously verified version and roll back. The pinned CLI also supports:
 
 ```sh
 npx wrangler deployments list
 npx wrangler rollback <previous-version-id>
 ```
 
-Version IDs are operational values; do not commit them as configuration. Record the chosen version and reason privately. Verify HTTPS and representative routes afterwards. Do not exercise rollback against an unknown live service. Rollback capability is documented until two actual versions and a controlled rollback have been verified.
+Version IDs are operational values; do not commit them as configuration. Record the version and reason privately, then verify HTTPS and representative routes. A rollback changes the deployed version, not Git history. Revert source through a new PR for a durable fix. Rollback is documented capability until two versions and a controlled rollback have been tested.
 
-For a durable source correction, revert through a new pull request and let the normal checks and deployment gate run. A rollback does not change Git history. Preview versions need not be promoted.
+## Remaining configuration and failure handling
 
-## Failure handling
-
-A GitHub API rate limit or unavailable status check intentionally blocks production. Retry after the underlying issue is resolved. Do not bypass the gate, weaken rules or use a direct deploy to make a failed pipeline appear green. A Cloudflare account connection or installation permission block must be resolved by the account owner.
+The [acceptance record](acceptance.md) tracks actual token-scope, environment, preview, production and rollback verification. A failed deployment is not success merely because its configuration exists. Resolve credential or platform errors without weakening required checks, widening token scope or enabling a second deployment system.
 
 ## References
 
-- [Build configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)
-- [Build branches](https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/)
+- [Workers GitHub Actions deployment](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/)
+- [Native Builds user-token limitation](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/#api-token)
+- [Single-Worker account-owned tokens](https://developers.cloudflare.com/changelog/post/2026-09-15-granular-worker-permissions/)
+- [Workers permissions](https://developers.cloudflare.com/workers/authorization/workers/)
 - [Version URLs](https://developers.cloudflare.com/workers/configuration/previews/)
 - [Rollback](https://developers.cloudflare.com/workers/configuration/versions-and-deployments/rollbacks/)

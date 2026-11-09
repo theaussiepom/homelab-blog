@@ -7,6 +7,10 @@ updates:
       day: monday
       time: '06:00'
       timezone: Australia/Brisbane
+    # Astro's validator currently supports TypeScript 5/6, not 7.
+    ignore:
+      - dependency-name: typescript
+        versions: ['>=7']
     open-pull-requests-limit: 5
     groups:
       routine-npm:
