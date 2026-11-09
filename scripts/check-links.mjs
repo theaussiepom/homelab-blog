@@ -5,6 +5,8 @@ import { parseHTML } from 'linkedom';
 
 export async function checkLinks(directory) {
   const root = resolve(directory);
+  const origin = new URL(process.env.SITE_URL || 'https://theaussiepom.me')
+    .origin;
   const files = [];
   async function walk(dir) {
     for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -18,22 +20,16 @@ export async function checkLinks(directory) {
   const errors = [];
   for (const file of files) {
     const { document } = parseHTML(await readFile(file, 'utf8'));
-    const base = new URL(
-      relative(root, file).split(sep).join('/'),
-      'https://example.com/',
-    );
+    const base = new URL(relative(root, file).split(sep).join('/'), origin);
     for (const element of document.querySelectorAll(
-      'a[href], img[src], script[src], link[href]',
+      'a[href], img[src], script[src], link[href]:not([rel="canonical"])',
     )) {
       const value = element.getAttribute(
         element.hasAttribute('src') ? 'src' : 'href',
       );
-      if (
-        !value ||
-        /^(https?:|mailto:|tel:|data:|javascript:|\/\/)/i.test(value)
-      )
-        continue;
+      if (!value || /^(mailto:|tel:|data:|javascript:)/i.test(value)) continue;
       const url = new URL(value, base);
+      if (url.origin !== origin) continue;
       const pathname = decodeURIComponent(url.pathname);
       let target = resolve(root, '.' + pathname);
       if (target !== root && !target.startsWith(root + sep))
