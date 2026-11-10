@@ -1,0 +1,59 @@
+---
+title: '{{TITLE}}'
+description: Replace this summary with the architectural question, decision and the boundary this article explains.
+articleType: architecture
+date: '{{DATE}}'
+authors:
+  - name: REPLACE_AUTHOR
+tags:
+  - synthetic-example
+draft: true
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+State the problem and the decision in plain language. Explain why the boundary or trade-off matters to the reader.
+
+<Aside type="note" title="Draft — synthetic example">
+  The following diagram describes a fictional system. Rebuild examples from
+  synthetic data; do not export private topology or operational configuration.
+</Aside>
+
+## Scope and constraints
+
+Define the responsibilities in scope, the assumptions that constrain the design and the responsibilities owned elsewhere.
+
+## System boundaries
+
+The fictional request below moves from a client through a gateway to a service. Each arrow means a request crossing a responsibility boundary; it does not describe a private network.
+
+```text
+[Client] -- request --> [Gateway] -- forwarded request --> [Service]
+```
+
+| Element | Responsibility       | Boundary                          |
+| ------- | -------------------- | --------------------------------- |
+| Client  | Form a request       | Starts the interaction            |
+| Gateway | Select a destination | Separates routing from processing |
+| Service | Process the request  | Owns the response                 |
+
+## Decision and alternatives
+
+Explain the chosen approach and its concrete consequences. Compare credible alternatives using the same constraints; do not invent rejected approaches merely to make the choice look stronger.
+
+## Failure and recovery behaviour
+
+Describe what happens when a component or connection fails, where state lives, and who owns recovery. Separate intended behaviour from observed behaviour.
+
+<Aside type="note" title="Inferred">
+  Identify any conclusion derived from documentation or reasoning, together with
+  its supporting evidence. A design diagram does not prove runtime behaviour.
+</Aside>
+
+## Verification and open questions
+
+Record what was inspected, tested and verified, including versions and conditions. Identify unresolved assumptions and the observation that would resolve each one.
+
+## Sources and related reading
+
+Add descriptive links to primary sources and related publication articles. Cite the source that supports each material technical claim.

@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/check-drafts.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "format": "prettier --write .",
@@ -17,10 +17,12 @@
     "lint": "eslint .",
     "links": "node scripts/check-links.mjs",
     "test": "playwright test",
-    "validate": "npm run format:check && npm run lint && npm run check && npm run build && npm run links && npm run test:guards && npm test",
+    "validate": "npm run format:check && npm run lint && npm run check && npm run test:editorial && npm run build && npm run links && npm run test:guards && npm test",
     "deploy:production": "wrangler deploy",
     "deploy:preview": "wrangler versions upload",
-    "test:guards": "node scripts/test-guards.mjs"
+    "test:guards": "node scripts/test-guards.mjs",
+    "new:article": "node scripts/new-article.mjs",
+    "test:editorial": "node scripts/test-editorial.mjs && node scripts/test-new-article.mjs"
   },
   "dependencies": {
     "@astrojs/starlight": "0.42.10",

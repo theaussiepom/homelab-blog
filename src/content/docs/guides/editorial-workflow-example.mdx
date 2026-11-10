@@ -1,0 +1,72 @@
+---
+articleType: guide
+title: Synthetic example — checking a sample response
+description: A harmless, invented walkthrough showing how prerequisites, steps, evidence and limitations fit together in a published guide.
+date: 2026-11-10
+authors:
+  - name: HomeLab Notes
+tags:
+  - synthetic-example
+draft: false
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+<Aside type="note" title="Synthetic publication example">
+  This is a completed editorial fixture, not an operational guide. The response
+  and system below are invented. No real service was contacted or changed.
+</Aside>
+
+## Outcome and prerequisites
+
+Read a supplied response and separate the observation from its interpretation.
+You need only this page; there are no credentials, installations or network calls.
+The phrase **editorialpublishedlighthouse** identifies this example in search.
+
+## Procedure
+
+<Steps>
+
+1. Inspect the supplied response:
+
+   ```json
+   { "status": "ready", "source": "synthetic-example" }
+   ```
+
+2. Compare the field with the expected value, `ready`. Record the exact field you inspected.
+
+3. State the limit of that observation. A value in a supplied example does not establish the health of a running service.
+
+</Steps>
+
+## Evidence and interpretation
+
+| Kind         | Statement                                          |
+| ------------ | -------------------------------------------------- |
+| Observed     | The supplied example contains `"status": "ready"`. |
+| Inferred     | The example matches the expected response shape.   |
+| Not verified | Availability or behaviour of any real service.     |
+
+<Aside type="note" title="Observed">
+  The evidence is the static JSON printed above. This article makes no claim
+  about a live system or a command execution.
+</Aside>
+
+## Boundaries
+
+```text
+Supplied sample → reader comparison → bounded conclusion
+```
+
+The diagram describes a reading exercise. It is not a network diagram.
+
+## Verification and recovery
+
+The expected reading outcome is a matching field value and a statement of its
+limits. This exercise changes no persistent state, so no recovery action is needed.
+
+## Limitations and related reading
+
+This fixture tests the publication's MDX components, metadata, navigation and
+search. It does not validate an operational procedure. See the
+[placeholder guide](/guides/placeholder/) for another synthetic layout sample.

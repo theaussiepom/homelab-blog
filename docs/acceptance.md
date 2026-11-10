@@ -51,3 +51,15 @@ Local `npm run validate` passed formatting, lint, Astro/TypeScript, static build
 The blog's Australian English labels use an explicit local dictionary because plugin English strings do not fall back to `en-AU` in the installed Starlight version. A regression test checks that raw translation keys do not reach the blog index or post.
 
 This records local evidence; the integrating pull request and its GitHub Actions runs record hosted validation, preview and production deployment. Automated axe checks are not a full accessibility audit; 200% root text does not establish browser-zoom equivalence. Safari, Firefox, screen readers and real editorial templates remain unverified. Local split DNS/Traefik changes are outside this phase.
+
+## Phase 3 editorial workflow — 10 November 2026
+
+Four MDX templates and `npm run new:article` support guides, architecture articles, investigations and posts. The generator defaults to a draft, uses native metadata and refuses invalid slugs or existing routes. The shared article introduction displays description, author, date and topics; blog metadata remains native. The README links the writing workflow, templates and updated style-guide v1.2 (Markdown and nine-page PDF).
+
+Local `npm run validate` passed all checks and 40 Chromium tests. Metadata negative cases cover missing/empty fields, invalid dates/types/tags, reversed update dates, duplicate tags and unfinished publication metadata. Generator tests cover all four templates, route collisions and traversal rejection without overwriting content. A separate actual Astro build was deliberately given a synthetic article without authors; it failed with the expected schema error, and the temporary fixture was removed.
+
+The synthetic workflow example was created by the generator. It returned HTTP 200 with a draft notice in development and had no generated route in a successful production build while `draft: true`. After editing it into a completed synthetic example and setting `draft: false`, the build, sitemap and live browser search tests included it. All other templates were generated and rendered successfully as local drafts; those temporary template-test articles were removed.
+
+Permanent synthetic guide/blog draft canaries remain excluded: production routes and their tag/author pages return 404; generated HTML/XML/JSON and route-name scans contain no canaries; completed exact-phrase Pagefind queries return no draft results. The checker itself is tested against intentionally leaked output. Unquoted Pagefind queries can produce fuzzy matches, so a fuzzy match alone is not evidence of a draft leak.
+
+The article layout was visually reviewed in light/dark modes at desktop and mobile widths. The PDF was rendered and inspected on every page. Hosted preview and production evidence is recorded on the integrating PR and its workflow runs. Draft source/history and static public assets are still public; rendering exclusion is not confidentiality. Real article production, Safari/Firefox, screen-reader verification and local DNS/Traefik remain outside this work.

@@ -1,6 +1,12 @@
 ---
+articleType: guide
 title: Placeholder documentation article
 description: Synthetic content used to validate documentation rendering, navigation and search.
+date: 2026-11-10
+authors:
+  - name: HomeLab Notes
+tags:
+  - placeholder
 ---
 
 **Placeholder — publishing validation only.** This is not an operational guide.

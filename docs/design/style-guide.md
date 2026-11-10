@@ -1,6 +1,6 @@
 # HomeLab Notes: visual style and layout guide
 
-Version 1.1 | 10 November 2026 | Approved design direction: 04 + 05 hybrid
+Version 1.2 | 10 November 2026 | Approved design direction: 04 + 05 hybrid
 
 ## 1. Direction and authority
 
@@ -12,7 +12,7 @@ Keep the bold sans-serif masthead, dark opening panel and lilac featured article
 
 ![Approved hybrid homepage reference](assets/hybrid-home.png)
 
-The reference image shows the visual intent. The numeric rules below take precedence where they deliberately improve the prototype, especially small labels, code size, tablet layout and mobile navigation. Dark mode is specified below. Final branding and full editorial templates remain separate decisions.
+The reference image shows the visual intent. The numeric rules below take precedence where they deliberately improve the prototype, especially small labels, code size, tablet layout and mobile navigation. Dark mode is specified below. Editorial templates now apply this guide; final branding and real article content remain separate decisions.
 
 <!-- pagebreak -->
 
@@ -50,7 +50,7 @@ Use genuine available weights. Arial commonly provides regular and bold; use 700
 | Labels and metadata    | 12px / 1.50 minimum        | 12px / 1.50 minimum                  |
 | Code / table text      | 14px / 1.70; 16px / 1.50   | Same sizes; contain overflow locally |
 
-Implement sizes in rem, based on the user's default font size; do not lock the root font size. Use fluid sizing between these anchors. The lede is a future editorial component; current placeholder prose uses the body style. Preserve the native heading spacing and code line-height where the framework supplies them. Keep body text left-aligned and avoid justified columns. Target 60-75 characters per line, with the article width capped at 700px.
+Implement sizes in rem, based on the user's default font size; do not lock the root font size. Use fluid sizing between these anchors. Guides, architecture articles and investigations display their description as a lede. Blog posts retain their native metadata and article body. Preserve the native heading spacing and code line-height where the framework supplies them. Keep body text left-aligned and avoid justified columns. Target 60-75 characters per line, with the article width capped at 700px.
 
 Use at most -0.04em tracking for display headings and -0.02em for serif titles. Body text uses normal tracking. Short uppercase labels may use 0.10em tracking; never use uppercase for paragraphs. Give paragraphs 1em separation and H2 sections about 2em above / 0.6em below. Essential labels and commands must remain legible at 200% zoom.
 
@@ -146,7 +146,7 @@ Use a 4px spacing scale: 4, 8, 12, 16, 20, 24, 28, 32, 40, 48 and 64px. The appr
 
 Cap the reading column at 700px inside Starlight's native article shell. Retain its 240px section sidebar from 800px and right-hand contents column from 1152px; below those widths use its native collapsible navigation and contents controls. These production breakpoints deliberately replace the prototype's 930px region and 1100px contents breakpoint, preserving keyboard and responsive behaviour.
 
-For future editorial templates, order the page as category, title, lede, author/date/reading time, any required notice, and article content. Current documentation uses the native title and body; blog pages retain plugin metadata without inventing authors or reading information. Use a single H1 followed by a logical heading hierarchy. Keep paragraphs and diagrams in the reading column. Wide tables or code may scroll within their own container, never force horizontal scrolling of the page.
+For guides, architecture articles and investigations, use the native title followed by a description lede and a compact metadata row: type, author, publication date, optional update date and topics. A local draft notice appears after the title when needed. Blog pages retain the plugin's native author, date, reading metrics and tags; do not duplicate that metadata. Landing pages have no article introduction. Use a single H1 followed by a logical heading hierarchy. Keep paragraphs and diagrams in the reading column. Wide tables or code may scroll within their own container, never force horizontal scrolling of the page.
 
 Use sans-serif for the title, metadata and navigation; serif for the lede, body and section headings. The desktop title is 48px, the body is 18px with 1.7 line height. Mobile retains the body size. The table of contents may be sticky if it stays inside the viewport and does not obscure focus or headings.
 
@@ -203,7 +203,9 @@ Start with theme tokens and typography, then the custom homepage and shared arti
 
 This abbreviated light palette illustrates the roles. The authoritative mappings and both palettes are in `src/styles/hybrid.css`; its base tokens are dark and its `[data-theme="light"]` override is light. Native Starlight controls provide Light, Dark and Auto, persist an explicit choice, and follow system preference in Auto. No additional theme storage or custom switching script is required.
 
-`HomeHero.astro` provides only the homepage composition and falls back to the native hero elsewhere. `SiteTitle.astro` provides the masthead. The Australian English UI dictionary supplies blog labels because the installed Starlight plugin translation fallback does not carry `en` plugin strings into `en-AU`. Update that dictionary when new blog controls are introduced.
+`HomeHero.astro` supplies the homepage and falls back to the native hero elsewhere. `SiteTitle.astro` supplies the masthead. `ArticleTitle.astro` preserves the native title, adds the article lede and metadata, and labels local drafts. Keep its metadata at 14px with wrapping rows.
+
+Use the [editorial workflow and templates](../editorial/workflow.md) for article structure. They use native Starlight notes and steps, Markdown tables and code. The Australian English UI dictionary supplies blog labels because plugin `en` strings do not fall back to `en-AU`; maintain it when blog controls change.
 
 ### Implementation acceptance
 
@@ -224,9 +226,9 @@ The user selected the 04 + 05 hybrid on 10 November 2026. The reference prototyp
 
 ### Implementation evidence and limits
 
-The hybrid is implemented through two component overrides and shared CSS. Local validation covers formatting, lint, Astro/TypeScript, the static build, generated links, negative guard tests and Chromium browser tests. Both palettes are checked with axe on eight routes; responsive checks cover 320, 390, 700, 768, 1024, 1200 and 1440px. Tests exercise mobile navigation and theme selection, search, theme persistence, system preference, enlarged root text, RSS and sitemap. See the acceptance record for deployment evidence.
+The hybrid uses shared CSS and overrides for the homepage, masthead and article introduction. Validation covers formatting, lint, types, production builds, generated links and Chromium tests. Both palettes receive axe checks; responsive checks cover 320-1440px. Tests exercise navigation, search, theme persistence, system preference, enlarged text, RSS and sitemap. See the acceptance record for deployment evidence.
 
-Automated accessibility checks and 200% root-text enlargement do not establish a complete accessibility audit or browser-zoom equivalence. Firefox, Safari, screen readers, every content combination and real editorial templates remain unverified.
+Automated checks are not a complete accessibility audit, and root-text enlargement does not establish browser-zoom equivalence. Firefox, Safari, screen readers and real article content remain unverified. Templates and synthetic workflow fixtures exercise presentation, not the truth of future technical claims.
 
 ### Keeping the specification current
 
@@ -247,5 +249,6 @@ Use pull requests for integration and follow the existing validation gates. Chan
 - [Printable style guide](style-guide.pdf)
 - [Repository README](../../README.md)
 - [Architecture decision](../decisions/0001-static-publishing.md)
+- [Editorial workflow and templates](../editorial/workflow.md)
 - [Editorial sanitisation policy](../editorial/sanitisation.md)
 - [Foundation acceptance evidence](../acceptance.md)

@@ -9,4 +9,4 @@ Every branch and commit can be copied indefinitely. Review the diff before pushi
 5. Run all source and rendered-output checks. Secret scanners cannot prove that material is safe to publish; conduct human review too.
 6. If a secret is exposed, revoke or rotate it first. Removing the current line does not remove history or copies. Coordinate any history remediation explicitly; do not disable scanning or add broad exclusions to hide a leak.
 
-Use Australian English. Future technical claims should cite current primary sources and state version/validation limits. Real articles and full editorial templates belong to a later milestone.
+Use Australian English. Technical claims should cite current primary sources and state version/validation limits. Follow the [writing and publishing workflow](workflow.md) and its article templates. The current publication uses synthetic examples; real article production is a separate milestone. Draft status does not make source files, Git history or public preview links private.

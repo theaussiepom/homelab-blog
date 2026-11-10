@@ -1,4 +1,5 @@
 ---
+articleType: page
 title: Guides
 description: Placeholder guide navigation for the publishing foundation.
 ---

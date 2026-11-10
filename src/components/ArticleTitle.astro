@@ -1,0 +1,95 @@
+---
+import DefaultTitle from '@astrojs/starlight/components/PageTitle.astro';
+const { data } = Astro.locals.starlightRoute.entry;
+const showMetadata = ['guide', 'architecture', 'investigation'].includes(
+  data.articleType,
+);
+const formatDate = (value: Date) =>
+  new Intl.DateTimeFormat('en-AU', {
+    dateStyle: 'medium',
+    timeZone: 'UTC',
+  }).format(value);
+---
+
+<DefaultTitle />
+{data.draft && (
+  <p class="hl-draft" role="note">
+    Draft — local preview. Excluded from production builds.
+  </p>
+)}
+{showMetadata && (
+  <div class="hl-article-intro">
+    <p class="hl-lede">{data.description}</p>
+    <dl class="hl-article-meta">
+      <div>
+        <dt>Type</dt>
+        <dd>{data.articleType}</dd>
+      </div>
+      <div>
+        <dt>By</dt>
+        <dd>{data.authors?.map((author) => author.name).join(', ')}</dd>
+      </div>
+      {data.date && (
+        <div>
+          <dt>{data.draft ? 'Planned date' : 'Published'}</dt>
+          <dd>
+            <time datetime={data.date.toISOString().slice(0, 10)}>
+              {formatDate(data.date)}
+            </time>
+          </dd>
+        </div>
+      )}
+      {data.lastUpdated instanceof Date && (
+        <div>
+          <dt>Updated</dt>
+          <dd>
+            <time datetime={data.lastUpdated.toISOString().slice(0, 10)}>
+              {formatDate(data.lastUpdated)}
+            </time>
+          </dd>
+        </div>
+      )}
+      <div>
+        <dt>Topics</dt>
+        <dd>{data.tags?.join(' · ')}</dd>
+      </div>
+    </dl>
+  </div>
+)}
+<style>
+  .hl-draft {
+    padding: 1rem;
+    border-inline-start: 3px solid var(--hl-accent);
+    background: var(--hl-callout);
+    color: var(--hl-ink);
+  }
+  .hl-lede {
+    font: 1.375rem/1.5 var(--hl-reading);
+    margin-block: 1rem;
+  }
+  .hl-article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .hl-article-meta div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .hl-article-meta dt {
+    font-weight: 700;
+  }
+  .hl-article-meta dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  @media (min-width: 50rem) {
+    .hl-lede {
+      font-size: 1.4375rem;
+      line-height: 1.45;
+    }
+  }
+</style>
