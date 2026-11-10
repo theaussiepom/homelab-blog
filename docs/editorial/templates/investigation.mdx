@@ -1,0 +1,65 @@
+---
+title: '{{TITLE}}'
+description: Replace this summary with the investigation question, observation and the limits of the current conclusion.
+articleType: investigation
+date: '{{DATE}}'
+authors:
+  - name: REPLACE_AUTHOR
+tags:
+  - synthetic-example
+draft: true
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Introduce the question, what prompted it and what the reader can learn from the investigation.
+
+<Aside type="note" title="Draft — synthetic example">
+  This scaffold is not an incident report. All example observations are invented
+  and must remain clearly labelled until replaced with publishable evidence.
+</Aside>
+
+## Question and observed conditions
+
+Describe the reported symptom separately from observations you reproduced. Include relevant versions and conditions without disclosing private operational data.
+
+## Competing explanations
+
+| Explanation            | Supporting evidence | Observation that would distinguish it   |
+| ---------------------- | ------------------- | --------------------------------------- |
+| Synthetic hypothesis A | Not yet established | Define a bounded test before running it |
+| Synthetic hypothesis B | Not yet established | Identify a different observable outcome |
+
+## Method
+
+State what was inspected or tested, how the baseline was preserved and which variables changed. Include enough sanitised detail to understand the method without providing private access mechanisms.
+
+## Observations
+
+<Aside type="note" title="Observed">
+  Record direct observations, their order and test conditions. Label user
+  reports, logs and reproduced behaviour distinctly; they are different kinds of
+  evidence.
+</Aside>
+
+## Interpretation
+
+Explain how the observations support or weaken each explanation. A successful workaround does not by itself establish a root cause.
+
+<Aside type="note" title="Inferred">
+  State the inference and the evidence connecting it to the observations.
+  Include credible alternative explanations that remain possible.
+</Aside>
+
+## Conclusion and limits
+
+Answer the original question as narrowly as the evidence allows. State what changed, what was verified and what remains uncertain.
+
+<Aside type="note" title="Not verified">
+  Record outstanding checks and the limits of the conclusion. Do not turn an
+  untested possibility into a statement of fact.
+</Aside>
+
+## Next steps and sources
+
+Identify the next useful observation, if any. Add descriptive links to primary sources beside the technical claims they support.

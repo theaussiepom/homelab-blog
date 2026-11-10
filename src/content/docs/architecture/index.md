@@ -1,4 +1,5 @@
 ---
+articleType: page
 title: Architecture
 description: Placeholder architecture section for the public publication.
 ---

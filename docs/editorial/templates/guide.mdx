@@ -1,0 +1,72 @@
+---
+title: '{{TITLE}}'
+description: Replace this summary with the reader outcome, scope and main prerequisite for this guide.
+articleType: guide
+date: '{{DATE}}'
+authors:
+  - name: REPLACE_AUTHOR
+tags:
+  - synthetic-example
+draft: true
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Explain the outcome in one short paragraph, including who this guide is for and where it applies.
+
+<Aside type="note" title="Draft — synthetic example">
+  This scaffold contains invented examples. Replace its guidance and record
+  actual validation before publication; do not imply that the example was
+  exercised on a real system.
+</Aside>
+
+## Prerequisites and scope
+
+- List the software versions, permissions and starting conditions the reader needs.
+- State which environments were tested and which are outside the guide's scope.
+- Identify expected disruption, reversible changes and any required recovery preparation.
+
+## Procedure
+
+<Steps>
+
+1. Establish a baseline before changing anything. Describe the observation to capture and why it matters.
+
+2. Perform one bounded step. This harmless command is a synthetic formatting example:
+
+   ```sh
+   printf 'synthetic-check\n'
+   ```
+
+   Expected output:
+
+   ```text
+   synthetic-check
+   ```
+
+3. Check the result against the baseline. Explain when the reader should stop rather than continue.
+
+</Steps>
+
+## Verification
+
+| Check             | Expected result          | Evidence to retain                       |
+| ----------------- | ------------------------ | ---------------------------------------- |
+| Synthetic command | The stated sample output | Sanitised output and the test conditions |
+
+<Aside type="note" title="Observed">
+  Record the result actually observed, the method and its conditions. Expected
+  output alone is not evidence that a procedure succeeded.
+</Aside>
+
+## Recovery and troubleshooting
+
+Describe how to restore the prior state and how to verify recovery. If the procedure makes no persistent change, say so. Distinguish documented recovery steps from an exercised recovery test.
+
+## Limitations
+
+State known failure cases, untested versions and what this verification cannot establish.
+
+## Sources and related reading
+
+Add descriptive links to primary sources next to the claims they support, including relevant versions or dates. Link to related publication articles only when those routes exist.

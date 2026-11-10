@@ -1,6 +1,6 @@
 # HomeLab Notes
 
-Public, static homelab publication at **https://theaussiepom.me** (intended production address; see [acceptance](docs/acceptance.md) for deployment evidence). Current articles are explicitly labelled placeholders. No real technical articles or private infrastructure data are included.
+Public, static homelab publication at **https://theaussiepom.me** (intended production address; see [acceptance](docs/acceptance.md) for deployment evidence). Current articles are explicitly labelled placeholders or synthetic editorial examples. No real technical articles or private infrastructure data are included.
 
 ## Visual design
 
@@ -33,7 +33,7 @@ node scripts/test-guards.mjs
 npm audit --audit-level=low
 ```
 
-`npm run validate` runs formatting, lint, Astro/TypeScript checks, the production build, all generated internal links/fragments/assets, and browser tests. Browser tests cover representative pages, search results, mobile navigation, RSS, sitemap and automated WCAG A/AA checks. Automated accessibility testing is not a complete accessibility audit.
+`npm run validate` runs formatting, lint, Astro/TypeScript checks, the production build, all generated internal links/fragments/assets, editorial/scaffold negative cases, draft-exclusion guards and browser tests. Browser tests cover representative pages, search results, mobile navigation, RSS, sitemap and automated WCAG A/AA checks. Automated accessibility testing is not a complete accessibility audit.
 
 Secret scanning uses the checksum-pinned official Gitleaks 8.30.1 binary, scanning both the current tree and complete reachable Git history with redacted diagnostics. Initialise Git before scanning and retain full history in CI:
 
@@ -57,6 +57,18 @@ The scanner guard deliberately generates a fake token in temporary storage and r
 - `docs/decisions/`: architecture decisions.
 
 `src/components/` contains the homepage and masthead overrides; `src/styles/hybrid.css` owns the semantic palette and layout. `src/content/i18n/en-AU.json` supplies the blog's Australian English UI labels.
+
+## Writing articles
+
+Follow the [writing and publishing workflow](docs/editorial/workflow.md). Create a draft with:
+
+```sh
+npm run new:article -- guide my-topic
+```
+
+Choose `guide`, `architecture`, `investigation` or `post`. The command uses the corresponding template, fills the title/date and refuses to overwrite an existing route. Replace the author placeholder, title, summary and example prose, then preview with `npm run dev`. Article metadata validation checks the shared type, summary, author, dates and tags.
+
+Drafts are excluded from production builds and hosted PR previews; they remain visible in local development. Draft source and files under `public/` are still public once pushed. Sanitise before committing or pushing. Set `draft: false` only when ready for a public review preview. The [synthetic workflow example](https://theaussiepom.me/guides/editorial-workflow-example/) demonstrates the resulting article layout without real infrastructure content.
 
 ## Publishing and CI/CD
 

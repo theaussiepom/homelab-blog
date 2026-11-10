@@ -1,4 +1,5 @@
 ---
+articleType: page
 title: Start Here
 description: Understand the scope and current foundation status of HomeLab Notes.
 ---
