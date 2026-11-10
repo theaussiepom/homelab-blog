@@ -2,6 +2,14 @@
 
 Use the article type that matches the reader's need. Guides explain how to achieve and verify an outcome; architecture articles explain boundaries and decisions; investigations explain evidence and uncertainty; blog posts communicate shorter changes and lessons. The templates are starting points, not a requirement to retain empty sections.
 
+## Establish the reader and voice
+
+Follow the [editorial voice guide](voice.md) throughout. Before drafting, identify the reader's goal, article type, assumed knowledge and available evidence. Use the authoring brief in the template to record those choices; it stays in the MDX source without appearing on the page, but is still public once pushed. Do not add unsupported frontmatter fields for these notes.
+
+Begin the publication with approachable foundations and progress towards intermediate decisions and advanced investigations. Keep the same human, conversational voice at every level. State prerequisites naturally, explain unfamiliar terms at the chosen level and link to existing foundational articles where useful. An advanced topic does not require formal or impersonal prose.
+
+Use supplied experiences accurately. Ask for missing evidence when it is needed for a claim; otherwise narrow the claim or identify the uncertainty. Humour is optional and must fit naturally. The [repository instructions](../../AGENTS.md) give coding assistants the reading order and drafting procedure.
+
 ## Create a draft
 
 From the repository root, create an article with a short kebab-case slug:
@@ -61,7 +69,7 @@ Both CI previews and production use a production build. They omit `draft: true` 
 4. Review the full diff for accuracy and public safety, then push and open a pull request. State reader-visible changes, evidence and unresolved uncertainty.
 5. Wait for the required checks and inspect the actual Cloudflare preview URL reported by CI. Same-repository owner PRs receive previews; untrusted PRs do not receive deployment credentials.
 
-The review should cover prose, metadata, links, sources, screenshots, responsive layout, both themes, search and relevant RSS or archive listings. Automated checks support this review; they cannot prove that content is accurate or safe to publish. CodeRabbit may skip automatic reviews on this repository, so its presence alone is not a completed review.
+The review should cover voice, audience fit, evidence, metadata, links, sources, screenshots, responsive layout, both themes, search and relevant RSS or archive listings. Check that any humour serves the explanation and that first-person claims are supported. Automated checks support this review; they cannot prove that content is accurate or safe to publish. CodeRabbit may skip automatic reviews on this repository, so its presence alone is not a completed review.
 
 ## Publish and verify
 

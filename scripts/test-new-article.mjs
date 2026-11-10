@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { compile } from '@mdx-js/mdx';
 import {
   cp,
   mkdir,
@@ -52,6 +53,8 @@ try {
     assert.match(content, /^date: 2026-11-10$/m);
     assert.match(content, /REPLACE_AUTHOR/);
     assert.doesNotMatch(content, /\{\{(?:TITLE|DATE)\}\}/);
+    // Formatting must not turn source-only authoring notes into invalid MDX.
+    await compile(content.replace(/^---[\s\S]*?---\s*/, ''));
     await assert.rejects(
       newArticle(kind, `sample-${kind}`, { root, now }),
       /already exists/,

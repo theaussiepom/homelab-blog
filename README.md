@@ -53,14 +53,14 @@ The scanner guard deliberately generates a fake token in temporary storage and r
 - `scripts/` and `tests/`: validation and deployment gates.
 - `.github/`: GitHub-hosted CI, dependency updates and contribution template.
 - `docs/design/`: approved visual specification, printable guide and synthetic reference images.
-- `docs/editorial/`: public-content sanitisation policy.
+- `docs/editorial/`: voice, audience guidance, templates, authoring workflow and sanitisation policy.
 - `docs/decisions/`: architecture decisions.
 
 `src/components/` contains the homepage and masthead overrides; `src/styles/hybrid.css` owns the semantic palette and layout. `src/content/i18n/en-AU.json` supplies the blog's Australian English UI labels.
 
 ## Writing articles
 
-Follow the [writing and publishing workflow](docs/editorial/workflow.md). Create a draft with:
+Follow the [editorial voice guide](docs/editorial/voice.md) and [writing and publishing workflow](docs/editorial/workflow.md). The voice stays human and conversational as the audience progresses from foundations to advanced material. Coding assistants should start with [AGENTS.md](AGENTS.md). Create a draft with:
 
 ```sh
 npm run new:article -- guide my-topic
