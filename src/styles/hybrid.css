@@ -251,12 +251,9 @@ h1 {
   font: 700 0.75rem/1.5 var(--sl-font);
   letter-spacing: 0.08em;
 }
-.hl-section-label p {
-  font-size: 0.875rem;
-}
 .hl-discovery {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2rem;
   padding-block: 1.5rem;
 }
@@ -288,9 +285,6 @@ h1 {
   }
   .hl-intro {
     max-width: 40rem;
-  }
-  .hl-discovery {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 43.75rem) {

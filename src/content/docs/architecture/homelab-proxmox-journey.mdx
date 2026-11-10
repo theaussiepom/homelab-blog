@@ -13,7 +13,9 @@ draft: false
 ---
 
 import JourneyFigure from '../../../components/JourneyFigure.astro';
-import JourneyTablet from '../../../components/JourneyTablet.astro';
+import ArticleScreenshot from '../../../components/ArticleScreenshot.astro';
+import tabletDashboard from '../../../assets/articles/homelab-proxmox-journey/living-tablet-dashboard.png';
+import deploymentRun from '../../../assets/articles/homelab-proxmox-journey/github-actions-deploy.png';
 
 export const authoringBrief = {
   readerAndGoal:
@@ -40,7 +42,12 @@ In the living room, I configured some downlights to fade out around sunset while
 
 I was building lighting scenes galore, bringing in the blinds and putting the controls on a tablet dashboard. Being able to decide how the house behaved, down to the way a light dimmed, kept giving me more ideas.
 
-<JourneyTablet />
+<ArticleScreenshot
+  src={tabletDashboard}
+  alt="The living-room tablet dashboard, showing lighting scenes, blind controls, air conditioning and a household energy-flow display."
+  caption="On my living-room tablet: lighting scenes, blinds, climate and energy in one view."
+  fullSizeLabel="View full size"
+/>
 
 Over those years, I bought [UniFi](https://ui.com/) equipment, learnt how [virtual local area networks (VLANs)](https://help.ui.com/hc/en-us/articles/26136851868695-Using-VLANs-for-Network-Security-and-Performance) let me separate devices into different networks, and watched copious amounts of [YouTube](https://www.youtube.com/) on Home Assistant, UniFi and Node-RED.
 
@@ -131,6 +138,13 @@ Moving to Proxmox also had to preserve what already worked: radio services near 
 For this build, I also want the configuration written in files and kept in [Git](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control), with a history I can review.
 
 [Continuous integration (CI)](https://docs.github.com/en/actions/get-started/continuous-integration) checks proposed changes, while [continuous deployment (CD)](https://docs.github.com/en/actions/get-started/continuous-deployment) applies approved changes to the system. I want a process I can repeat when the setup changes.
+
+<ArticleScreenshot
+  src={deploymentRun}
+  alt="GitHub Actions workflow graph with green checks on all 17 jobs, including Validate, Check guests, service jobs and Backup."
+  caption="A run of my homelab’s Deploy workflow in GitHub Actions on 10 November 2026. All 17 jobs passed, from validation and guest checks through to services and backup."
+  fullSizeLabel="View the workflow at full size"
+/>
 
 That’s the fifth version I’m building now. The migration and recovery testing are still under way. A rebuild needs to bring back data, credentials and device pairings as well as the software.
 

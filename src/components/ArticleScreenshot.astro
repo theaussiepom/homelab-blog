@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption: string;
+  fullSizeLabel: string;
+}
+
+const { src, alt, caption, fullSizeLabel } = Astro.props;
+---
+
+<figure class="article-screenshot">
+  <Image
+    src={src}
+    alt={alt}
+    widths={[360, 700, 1400]}
+    sizes="(max-width: 700px) calc(100vw - 2rem), 700px"
+    loading="lazy"
+  />
+  <figcaption>
+    {caption} <a href={src.src}>{fullSizeLabel}</a>.
+  </figcaption>
+</figure>
+
+<style>
+  .article-screenshot {
+    margin: 2rem 0;
+  }
+  .article-screenshot :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--hl-rule-soft);
+  }
+  figcaption {
+    margin-block-start: 0.75rem;
+    color: var(--hl-ink);
+    font: 0.875rem/1.6 var(--sl-font);
+  }
+</style>

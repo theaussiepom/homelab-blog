@@ -1,6 +1,7 @@
 ---
 articleType: page
 title: Investigations
+draft: true
 description: Placeholder investigations section for future evidence-led articles.
 ---
 

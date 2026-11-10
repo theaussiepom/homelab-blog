@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const origin = 'https://theaussiepom.me';
-const article = '/guides/placeholder/';
+const article = '/architecture/homelab-proxmox-journey/';
 
 test('landing pages have no comment widget; local previews do not load Giscus', async ({
   page,
@@ -16,18 +16,16 @@ test('landing pages have no comment widget; local previews do not load Giscus', 
     await page.goto(path);
     await expect(page.locator('.hl-comments')).toHaveCount(0);
   }
-  for (const path of [article, '/blog/foundation-placeholder/']) {
-    await page.goto(path);
-    await expect(page.locator('.hl-comments-status')).toHaveText(
-      'Comments are available on the public site.',
-    );
-    await expect(
-      page.getByRole('link', { name: 'browse the discussions on GitHub' }),
-    ).toHaveAttribute(
-      'href',
-      /homelab-blog\/discussions\/categories\/announcements$/,
-    );
-  }
+  await page.goto(article);
+  await expect(page.locator('.hl-comments-status')).toHaveText(
+    'Comments are available on the public site.',
+  );
+  await expect(
+    page.getByRole('link', { name: 'browse the discussions on GitHub' }),
+  ).toHaveAttribute(
+    'href',
+    /homelab-blog\/discussions\/categories\/announcements$/,
+  );
   expect(thirdPartyRequests).toEqual([]);
 });
 

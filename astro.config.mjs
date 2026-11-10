@@ -49,21 +49,16 @@ export default defineConfig({
           label: 'Start Here',
           items: [{ autogenerate: { directory: 'start-here' } }],
         },
-        { label: 'Guides', items: [{ autogenerate: { directory: 'guides' } }] },
         {
           label: 'Architecture',
           items: [{ autogenerate: { directory: 'architecture' } }],
         },
-        {
-          label: 'Investigations',
-          items: [{ autogenerate: { directory: 'investigations' } }],
-        },
-        { label: 'Blog', link: '/blog/' },
       ],
       plugins: [
         starlightBlog({
           title: 'HomeLab Blog',
-          description: 'Placeholder publishing updates for HomeLab Notes.',
+          description: 'Shorter notes from HomeLab Notes.',
+          navigation: 'none',
         }),
       ],
     }),
