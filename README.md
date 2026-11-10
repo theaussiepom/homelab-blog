@@ -1,6 +1,6 @@
 # HomeLab Notes
 
-Public, static homelab publication at **https://theaussiepom.me** (intended production address; see [acceptance](docs/acceptance.md) for deployment evidence). Current articles are explicitly labelled placeholders or synthetic editorial examples. No real technical articles or private infrastructure data are included.
+HomeLab Notes is a public, static publication for homelab guides, architecture stories and investigations. The first article follows Ben’s journey from a Home Assistant VM on a NAS to his current Proxmox build. [HomeLab Notes](https://theaussiepom.me/) · [First article](https://theaussiepom.me/architecture/homelab-proxmox-journey/)
 
 ## Visual design
 

@@ -1,17 +1,17 @@
 ---
 articleType: page
 title: Start Here
-description: Understand the scope and current foundation status of HomeLab Notes.
+description: Find your way through the guides, architecture stories and investigations on HomeLab Notes.
 ---
 
-This publication is in its foundation phase. **All current articles are placeholders**, provided only to verify navigation, search and publishing.
+I’m Ben. I write about what I build in my homelab, what I learn along the way and the decisions that shape it. The story starts with a garage door. [Read the homelab journey](/architecture/homelab-proxmox-journey/)
 
 ## Explore the publication
 
-- [Guides](/guides/): future reproducible procedures.
-- [Architecture](/architecture/): future design decisions and trade-offs.
-- [Investigations](/investigations/): future evidence-led problem solving.
-- [Blog](/blog/): publishing updates and future technical stories.
+- Reproducible procedures and practical checks. [Guides](/guides/)
+- Design decisions and trade-offs. [Architecture](/architecture/)
+- Evidence, interpretations and open questions. [Investigations](/investigations/)
+- Publishing updates and shorter notes. [Blog](/blog/)
 
 ## What to expect
 

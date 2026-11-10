@@ -1,5 +1,10 @@
 ---
 import DefaultHero from '@astrojs/starlight/components/Hero.astro';
+import { getEntry } from 'astro:content';
+
+const featuredId = 'architecture/homelab-proxmox-journey';
+const featuredArticle =
+  Astro.url.pathname === '/' ? await getEntry('docs', featuredId) : undefined;
 const topics = [
   [
     'Start Here',
@@ -54,35 +59,32 @@ const topics = [
           how small systems work, and sharing what the evidence tells us.
         </p>
       </div>
-      <div class="hl-feature">
-        <svg
-          viewBox="0 0 400 120"
-          class="hl-motif"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <g fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M55 60H345M150 20V100M250 20V100M150 20H250M150 100H250" />
-            <circle cx="55" cy="60" r="25" />
-            <rect x="125" y="35" width="50" height="50" />
-            <circle cx="250" cy="60" r="25" />
-            <rect x="320" y="35" width="50" height="50" />
-          </g>
-        </svg>
-        <p class="hl-kicker">Foundation preview · Placeholder</p>
-        <h2>
-          <a href="/guides/placeholder/">
-            Following a request through a small system
+      {featuredArticle && !featuredArticle.data.draft && (
+        <div class="hl-feature">
+          <svg
+            viewBox="0 0 400 120"
+            class="hl-motif"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <g fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M55 60H345M150 20V100M250 20V100M150 20H250M150 100H250" />
+              <circle cx="55" cy="60" r="25" />
+              <rect x="125" y="35" width="50" height="50" />
+              <circle cx="250" cy="60" r="25" />
+              <rect x="320" y="35" width="50" height="50" />
+            </g>
+          </svg>
+          <p class="hl-kicker">Architecture</p>
+          <h2>
+            <a href={`/${featuredId}/`}>{featuredArticle.data.title}</a>
+          </h2>
+          <p>{featuredArticle.data.description}</p>
+          <a class="hl-read" href={`/${featuredId}/`}>
+            Read the homelab story <span aria-hidden="true">→</span>
           </a>
-        </h2>
-        <p>
-          A synthetic example for exploring the reading experience, navigation
-          and search.
-        </p>
-        <a class="hl-read" href="/guides/placeholder/">
-          Explore the sample guide <span aria-hidden="true">→</span>
-        </a>
-      </div>
+        </div>
+      )}
     </section>
     <div class="hl-section-label">
       <h2>Explore the notes</h2>
@@ -101,10 +103,6 @@ const topics = [
         </section>
       ))}
     </div>
-    <p class="hl-foundation">
-      All current articles are placeholders or synthetic examples. Real
-      technical articles will follow.
-    </p>
   </div>
 ) : (
   <DefaultHero>

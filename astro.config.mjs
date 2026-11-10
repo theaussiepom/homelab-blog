@@ -31,7 +31,7 @@ export default defineConfig({
         PageSidebar: './src/components/ArticlePageSidebar.astro',
       },
       description:
-        'A public technical homelab publication. Foundation preview with placeholder content.',
+        'Practical guides, architecture stories and investigations from a curious homelab.',
       defaultLocale: 'root',
       locales: { root: { label: 'English (Australia)', lang: 'en-AU' } },
       social: [
