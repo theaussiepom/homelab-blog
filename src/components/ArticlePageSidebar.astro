@@ -1,0 +1,37 @@
+---
+import DefaultPageSidebar from '@astrojs/starlight/components/PageSidebar.astro';
+import MobileTableOfContents from '@astrojs/starlight/components/MobileTableOfContents.astro';
+
+const { entry, toc } = Astro.locals.starlightRoute;
+const isArticle =
+  ['guide', 'architecture', 'investigation', 'post'].includes(
+    entry.data.articleType,
+  ) && Boolean(toc);
+---
+
+{isArticle ? (
+  <div class="hl-mobile-contents">
+    <MobileTableOfContents />
+  </div>
+) : (
+  <DefaultPageSidebar>
+    <slot />
+  </DefaultPageSidebar>
+)}
+
+<style>
+  @media (max-width: 49.999rem) {
+    /* The blog plugin hides its native right-side TOC, including the mobile control. */
+    :global(:root:has(.hl-reader-sidebar) mobile-starlight-toc) {
+      display: block;
+    }
+    :global(:root:has(.hl-reader-sidebar) .main-frame) {
+      padding-top: calc(var(--sl-nav-height) + var(--sl-mobile-toc-height));
+    }
+  }
+  @media (min-width: 50rem) {
+    .hl-mobile-contents {
+      display: none;
+    }
+  }
+</style>

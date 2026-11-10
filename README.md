@@ -4,7 +4,7 @@ Public, static homelab publication at **https://theaussiepom.me** (intended prod
 
 ## Visual design
 
-The approved direction combines the Technical magazine's confident homepage with the Quiet personal publication's warm article reading experience. Follow the [visual style and layout guide](docs/design/style-guide.md) for typography, colours, spacing, components and responsive layouts. A [printable PDF edition](docs/design/style-guide.pdf) is also available. The shared theme implements that direction in light and dark modes, with a system-following Auto option. The guide records the native navigation adaptations and remaining validation limits.
+The approved direction combines the Technical magazine's confident homepage with the Quiet personal publication's warm article reading experience. Follow the [visual style and layout guide](docs/design/style-guide.md) for typography, colours, spacing, components and responsive layouts. Markdown is the maintained specification; the PDF edition has been retired. The guides define the author-approved standard for storytelling, warmth, visual pacing and contents navigation. Shared article components apply the reading layout in light and dark modes, with a system-following Auto option. Publication follows the separate editorial workflow.
 
 ## Stack and local development
 
@@ -52,7 +52,7 @@ The scanner guard deliberately generates a fake token in temporary storage and r
 - `public/`: static assets and HTTP security headers.
 - `scripts/` and `tests/`: validation and deployment gates.
 - `.github/`: GitHub-hosted CI, dependency updates and contribution template.
-- `docs/design/`: approved visual specification, printable guide and synthetic reference images.
+- `docs/design/`: maintained Markdown visual specification and synthetic reference images.
 - `docs/editorial/`: voice, audience guidance, templates, authoring workflow and sanitisation policy.
 - `docs/decisions/`: architecture decisions.
 

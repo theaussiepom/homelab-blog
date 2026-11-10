@@ -166,6 +166,9 @@ test('Australian English blog labels are translated', async ({ page }) => {
     await page.goto(path);
     await expect(page.locator('html')).toHaveAttribute('lang', 'en-AU');
     await expect(page.locator('body')).not.toContainText('starlightBlog.');
+    if (path === '/blog/foundation-placeholder/') {
+      await page.getByText('Browse the site', { exact: true }).click();
+    }
     await expect(page.getByText('All posts', { exact: true })).toBeVisible();
   }
 });
