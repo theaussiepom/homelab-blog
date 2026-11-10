@@ -170,7 +170,7 @@ Keep figures within the reading column, normally with 2rem vertical separation. 
 
 Use a genuine, public-safe photograph or screenshot when it helps readers picture the result. Give it meaningful alternative text, reserved dimensions, a short caption beneath it and a full-size link when the detail warrants one. The reference tablet caption uses 14px sans-serif text with a 1.6 line height. Do not manufacture a photograph of the author's home or imply that a configured behaviour has been observed live when it has not.
 
-Keep the ending in the same reading flow. Let the author finish the thought and make a useful connection to what follows. Put comments after the article body, followed by the existing footer navigation. Do not insert a large promotional panel between the final paragraphs or duplicate the article contents at the bottom.
+Keep the ending in the same reading flow. Let the author finish the thought and make a useful connection to what follows. Place the shared author bio after the story when a profile is available for the credited author. Use a compact card with a sans-serif heading, body typography and the theme's callout surface. Place comments below the bio, followed by the existing footer navigation. Do not insert a large promotional panel between the final paragraphs or duplicate the article contents at the bottom.
 
 <!-- pagebreak -->
 
@@ -227,7 +227,7 @@ This abbreviated light palette illustrates the roles. The authoritative mappings
 
 `HomeHero.astro` supplies the homepage and falls back to the native hero elsewhere. `SiteTitle.astro` supplies the masthead. `ArticleTitle.astro` preserves the native title, adds the article lede and metadata, and labels local drafts. Keep its metadata at 14px with wrapping rows.
 
-Use the shared `ArticleSidebar.astro` and `ArticlePageSidebar.astro` for article contents and site browsing. Use native HTML/SVG diagrams and responsive image components with captions to meet the visual rules above. `ArticleFooter.astro` adds comments while preserving the framework footer. Keep layout decisions in components and shared styles, with article prose and visual placement in Markdown/MDX. Do not require authors to select a route-specific layout to obtain the approved reading experience.
+Use the shared `ArticleSidebar.astro` and `ArticlePageSidebar.astro` for article contents and site browsing. Use native HTML/SVG diagrams and responsive image components with captions to meet the visual rules above. `ArticleFooter.astro` adds the shared author bio and comments while preserving the framework footer. Keep layout decisions in components and shared styles, with article prose and visual placement in Markdown/MDX. Do not require authors to select a route-specific layout to obtain the approved reading experience.
 
 Use the [editorial workflow and templates](../editorial/workflow.md) for article structure. They use native Starlight notes and steps, Markdown tables and code. The Australian English UI dictionary supplies blog labels because plugin `en` strings do not fall back to `en-AU`; maintain it when blog controls change.
 

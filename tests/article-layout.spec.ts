@@ -123,3 +123,32 @@ test('landing and archive pages retain their normal navigation', async ({
     await expect(page.locator('.hl-mobile-contents')).toHaveCount(0);
   }
 });
+
+test('the shared bio follows the story and precedes comments for its author', async ({
+  page,
+}) => {
+  const bio = page.getByRole('region', { name: 'About Ben' });
+  for (const path of ['/', '/guides/placeholder/']) {
+    await page.goto(path);
+    await expect(bio).toHaveCount(0);
+  }
+
+  await page.goto('/architecture/homelab-proxmox-journey/');
+  await expect(bio.getByRole('heading', { level: 2 })).toHaveText('About Ben');
+  await expect(bio.locator('p')).toHaveCount(2);
+  const order = await bio.evaluate((card) => {
+    const story = document.querySelector('main .sl-markdown-content');
+    const comments = card.nextElementSibling;
+    return {
+      followsStory:
+        story !== null &&
+        Boolean(
+          story.compareDocumentPosition(card) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+        ),
+      precedesComments:
+        comments?.getAttribute('aria-labelledby') === 'comments-heading',
+    };
+  });
+  expect(order).toEqual({ followsStory: true, precedesComments: true });
+});
