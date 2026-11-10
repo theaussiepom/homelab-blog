@@ -1,0 +1,146 @@
+---
+const { data } = Astro.locals.starlightRoute.entry;
+const isArticle = ['guide', 'architecture', 'investigation', 'post'].includes(
+  data.articleType,
+);
+const canLoad = import.meta.env.PROD && !data.draft;
+const discussions =
+  'https://github.com/theaussiepom/homelab-blog/discussions/categories/announcements';
+---
+
+{isArticle && (
+  <section
+    class="hl-comments"
+    aria-labelledby="comments-heading"
+    data-pagefind-ignore
+  >
+    <h2 id="comments-heading">Join the conversation</h2>
+    {canLoad ? (
+      <>
+        <p>
+          Questions, ideas or something you’ve tried? Read the comments below,
+          or sign in with GitHub to join in.
+        </p>
+        <div
+          class="giscus"
+          data-giscus-comments
+          data-repo="theaussiepom/homelab-blog"
+          data-repo-id="R_kgDOVotMFQ"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOVotMFc4DK12c"
+          data-site-origin={Astro.site?.origin}
+        ></div>
+        <p class="hl-comments-status" role="status"></p>
+        <p class="hl-comments-link">
+          You can also{' '}
+          <a href={discussions}>browse the discussions on GitHub</a>.
+        </p>
+      </>
+    ) : (
+      <p>Comments open on the public site after publication.</p>
+    )}
+  </section>
+)}
+
+<script>
+  const comments = document.querySelector<HTMLElement>(
+    '[data-giscus-comments]',
+  );
+  if (comments) {
+    const status = comments.parentElement?.querySelector<HTMLElement>(
+      '.hl-comments-status',
+    );
+    const publicOrigins = [
+      comments.dataset.siteOrigin,
+      'https://homelab-blog.theaussiepom.workers.dev',
+    ];
+    if (!publicOrigins.includes(window.location.origin)) {
+      if (status)
+        status.textContent = 'Comments are available on the public site.';
+    } else {
+      const theme = () =>
+        document.documentElement.dataset.theme === 'dark'
+          ? 'dark_dimmed'
+          : 'light';
+      const loadComments = () => {
+        const script = document.createElement('script');
+        script.src = 'https://giscus.app/client.js';
+        script.async = true;
+        script.crossOrigin = 'anonymous';
+        Object.assign(script.dataset, {
+          repo: comments.dataset.repo,
+          repoId: comments.dataset.repoId,
+          category: comments.dataset.category,
+          categoryId: comments.dataset.categoryId,
+          mapping: 'pathname',
+          strict: '1',
+          reactionsEnabled: '1',
+          emitMetadata: '0',
+          inputPosition: 'bottom',
+          theme: theme(),
+          lang: 'en',
+          loading: 'lazy',
+        });
+        script.addEventListener('error', () => {
+          if (status) {
+            status.textContent =
+              'Comments couldn’t load. You can still join the discussion on GitHub.';
+          }
+        });
+        comments.append(script);
+      };
+      const visibility = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            visibility.disconnect();
+            loadComments();
+          }
+        },
+        { rootMargin: '300px' },
+      );
+      visibility.observe(comments);
+      new MutationObserver(() => {
+        const iframe = comments.querySelector<HTMLIFrameElement>(
+          'iframe.giscus-frame',
+        );
+        iframe?.contentWindow?.postMessage(
+          { giscus: { setConfig: { theme: theme() } } },
+          'https://giscus.app',
+        );
+      }).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme'],
+      });
+    }
+  }
+</script>
+
+<style>
+  .hl-comments {
+    margin-block-start: 3rem;
+    padding-block-start: 2rem;
+    border-top: 1px solid var(--hl-rule-soft);
+  }
+  .hl-comments h2 {
+    margin: 0 0 1rem;
+    font: 700 1.5rem/1.25 var(--sl-font);
+  }
+  .hl-comments p {
+    margin-block: 1rem;
+  }
+  .hl-comments a {
+    color: var(--hl-accent);
+  }
+  .hl-comments-link,
+  .hl-comments-status {
+    font-size: 0.875rem;
+  }
+  .hl-comments-status:empty {
+    display: none;
+  }
+  @media print {
+    .hl-comments {
+      display: none;
+    }
+  }
+</style>

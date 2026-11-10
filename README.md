@@ -81,6 +81,10 @@ GitHub Actions is the sole deployer to Cloudflare Workers Static Assets. The pro
 The Cloudflare account-owned deployment token is restricted to the existing `homelab-blog` Worker with Editor access. Its secret and the account identifier are GitHub secrets, never source values. The native Git integration was evaluated, but it only accepts user tokens while the available user-token editor cannot express a single-Worker scope. This technical constraint justifies the GitHub Actions alternative. There is no homelab runner, inbound connection, database or application server code.
 See [deployment and rollback](docs/deployment.md), [architecture decision](docs/decisions/0001-static-publishing.md), [source conventions](docs/conventions.md) and [acceptance evidence](docs/acceptance.md).
 
+## Comments and readership
+
+Published articles display [Giscus comments](https://giscus.app/), backed by this repository’s GitHub Discussions. Anyone can read them; posting requires GitHub sign-in. Drafts and review previews do not connect to live comments. Cloudflare Web Analytics already collects page views and visits for the public domain. See [comments, moderation and traffic reporting](docs/comments-and-analytics.md) for configuration and dashboard instructions.
+
 ## Security and remaining setup
 
 Treat every commit as permanently public. Use only synthetic examples; follow the [sanitisation policy](docs/editorial/sanitisation.md). Report vulnerabilities privately through GitHub's security reporting when available; never open an issue containing a secret.
