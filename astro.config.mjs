@@ -26,6 +26,7 @@ export default defineConfig({
         Hero: './src/components/HomeHero.astro',
         SiteTitle: './src/components/SiteTitle.astro',
         PageTitle: './src/components/ArticleTitle.astro',
+        Footer: './src/components/ArticleFooter.astro',
       },
       description:
         'A public technical homelab publication. Foundation preview with placeholder content.',
