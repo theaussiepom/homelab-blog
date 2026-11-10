@@ -1,0 +1,357 @@
+/* Approved magazine/personal hybrid. Semantic tokens also drive native Starlight UI. */
+:root {
+  --hl-paper: #1b1b27;
+  --hl-ink: #f1eee8;
+  --hl-accent: #cbb5f1;
+  --hl-feature: #332b46;
+  --hl-callout: #2a2539;
+  --hl-rule: #615a6d;
+  --hl-rule-soft: #484252;
+  --hl-reading: Georgia, 'Times New Roman', serif;
+  --sl-font: Arial, Helvetica, sans-serif;
+  --sl-font-mono:
+    ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+  --sl-content-width: 43.75rem;
+  --sl-sidebar-width: 15rem;
+  --sl-text-h1: clamp(2rem, 4vw, 3rem);
+  --sl-nav-height: 6.375rem;
+  --sl-text-code: 0.875rem;
+  --sl-text-code-sm: 0.875rem;
+  --sl-color-white: #f1eee8;
+  --sl-color-gray-1: #f1eee8;
+  --sl-color-gray-2: #ded8e5;
+  --sl-color-gray-3: #b8afc6;
+  --sl-color-gray-4: #81758e;
+  --sl-color-gray-5: #484252;
+  --sl-color-gray-6: #2a2539;
+  --sl-color-black: #1b1b27;
+}
+:root[data-theme='light'] {
+  --hl-paper: #faf8f3;
+  --hl-ink: #252535;
+  --hl-accent: #62429a;
+  --hl-feature: #e2d7f5;
+  --hl-callout: #f0ebf5;
+  --hl-rule: #beb9b1;
+  --hl-rule-soft: #d0cbc3;
+  --sl-color-white: #252535;
+  --sl-color-gray-1: #252535;
+  --sl-color-gray-2: #343342;
+  --sl-color-gray-3: #5c5369;
+  --sl-color-gray-4: #81758e;
+  --sl-color-gray-5: #d0cbc3;
+  --sl-color-gray-6: #f0ebf5;
+  --sl-color-gray-7: #faf8f3;
+  --sl-color-black: #faf8f3;
+}
+:root,
+:root[data-theme='light'] {
+  --sl-color-text: var(--hl-ink);
+  --sl-color-bg: var(--hl-paper);
+  --sl-color-bg-nav: var(--hl-paper);
+  --sl-color-bg-sidebar: var(--hl-paper);
+  --sl-color-bg-inline-code: var(--hl-callout);
+  --sl-color-accent: var(--hl-accent);
+  --sl-color-accent-high: var(--hl-accent);
+  --sl-color-accent-low: var(--hl-callout);
+  --sl-color-text-accent: var(--hl-accent);
+  --sl-color-bg-accent: var(--hl-accent);
+  --sl-color-text-invert: var(--hl-paper);
+  --sl-color-hairline: var(--hl-rule-soft);
+  --sl-color-hairline-light: var(--hl-rule-soft);
+}
+:focus-visible {
+  outline: 3px solid var(--hl-accent);
+  outline-offset: 3px;
+}
+.hl-brand {
+  color: var(--hl-ink);
+  text-decoration: none;
+  line-height: 1.15;
+  min-width: 0;
+}
+.hl-brand span {
+  display: block;
+  font-size: 1.8125rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.hl-brand small {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
+h1 {
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+.sl-markdown-content {
+  font-family: var(--hl-reading);
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+.sl-markdown-content :is(h2, h3, h4) {
+  font-family: var(--hl-reading);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.sl-markdown-content h2 {
+  font-size: 1.8125rem;
+}
+.sl-markdown-content h3 {
+  font-size: 1.4375rem;
+}
+.sl-markdown-content a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.sl-markdown-content :is(table, .starlight-aside) {
+  font-size: 1rem;
+}
+.sl-markdown-content .starlight-aside {
+  font-family: var(--sl-font);
+}
+.starlight-aside--note {
+  --sl-color-asides-text-accent: var(--hl-accent);
+  --sl-color-asides-border: var(--hl-accent);
+  background: var(--hl-callout);
+  border-inline-start-width: 3px;
+}
+.sl-markdown-content th {
+  font-family: var(--sl-font);
+}
+.sl-markdown-content :not(pre) > code {
+  overflow-wrap: anywhere;
+}
+.sl-markdown-content .expressive-code {
+  font-family: var(--sl-font-mono);
+}
+.sl-markdown-content .expressive-code pre {
+  max-width: 100%;
+}
+.sl-markdown-content .hl-diagram {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font: 0.875rem/1.5 var(--sl-font-mono);
+}
+.hl-diagram span {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  padding: 1rem 0.25rem;
+  border: 1px solid var(--hl-accent);
+  background: var(--hl-callout);
+}
+:root:not([data-has-sidebar]) .content-panel .sl-container {
+  max-width: 72.5rem;
+}
+.hl-home {
+  max-width: 72.5rem;
+  margin: auto;
+}
+.hl-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.hl-topics a {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  color: var(--hl-ink);
+  text-underline-offset: 0.25em;
+  font-size: 0.875rem;
+}
+.hl-hero {
+  display: grid;
+  grid-template-columns: 1.18fr 1fr;
+  gap: 2.875rem;
+  align-items: center;
+  padding: 2.125rem 2.625rem;
+  background: #252535;
+  color: #eeeaf3;
+}
+.hl-kicker {
+  font: 700 0.75rem/1.5 var(--sl-font);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hl-accent);
+}
+.hl-hero > div > .hl-kicker {
+  color: #dfd0fa;
+}
+.hl-hero h1 {
+  color: #fff;
+  font-size: clamp(2.25rem, 4.8vw, 3.75rem);
+  margin: 1rem 0 1.375rem;
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+}
+.hl-intro {
+  max-width: 28.4375rem;
+  font: 1.0625rem/1.65 var(--sl-font);
+}
+.hl-feature {
+  padding: 1.5rem 1.625rem;
+  background: var(--hl-feature);
+  color: var(--hl-ink);
+}
+.hl-feature h2 {
+  font: 400 2.0625rem/1.15 var(--hl-reading);
+  letter-spacing: -0.02em;
+  margin: 0.75rem 0 1rem;
+}
+.hl-feature h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+.hl-feature h2 a:hover {
+  text-decoration: underline;
+}
+.hl-feature > p:not(.hl-kicker) {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.hl-hero .hl-feature > .hl-kicker {
+  color: var(--hl-accent);
+}
+.hl-motif {
+  width: 100%;
+  height: 5.25rem;
+  color: var(--hl-accent);
+  margin-bottom: 1rem;
+}
+.hl-read {
+  display: inline-block;
+  color: var(--hl-accent);
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding-block: 0.75rem;
+  margin-top: 0.5rem;
+  text-underline-offset: 0.3em;
+}
+.hl-hero > div:first-child :focus-visible {
+  outline-color: #dfd0fa;
+}
+.hl-section-label {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 1.25rem 0 0.875rem;
+  border-bottom: 1px solid var(--hl-rule);
+  margin-top: 1.25rem;
+}
+.hl-section-label h2 {
+  text-transform: uppercase;
+  font: 700 0.75rem/1.5 var(--sl-font);
+  letter-spacing: 0.08em;
+}
+.hl-section-label p {
+  font-size: 0.875rem;
+}
+.hl-discovery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  padding-block: 1.5rem;
+}
+.hl-discovery h3 {
+  font: 400 1.5625rem/1.2 var(--hl-reading);
+  margin: 0.5rem 0 0.75rem;
+}
+.hl-discovery h3 a {
+  color: var(--hl-ink);
+  text-decoration: none;
+}
+.hl-discovery h3 a:hover {
+  text-decoration: underline;
+}
+.hl-discovery section > p:last-child {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.hl-foundation {
+  font-size: 0.875rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hl-rule);
+}
+@media (max-width: 68.75rem) {
+  .hl-hero {
+    grid-template-columns: 1fr;
+    padding: 1.75rem;
+    gap: 1.625rem;
+  }
+  .hl-intro {
+    max-width: 40rem;
+  }
+  .hl-discovery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 43.75rem) {
+  :root {
+    --sl-nav-height: 5.625rem;
+  }
+  .hl-brand span {
+    font-size: 1.5625rem;
+  }
+  .hl-brand small {
+    max-width: 13rem;
+  }
+  .hl-hero {
+    padding: 1.75rem 1.375rem;
+  }
+  .hl-hero h1 {
+    font-size: clamp(2.25rem, 8vw, 2.8125rem);
+  }
+  .hl-feature {
+    padding: 1.25rem;
+  }
+  .hl-feature h2 {
+    font-size: 1.8125rem;
+  }
+  .hl-discovery {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+/* Splash pages have no mobile sidebar, so keep their theme control in the header. */
+@media screen and (max-width: 49.999rem) {
+  :root:not([data-has-sidebar]) {
+    --sl-nav-height: 8.25rem;
+  }
+  :root:not([data-has-sidebar]) .header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    align-content: center;
+  }
+  :root:not([data-has-sidebar]) .header .right-group {
+    display: flex;
+    grid-column: 1 / -1;
+  }
+  :root:not([data-has-sidebar]) .header .social-icons {
+    display: none;
+  }
+}
+@media print {
+  .hl-hero {
+    background: #fff;
+    color: #252535;
+    border: 1px solid #252535;
+  }
+  .hl-hero h1,
+  .hl-hero > div > .hl-kicker {
+    color: #252535;
+  }
+}
