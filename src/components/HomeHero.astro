@@ -1,0 +1,113 @@
+---
+import DefaultHero from '@astrojs/starlight/components/Hero.astro';
+const topics = [
+  [
+    'Start Here',
+    '/start-here/',
+    'A map of the notes',
+    'Find your way through the publication.',
+  ],
+  [
+    'Guides',
+    '/guides/',
+    'Make a test repeatable',
+    'Practical steps, clear assumptions and useful checks.',
+  ],
+  [
+    'Architecture',
+    '/architecture/',
+    'Keep the boundaries clear',
+    'Understand responsibilities and design decisions.',
+  ],
+  [
+    'Investigations',
+    '/investigations/',
+    'Follow the evidence',
+    'Observations, interpretations and open questions.',
+  ],
+  [
+    'Blog',
+    '/blog/',
+    'From the notebook',
+    'Publishing updates and shorter notes.',
+  ],
+];
+---
+
+{Astro.url.pathname === '/' ? (
+  <div class="hl-home">
+    <nav class="hl-topics" aria-label="Publication sections">
+      {topics.map(([label, url]) => (
+        <a href={url}>{label}</a>
+      ))}
+    </nav>
+    <section class="hl-hero" aria-labelledby="_top">
+      <div>
+        <p class="hl-kicker">Notes from a curious homelab</p>
+        <h1 id="_top" data-page-title>
+          Small systems.
+          <br />
+          Big understanding.
+        </h1>
+        <p class="hl-intro">
+          Practical guides and honest investigations by theaussiepom. Exploring
+          how small systems work, and sharing what the evidence tells us.
+        </p>
+      </div>
+      <div class="hl-feature">
+        <svg
+          viewBox="0 0 400 120"
+          class="hl-motif"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <g fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M55 60H345M150 20V100M250 20V100M150 20H250M150 100H250" />
+            <circle cx="55" cy="60" r="25" />
+            <rect x="125" y="35" width="50" height="50" />
+            <circle cx="250" cy="60" r="25" />
+            <rect x="320" y="35" width="50" height="50" />
+          </g>
+        </svg>
+        <p class="hl-kicker">Foundation preview · Placeholder</p>
+        <h2>
+          <a href="/guides/placeholder/">
+            Following a request through a small system
+          </a>
+        </h2>
+        <p>
+          A synthetic example for exploring the reading experience, navigation
+          and search.
+        </p>
+        <a class="hl-read" href="/guides/placeholder/">
+          Explore the sample guide <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+    <div class="hl-section-label">
+      <h2>Explore the notes</h2>
+      <p>The publication is taking shape.</p>
+    </div>
+    <div class="hl-discovery">
+      {topics.map(([label, url, title, description], i) => (
+        <section>
+          <p class="hl-kicker">
+            0{i + 1} / {label}
+          </p>
+          <h3>
+            <a href={url}>{title}</a>
+          </h3>
+          <p>{description}</p>
+        </section>
+      ))}
+    </div>
+    <p class="hl-foundation">
+      All current articles are clearly marked placeholders. Real technical
+      articles will follow.
+    </p>
+  </div>
+) : (
+  <DefaultHero>
+    <slot />
+  </DefaultHero>
+)}

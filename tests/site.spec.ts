@@ -90,3 +90,106 @@ test('RSS and sitemap contain real generated routes', async ({ request }) => {
   const sitemap = await request.get('/sitemap-0.xml');
   expect(await sitemap.text()).toContain('/guides/placeholder/');
 });
+
+for (const theme of ['light', 'dark']) {
+  for (const path of pages) {
+    test(`${theme} palette is accessible: ${path}`, async ({ page }) => {
+      await page.addInitScript(
+        (value) => localStorage.setItem('starlight-theme', value),
+        theme,
+      );
+      await page.goto(path);
+      await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+      expect(
+        (
+          await new AxeBuilder({ page })
+            .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+            .analyze()
+        ).violations,
+      ).toEqual([]);
+    });
+  }
+  test(`${theme} reflows at mobile, tablet and desktop widths`, async ({
+    page,
+  }) => {
+    await page.addInitScript(
+      (value) => localStorage.setItem('starlight-theme', value),
+      theme,
+    );
+    for (const width of [320, 390, 700, 768, 1024, 1200, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const path of ['/', '/guides/placeholder/', '/blog/']) {
+        await page.goto(path);
+        expect(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth,
+          ),
+          `${path} at ${width}px`,
+        ).toBe(true);
+      }
+    }
+  });
+}
+
+test('theme choice persists and auto follows the system', async ({ page }) => {
+  await page.goto('/');
+  const select = page.locator('starlight-theme-select select').first();
+  await select.selectOption('dark');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await page.getByRole('link', { name: /Explore the sample guide/ }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await select.selectOption('light');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await select.selectOption('auto');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+});
+
+test('mobile homepage exposes theme selection', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto('/');
+  const select = page.locator('starlight-theme-select select').first();
+  await expect(select).toBeVisible();
+  await select.selectOption('dark');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await select.selectOption('light');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+});
+
+test('Australian English blog labels are translated', async ({ page }) => {
+  for (const path of ['/blog/', '/blog/foundation-placeholder/']) {
+    await page.goto(path);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en-AU');
+    await expect(page.locator('body')).not.toContainText('starlightBlog.');
+    await expect(page.getByText('All posts', { exact: true })).toBeVisible();
+  }
+});
+
+test('keyboard access and enlarged text preserve reading and navigation', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await page.keyboard.press('Tab');
+  await expect(
+    page.getByRole('link', { name: /skip to content/i }),
+  ).toBeFocused();
+  await page.keyboard.press('Enter');
+  await page.getByRole('button', { name: /search/i }).click();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('button', { name: /search/i })).toBeFocused();
+  await page.goto('/guides/placeholder/');
+  await page.evaluate(() => {
+    document.documentElement.style.fontSize = '200%';
+  });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await expect(page.locator('h1')).toBeVisible();
+  await expect(page.locator('.expressive-code')).toBeVisible();
+});

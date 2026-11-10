@@ -19,6 +19,22 @@ service:
 
 The example uses a reserved domain and contains no real infrastructure details.
 
+## Reading layout sample
+
+:::note[Synthetic evidence]
+This invented example exercises the publication layout. It makes no claim about a real service.
+:::
+
+<div class="hl-diagram" role="img" aria-label="A fictional request travels from client through gateway to service">
+  <span>Client</span> → <span>Gateway</span> → <span>Service</span>
+</div>
+
+| Boundary | Observation       | Interpretation             |
+| -------- | ----------------- | -------------------------- |
+| Client   | Request sent      | Input recorded             |
+| Gateway  | Route selected    | Match observed             |
+| Service  | Response returned | This synthetic test passed |
+
 ## Next steps
 
 Return to [Start Here](/start-here/) or read the [placeholder blog post](/blog/foundation-placeholder/).

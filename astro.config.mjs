@@ -21,6 +21,11 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'HomeLab Notes',
+      customCss: ['./src/styles/hybrid.css'],
+      components: {
+        Hero: './src/components/HomeHero.astro',
+        SiteTitle: './src/components/SiteTitle.astro',
+      },
       description:
         'A public technical homelab publication. Foundation preview with placeholder content.',
       defaultLocale: 'root',

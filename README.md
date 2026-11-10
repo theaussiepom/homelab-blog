@@ -2,6 +2,10 @@
 
 Public, static homelab publication at **https://theaussiepom.me** (intended production address; see [acceptance](docs/acceptance.md) for deployment evidence). Current articles are explicitly labelled placeholders. No real technical articles or private infrastructure data are included.
 
+## Visual design
+
+The approved direction combines the Technical magazine's confident homepage with the Quiet personal publication's warm article reading experience. Follow the [visual style and layout guide](docs/design/style-guide.md) for typography, colours, spacing, components and responsive layouts. A [printable PDF edition](docs/design/style-guide.pdf) is also available. The shared theme implements that direction in light and dark modes, with a system-following Auto option. The guide records the native navigation adaptations and remaining validation limits.
+
 ## Stack and local development
 
 Astro 7.4.8, Starlight 0.42.10 and starlight-blog 0.30.2 provide static Markdown/MDX documentation, a blog, Pagefind search, RSS, sitemap, responsive navigation and article tables of contents. Direct npm dependencies use exact versions; `package-lock.json` pins the transitive graph with integrity hashes.
@@ -48,10 +52,11 @@ The scanner guard deliberately generates a fake token in temporary storage and r
 - `public/`: static assets and HTTP security headers.
 - `scripts/` and `tests/`: validation and deployment gates.
 - `.github/`: GitHub-hosted CI, dependency updates and contribution template.
+- `docs/design/`: approved visual specification, printable guide and synthetic reference images.
 - `docs/editorial/`: public-content sanitisation policy.
 - `docs/decisions/`: architecture decisions.
 
-Do not add empty component/style directories until custom presentation is needed.
+`src/components/` contains the homepage and masthead overrides; `src/styles/hybrid.css` owns the semantic palette and layout. `src/content/i18n/en-AU.json` supplies the blog's Australian English UI labels.
 
 ## Publishing and CI/CD
 
