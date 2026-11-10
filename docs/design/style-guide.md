@@ -170,7 +170,7 @@ Keep figures within the reading column, normally with 2rem vertical separation. 
 
 Use a genuine, public-safe photograph or screenshot when it helps readers picture the result. Give it meaningful alternative text, reserved dimensions, a short caption beneath it and a full-size link when the detail warrants one. The reference tablet caption uses 14px sans-serif text with a 1.6 line height. Do not manufacture a photograph of the author's home or imply that a configured behaviour has been observed live when it has not.
 
-Keep the ending in the same reading flow. Let the author finish the thought and make a useful connection to what follows. Place the shared author bio after the story when a profile is available for the credited author. Use a compact card with a sans-serif heading, body typography and the theme's callout surface. Place comments below the bio, followed by the existing footer navigation. Do not insert a large promotional panel between the final paragraphs or duplicate the article contents at the bottom.
+Keep the ending in the same reading flow. Let the author finish the thought and make a useful connection to what follows. Place the shared author bio after the story when a profile is available for the credited author. Use a compact card with a sans-serif heading, body typography and the theme's callout surface. When the author supplies a portrait, place a small square photo beside the bio on desktop. On narrow screens, put it beside the heading and let the paragraphs use the full card width. Place comments below the bio, followed by the existing footer navigation. Do not insert a large promotional panel between the final paragraphs or duplicate the article contents at the bottom.
 
 <!-- pagebreak -->
 

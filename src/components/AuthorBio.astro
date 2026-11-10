@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import portrait from '../assets/authors/ben.jpg';
+
 const { data } = Astro.locals.starlightRoute.entry;
 const showBio =
   data.articleType !== 'page' &&
@@ -12,23 +15,42 @@ const showBio =
     data-pagefind-ignore
   >
     <h2 id="author-bio-heading">About Ben</h2>
-    <p>
-      I’m a software engineer, AI enthusiast, homelab tinkerer and passionate
-      gourmet cook. I love pushing boundaries, challenging conventional thinking
-      and finding simple, practical solutions to complex technical problems. I’m
-      a big believer in starting with an MVP, proving what works and building
-      from there.
-    </p>
-    <p>
-      Away from the keyboard, you’ll find me experimenting with gourmet cooking,
-      enjoying a good coffee, a great Shiraz or a pint of Guinness. Whether it’s
-      technology or food, I’m always keen to try something new.
-    </p>
+    <Image
+      class="hl-author-portrait"
+      src={portrait}
+      alt="Ben at the beach"
+      width={112}
+      height={112}
+      widths={[64, 112, 128, 224]}
+      sizes="(max-width: 36rem) 4rem, 7rem"
+      loading="lazy"
+    />
+    <div class="hl-author-copy">
+      <p>
+        I’m a software engineer, AI enthusiast, homelab tinkerer and passionate
+        gourmet cook. I love pushing boundaries, challenging conventional
+        thinking and finding simple, practical solutions to complex technical
+        problems. I’m a big believer in starting with an MVP, proving what works
+        and building from there.
+      </p>
+      <p>
+        Away from the keyboard, you’ll find me experimenting with gourmet
+        cooking, enjoying a good coffee, a great Shiraz or a pint of Guinness.
+        Whether it’s technology or food, I’m always keen to try something new.
+      </p>
+    </div>
   </section>
 )}
 
 <style>
   .hl-author-bio {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    grid-template-areas:
+      'portrait heading'
+      'portrait copy';
+    align-items: start;
+    gap: 0.75rem 1.5rem;
     margin-block-start: 2rem;
     padding: clamp(1rem, 4vw, 1.5rem);
     border: 1px solid var(--hl-rule-soft);
@@ -37,8 +59,20 @@ const showBio =
     color: var(--hl-ink);
   }
   h2 {
-    margin: 0 0 0.75rem;
+    grid-area: heading;
+    margin: 0;
     font: 700 1.25rem/1.25 var(--sl-font);
+  }
+  .hl-author-portrait {
+    grid-area: portrait;
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--hl-rule-soft);
+    border-radius: 0.25rem;
+  }
+  .hl-author-copy {
+    grid-area: copy;
   }
   p {
     margin: 0;
@@ -46,5 +80,17 @@ const showBio =
   }
   p + p {
     margin-block-start: 0.75rem;
+  }
+  @media (max-width: 36rem) {
+    .hl-author-bio {
+      grid-template-columns: 4rem minmax(0, 1fr);
+      grid-template-areas:
+        'portrait heading'
+        'copy copy';
+      column-gap: 0.75rem;
+    }
+    h2 {
+      align-self: center;
+    }
   }
 </style>
