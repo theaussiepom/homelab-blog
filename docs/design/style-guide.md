@@ -120,13 +120,13 @@ Light, Dark and Auto must remain usable on desktop and mobile. In Auto, changing
 
 ### Desktop: 1100px and wider
 
-Use a centred homepage content wrapper with a maximum width of 1160px. Native Starlight outer gutters surround it; the hero adds 42px internal side padding. The header is at least 102px tall and may grow with content. Place the masthead at left, native search in the middle and theme/social controls at right. Put the five topic links in a wrapping row above the hero. Preserve access to Start Here, Guides, Architecture, Investigations, Blog and search; the prototype's reduced navigation is not a reason to drop production features.
+Use a centred homepage content wrapper with a maximum width of 1160px. Native Starlight outer gutters surround it; the hero adds 42px internal side padding. The header is at least 102px tall and may grow with content. Place the masthead at left, native search in the middle and theme/social controls at right. Put links to Start Here and sections with published articles in a wrapping row above the hero. Add links to Guides, Investigations and the Blog archive when they have published content. Keep editorial samples as drafts.
 
 The hero spans the wrapper's full width. Use two columns with a 1.18:1 ratio, a 46px gap and 34px vertical padding. Align the introduction and featured article near their vertical centres. The left column contains a short context label, a strong headline and a concise personal introduction. Limit the introduction to about 455px. Avoid fixed heights or manual line breaks that fail at intermediate widths.
 
 The lilac feature uses 24-28px padding, one representative diagram or image, a serif article title, a short summary, metadata and a clear reading link. Its image should support the subject. Abstract graphics in the reference are placeholders, not a permanent brand asset.
 
-Below the hero, show an understated section label and a three-column discovery row. Use 24-32px gaps or internal padding, serif card titles and short summaries. Avoid enclosing every item in a heavy card. Surface topic categories and a route to the archive as content grows.
+Below the hero, show an understated section label and a discovery row with columns for the linked sections. Use 24-32px gaps or internal padding, serif card titles and short summaries. Avoid enclosing every item in a heavy card. Surface topic categories and a route to the archive as content grows.
 
 ### Tablet: 701-1099px
 

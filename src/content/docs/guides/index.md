@@ -1,6 +1,7 @@
 ---
 articleType: page
 title: Guides
+draft: true
 description: Placeholder guide navigation for the publishing foundation.
 ---
 

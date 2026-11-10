@@ -1,32 +1,24 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const pages = [
-  '/',
-  '/start-here/',
+const story = '/architecture/homelab-proxmox-journey/';
+const storyTitle = 'From a NAS VM to Proxmox: five versions of my homelab';
+const samples = [
   '/guides/',
   '/guides/placeholder/',
   '/guides/editorial-workflow-example/',
-  '/architecture/',
-  '/architecture/homelab-proxmox-journey/',
   '/investigations/',
-  '/blog/',
   '/blog/foundation-placeholder/',
+  '/blog/tags/placeholder/',
+  '/blog/authors/homelab-notes/',
 ];
+const pages = ['/', '/start-here/', '/architecture/', story, '/blog/'];
 for (const path of pages) {
   test(`renders accessibly: ${path}`, async ({ page }) => {
     const response = await page.goto(path);
     expect(response?.status()).toBe(200);
-    // The blog plugin intentionally hides the index title panel.
     if (path === '/blog/') {
-      await expect(
-        page
-          .getByRole('link', {
-            name: 'Placeholder — the publishing foundation',
-            exact: true,
-          })
-          .last(),
-      ).toBeVisible();
+      await expect(page.getByText('All posts', { exact: true })).toBeVisible();
     } else {
       await expect(page.locator('h1')).toBeVisible();
     }
@@ -36,30 +28,29 @@ for (const path of pages) {
     expect(results.violations).toEqual([]);
   });
 }
-test('search returns the placeholder documentation article', async ({
-  page,
-}) => {
+test('search returns the published homelab story', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: /search/i }).click();
-  await page
-    .locator('.pagefind-ui__search-input')
-    .fill('synthetic publishing lighthouse');
-  await expect(page.locator('.pagefind-ui__result-link').first()).toContainText(
-    'Placeholder documentation article',
-  );
-  await page.locator('.pagefind-ui__result-link').first().click();
-  await expect(page).toHaveURL(/guides\/placeholder/);
+  await page.locator('.pagefind-ui__search-input').fill('settling on proxmox');
+  const result = page
+    .locator('.pagefind-ui__result-link')
+    .filter({ hasText: storyTitle })
+    .first();
+  await expect(result).toBeVisible();
+  await result.click();
+  await expect(page).toHaveURL(story);
 });
-test('documentation has a table of contents and metadata', async ({ page }) => {
-  await page.goto('/guides/placeholder/');
+
+test('the story has a table of contents and metadata', async ({ page }) => {
+  await page.goto(story);
   await expect(page.locator('starlight-toc').first()).toBeVisible();
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     'href',
-    /guides\/placeholder/,
+    'https://theaussiepom.me' + story,
   );
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     'content',
-    /Synthetic content/,
+    /garage door/,
   );
 });
 test('mobile navigation and layout', async ({ page }) => {
@@ -71,28 +62,32 @@ test('mobile navigation and layout', async ({ page }) => {
   await page
     .locator('#starlight__sidebar')
     .getByRole('link', {
-      name: 'Placeholder documentation article',
+      name: storyTitle,
       exact: true,
     })
     .click();
-  await expect(page).toHaveURL(/guides\/placeholder/);
+  await expect(page).toHaveURL(story);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBe(true);
 });
-test('RSS and sitemap contain real generated routes', async ({ request }) => {
+test('the sitemap and feed omit unpublished samples', async ({ request }) => {
   const rss = await request.get('/blog/rss.xml');
   expect(rss.status()).toBe(200);
-  expect(await rss.text()).toContain('/blog/foundation-placeholder/');
+  const rssBody = await rss.text();
+  expect(rssBody).toContain('<rss');
   const index = await request.get('/sitemap-index.xml');
   expect(index.status()).toBe(200);
   expect(await index.text()).toContain('sitemap-0.xml');
   const sitemap = await request.get('/sitemap-0.xml');
   const sitemapBody = await sitemap.text();
-  expect(sitemapBody).toContain('/guides/placeholder/');
-  expect(sitemapBody).toContain('/architecture/homelab-proxmox-journey/');
+  expect(sitemapBody).toContain(story);
+  for (const path of samples) {
+    expect(sitemapBody).not.toContain(path);
+    expect(rssBody).not.toContain(path);
+  }
 });
 
 for (const theme of ['light', 'dark']) {
@@ -122,7 +117,7 @@ for (const theme of ['light', 'dark']) {
     );
     for (const width of [320, 390, 700, 768, 1024, 1200, 1440]) {
       await page.setViewportSize({ width, height: 900 });
-      for (const path of ['/', '/guides/placeholder/', '/blog/']) {
+      for (const path of ['/', story, '/blog/']) {
         await page.goto(path);
         expect(
           await page.evaluate(
@@ -166,15 +161,10 @@ test('mobile homepage exposes theme selection', async ({ page }) => {
 });
 
 test('Australian English blog labels are translated', async ({ page }) => {
-  for (const path of ['/blog/', '/blog/foundation-placeholder/']) {
-    await page.goto(path);
-    await expect(page.locator('html')).toHaveAttribute('lang', 'en-AU');
-    await expect(page.locator('body')).not.toContainText('starlightBlog.');
-    if (path === '/blog/foundation-placeholder/') {
-      await page.getByText('Browse the site', { exact: true }).click();
-    }
-    await expect(page.getByText('All posts', { exact: true })).toBeVisible();
-  }
+  await page.goto('/blog/');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en-AU');
+  await expect(page.locator('body')).not.toContainText('starlightBlog.');
+  await expect(page.getByText('All posts', { exact: true })).toBeVisible();
 });
 
 test('keyboard access and enlarged text preserve reading and navigation', async ({
@@ -189,7 +179,7 @@ test('keyboard access and enlarged text preserve reading and navigation', async 
   await page.getByRole('button', { name: /search/i }).click();
   await page.keyboard.press('Escape');
   await expect(page.getByRole('button', { name: /search/i })).toBeFocused();
-  await page.goto('/guides/placeholder/');
+  await page.goto(story);
   await page.evaluate(() => {
     document.documentElement.style.fontSize = '200%';
   });
@@ -199,7 +189,7 @@ test('keyboard access and enlarged text preserve reading and navigation', async 
     ),
   ).toBe(true);
   await expect(page.locator('h1')).toBeVisible();
-  await expect(page.locator('.expressive-code')).toBeVisible();
+  await expect(page.locator('.article-screenshot').first()).toBeVisible();
 });
 
 test('drafts have no production routes, discovery pages or search entries', async ({
@@ -211,6 +201,7 @@ test('drafts have no production routes, discovery pages or search entries', asyn
     '/blog/editorial-draft-canary/',
     '/blog/tags/draft-canary/',
     '/blog/authors/draft-canary-author/',
+    ...samples,
   ]) {
     expect((await request.get(path)).status(), path).toBe(404);
   }
@@ -220,57 +211,67 @@ test('drafts have no production routes, discovery pages or search entries', asyn
     // @ts-expect-error Pagefind is generated by the production build.
     const search = await import('/pagefind/pagefind.js');
     return Promise.all(
-      ['editorialdraftcanaryguides', 'editorialdraftcanaryblog'].map(
-        async (term) => (await search.search(`"${term}"`)).results.length,
-      ),
+      [
+        'editorialdraftcanaryguides',
+        'editorialdraftcanaryblog',
+        'editorialpublishedlighthouse',
+        'synthetic publishing lighthouse',
+      ].map(async (term) => (await search.search(`"${term}"`)).results.length),
     );
   });
-  expect(results).toEqual([0, 0]);
+  expect(results).toEqual([0, 0, 0, 0]);
 });
 
 test('article introduction exposes shared metadata in both themes', async ({
   page,
 }) => {
   for (const theme of ['light', 'dark']) {
-    await page.goto('/guides/placeholder/');
+    await page.goto(story);
     await page
       .locator('starlight-theme-select select')
       .first()
       .selectOption(theme);
     await expect(page.locator('h1')).toHaveCount(1);
-    await expect(page.locator('.hl-lede')).toContainText('Synthetic content');
-    await expect(page.locator('.hl-article-meta')).toContainText(
-      'HomeLab Notes',
-    );
+    await expect(page.locator('.hl-lede')).toContainText('garage door');
+    await expect(page.locator('.hl-article-meta')).toContainText('Ben');
     await expect(page.locator('.hl-article-meta time')).toHaveAttribute(
       'datetime',
-      '2026-11-10',
+      '2026-11-11',
     );
   }
 });
 
-test('published editorial example is discoverable and renders native steps', async ({
+test('public navigation links to published pages', async ({ page }) => {
+  for (const path of ['/', '/start-here/', '/architecture/', story]) {
+    await page.goto(path);
+    for (const sample of [...samples, '/blog/']) {
+      await expect(page.locator(`a[href="${sample}"]`)).toHaveCount(0);
+    }
+  }
+});
+
+test('the deployment figure loads with a full-size link', async ({
   page,
   request,
 }) => {
-  await page.goto('/guides/editorial-workflow-example/');
-  await expect(page.locator('h1')).toHaveText(
-    'Synthetic example — checking a sample response',
-  );
-  await expect(page.locator('.hl-draft')).toHaveCount(0);
-  await expect(page.locator('.sl-steps')).toBeVisible();
-  await expect(page.locator('.hl-article-meta')).toContainText(
-    'synthetic-example',
-  );
-  const sitemap = await request.get('/sitemap-0.xml');
-  expect(await sitemap.text()).toContain('/guides/editorial-workflow-example/');
-  await page.getByRole('button', { name: /search/i }).click();
-  await page
-    .locator('.pagefind-ui__search-input')
-    .fill('editorialpublishedlighthouse');
-  await expect(page.locator('.pagefind-ui__result-link').first()).toContainText(
-    'Synthetic example',
-  );
-  await page.locator('.pagefind-ui__result-link').first().click();
-  await expect(page).toHaveURL(/guides\/editorial-workflow-example/);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(story);
+  const image = page.getByRole('img', {
+    name: /GitHub Actions workflow graph/,
+  });
+  await image.scrollIntoViewIfNeeded();
+  expect(
+    await image.evaluate(async (element: HTMLImageElement) => {
+      await element.decode();
+      return element.naturalWidth;
+    }),
+  ).toBeGreaterThan(0);
+  const link = page.getByRole('link', {
+    name: 'View the workflow at full size',
+  });
+  const href = await link.getAttribute('href');
+  expect(href).toMatch(/github-actions-deploy.*\.png$/);
+  const fullSize = await request.get(href!);
+  expect(fullSize.ok()).toBe(true);
+  expect(fullSize.headers()['content-type']).toContain('image/png');
 });

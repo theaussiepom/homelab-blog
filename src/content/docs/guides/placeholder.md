@@ -1,6 +1,7 @@
 ---
 articleType: guide
 title: Placeholder documentation article
+draft: true
 description: Synthetic content used to validate documentation rendering, navigation and search.
 date: 2026-11-10
 authors:
