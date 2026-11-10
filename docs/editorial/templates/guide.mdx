@@ -12,9 +12,18 @@ draft: true
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
+export const authoringBrief = {
+  readerAndGoal: 'State who this helps and the intended outcome.',
+  assumedKnowledge:
+    'Choose foundation, intermediate or advanced; list prerequisites.',
+  evidence: 'Identify supplied experience, sources, verified results and gaps.',
+  voice:
+    'Follow docs/editorial/voice.md. Use natural humour, never invented experience.',
+};
+
 Explain the outcome in one short paragraph, including who this guide is for and where it applies.
 
-<Aside type="note" title="Draft — synthetic example">
+<Aside type="note" title="Draft: synthetic example">
   This scaffold contains invented examples. Replace its guidance and record
   actual validation before publication; do not imply that the example was
   exercised on a real system.
