@@ -1,11 +1,11 @@
 ---
 articleType: page
 title: Architecture
-description: Placeholder architecture section for the public publication.
+description: The decisions and trade-offs behind the homelab as it grew.
 ---
 
-**Placeholder section.** No private topology or operational configuration is included.
+How the homelab grew and what I learnt along the way.
 
-## Publishing foundation
+## The homelab journey
 
-The publication is generated as static files. Readers and CI need no connection to the homelab. [Start Here](/start-here/) explains the content scope.
+It started with Home Assistant on a NAS. The first article follows five versions of the setup and the reasons behind each move. [From a NAS VM to Proxmox: five versions of my homelab](/architecture/homelab-proxmox-journey/)

@@ -8,6 +8,7 @@ const pages = [
   '/guides/placeholder/',
   '/guides/editorial-workflow-example/',
   '/architecture/',
+  '/architecture/homelab-proxmox-journey/',
   '/investigations/',
   '/blog/',
   '/blog/foundation-placeholder/',
@@ -89,7 +90,9 @@ test('RSS and sitemap contain real generated routes', async ({ request }) => {
   expect(index.status()).toBe(200);
   expect(await index.text()).toContain('sitemap-0.xml');
   const sitemap = await request.get('/sitemap-0.xml');
-  expect(await sitemap.text()).toContain('/guides/placeholder/');
+  const sitemapBody = await sitemap.text();
+  expect(sitemapBody).toContain('/guides/placeholder/');
+  expect(sitemapBody).toContain('/architecture/homelab-proxmox-journey/');
 });
 
 for (const theme of ['light', 'dark']) {
@@ -137,7 +140,8 @@ test('theme choice persists and auto follows the system', async ({ page }) => {
   const select = page.locator('starlight-theme-select select').first();
   await select.selectOption('dark');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await page.getByRole('link', { name: /Explore the sample guide/ }).click();
+  await page.getByRole('link', { name: 'Read the homelab story' }).click();
+  await expect(page).toHaveURL(/architecture\/homelab-proxmox-journey/);
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');

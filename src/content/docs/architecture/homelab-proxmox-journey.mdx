@@ -1,0 +1,143 @@
+---
+title: 'From a NAS VM to Proxmox: five versions of my homelab'
+description: I came to Home Assistant looking for a way to automate my garage door. What followed was about five years of learning, finding a community with the same obsession, and building my own solutions when existing tools couldn’t do what I wanted.
+articleType: architecture
+date: 2026-11-11
+authors:
+  - name: Ben
+tags:
+  - homelab
+  - proxmox
+  - architecture
+draft: false
+---
+
+import JourneyFigure from '../../../components/JourneyFigure.astro';
+import JourneyTablet from '../../../components/JourneyTablet.astro';
+
+export const authoringBrief = {
+  readerAndGoal:
+    'First of three connected articles. Follow a personal home-automation story through five real iterations, with time to understand what each move made possible and what it required next.',
+  assumedKnowledge:
+    'An interest in home automation or running services. Define essential terms in context; no Proxmox, Docker or networking expertise required.',
+  evidence:
+    'The early chronology and experiences are the author’s supplied recollections. The Proxmox direction is supported by the researched design and source. This article makes no completed migration or recovery claim.',
+  voice:
+    'Conversational Australian English, supported first-person experience, occasional dry humour. Give discovery, learning, practical payoffs and consequences room in the narrative. Graphics support the story at the point of need. Preserve the author’s humour and avoid invented scenes or dialogue.',
+};
+
+About five years ago, I discovered [Home Assistant](https://www.home-assistant.io/) through [digiblur](https://digiblur.com/2021/12/01/diy-smart-garage-opener-local-shelly-plus/). I’d been having problems with off-the-shelf products and wanted to automate my garage door.
+
+What caught my attention was being able to bring different ecosystems together in one automation system. The garage door was the immediate project, but the possibilities went much further.
+
+Home Assistant changed my life. I no longer have any time for myself.
+
+Automation is meant to give you less manual work. Nobody said it would become an obsession.
+
+## The house became the project
+
+In the living room, I configured some downlights to fade out around sunset while others settle at a lower evening level. Each group follows its own brightness range. Home Assistant calculates the changing levels and [Node-RED](https://nodered.org/) sends them to the lights.
+
+I was building lighting scenes galore, bringing in the blinds and putting the controls on a tablet dashboard. Being able to decide how the house behaved, down to the way a light dimmed, kept giving me more ideas.
+
+<JourneyTablet />
+
+Over those years, I bought [UniFi](https://ui.com/) equipment, learnt how [virtual local area networks (VLANs)](https://help.ui.com/hc/en-us/articles/26136851868695-Using-VLANs-for-Network-Security-and-Performance) let me separate devices into different networks, and watched copious amounts of [YouTube](https://www.youtube.com/) on Home Assistant, UniFi and Node-RED.
+
+The more I learnt, the more I realised I didn’t know. I was also discovering a massive community of other home automation and homelab enthusiasts.
+
+The hardware grew to three [Raspberry Pis](https://www.raspberrypi.com/products/), a [Synology](https://www.synology.com/en-global) [network-attached storage (NAS)](https://www.synology.com/en-global/dsm/solution/what-is-nas/for-home) box and an [ASUS Republic of Gamers (ROG)](https://rog.asus.com/) computer. Somewhere along the way, I seem to have become [AliExpress](https://www.aliexpress.com/)’s favourite customer too.
+
+It began with Home Assistant on the Synology.
+
+## Starting on the NAS
+
+My first setup ran in a [virtual machine (VM)](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/#containers-versus-virtual-machines-vms) on the NAS. A VM has its own operating system inside the computer hosting it. I ran extra services through Home Assistant’s [add-ons](https://www.home-assistant.io/docs/apps-and-integrations/).
+
+As I wanted to run more around Home Assistant, that particular setup started to feel restrictive. Adding my own [containers](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/) was awkward, as was connecting a [reverse proxy](https://developer.mozilla.org/en-US/docs/Glossary/Proxy_server) to services outside Home Assistant. I wanted one place to direct requests to the different web services I was running.
+
+Coverage gave me another reason to change things. My house has a metal frame. The [Zigbee](https://csa-iot.org/all-solutions/zigbee/) lights in the roof could act as routers, passing messages between devices, but the signal still had metal studs throughout the building to get through.
+
+I was effectively limited to one instance of [Zigbee2MQTT](https://www.zigbee2mqtt.io/), the software connecting a Zigbee radio network to the rest of my automation system. I wanted a second instance to improve coverage, along with more freedom to run the services around Home Assistant.
+
+I kept the NAS and changed how I ran the applications.
+
+<JourneyFigure kind="timeline" />
+
+## More control, more to look after
+
+Roughly four months after starting, I moved from the Home Assistant VM to [Docker](https://docs.docker.com/get-started/) containers on the same NAS. Home Assistant now ran as Home Assistant Core, alongside the other applications I set up myself.
+
+Each container has the files its application needs while sharing the host’s operating-system kernel. The significant change for me was losing Home Assistant’s add-ons. The [Container installation](https://www.home-assistant.io/installation/#about-installation-types) didn’t include them. The surrounding services were now mine to install, connect and maintain.
+
+There was more to set up, but vastly more control over what I could run and how everything fitted together.
+
+Back then, the [Home Assistant Community Store (HACS)](https://www.hacs.dev/docs/use/download/download/) was one of those jobs. It provides community integrations and dashboard extras. I opened a shell inside the Home Assistant container and ran its download script. The files stayed with my Home Assistant configuration, so that installation survived container restarts.
+
+The other applications needed a way to talk to each other. A lightweight messaging protocol called [MQTT](https://mqtt.org/faq/) carried messages between them, while Node-RED connected events and actions into flows. Getting those working alongside Zigbee2MQTT took quite a bit of setup, especially for the second instance.
+
+That second instance gave me a [separate Zigbee network with its own radio coordinator](https://www.zigbee2mqtt.io/guide/faq/#how-do-i-run-multiple-instances-of-zigbee2mqtt). The first coordinator was upstairs. The second went downstairs, on the opposite side of the house. I now had better coverage in the places the first network had struggled to reach.
+
+## The NAS could only take it so far
+
+The Docker version available on Synology at the time was old and missing features I wanted.
+
+The radio drivers were another recurring job. During that period I was using a [ZBT-1](https://www.home-assistant.io/connectzbt1/) adapter with drivers I’d installed manually. A Synology update would remove them, leaving me to install them again. Keeping the automation running still involved a fair amount of manual work.
+
+Eventually, the NAS’s processor could no longer keep up with the applications I wanted to run.
+
+## Buying a server, learning Linux
+
+Roughly a year and a half after moving to NAS containers, I bought an ASUS ROG specifically for the homelab and moved the applications onto it.
+
+It was a [Windows](https://www.microsoft.com/en-us/windows/) computer. I installed [Ubuntu](https://ubuntu.com/) and Docker, choosing Ubuntu over [Debian](https://www.debian.org/) for the driver support it offered for that hardware. That made my first full [Linux](https://www.linux.com/what-is-linux/) venture much easier.
+
+I ran it headless, managing it remotely without an attached screen.
+
+The ROG gave me a newer Docker version and plenty of processing capacity. The NAS kept the shared files. I connected the two through the [Network File System (NFS)](https://ubuntu.com/server/docs/how-to/networking/install-nfs/), so applications on the ROG could use files stored on the NAS.
+
+<JourneyFigure kind="storage" />
+
+Shortly after finishing the Ubuntu setup, [Unraid](https://unraid.net/) and [Proxmox](https://www.proxmox.com/en/products/proxmox-virtual-environment/overview) caught my attention. I just needed the time to make the change. Again.
+
+## Getting the startup order right
+
+An application using NAS files had to wait until those files were available. The network adapter had to be ready before NFS could reach the NAS, and the correct share had to be mounted before Docker started the applications that used it.
+
+I used [systemd](https://systemd.io/), Linux’s service manager, to make the services wait in that order. There was quite a bit of configuration involved in getting the dependencies right.
+
+<JourneyFigure kind="startup" />
+
+If a NAS share wasn’t mounted, the local directory underneath it was still there. An application could start against that directory and use the wrong location for its data. The startup checks were there to prevent that.
+
+## More of the house, more of the network
+
+I was also running services on Raspberry Pis around the house. Adding [Thread](https://threadgroup.org/What-is-Thread/Overview) blinds brought more radios into the setup, using the same upstairs and downstairs locations as the Zigbee coordinators, on opposite sides of the house.
+
+Some services made more sense on the Pis, close to the radios or independent of the main server. Changing the ROG wouldn’t change those reasons for having machines elsewhere in the house.
+
+I also wanted better network isolation between the services. About a year ago, I added [Docker Swarm](https://docs.docker.com/engine/swarm/) for its networking. Containers attached to its [overlay network](https://docs.docker.com/engine/network/drivers/overlay/) could share a private network across the ROG and the Pis.
+
+That was useful for [Traefik](https://traefik.io/traefik), the reverse proxy. It could [reach the web services on that network](https://doc.traefik.io/traefik/reference/install-configuration/providers/swarm/#usebindportip) without needing to publish a separate port for each backend on the household network. I could choose what to expose through Traefik and keep its connections to those services internal.
+
+## Settling on Proxmox
+
+With the NAS already handling storage, I eventually settled on Proxmox for the isolation I wanted.
+
+With Proxmox Virtual Environment, I could give groups of services their own virtual machines or Linux containers, with separate settings and resource limits. I would still have to look after the physical host, the guest operating systems and the connections between them.
+
+Moving to Proxmox also had to preserve what already worked: radio services near their hardware, storage checks before applications started, and private connections between services.
+
+For this build, I also want the configuration written in files and kept in [Git](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control), with a history I can review.
+
+[Continuous integration (CI)](https://docs.github.com/en/actions/get-started/continuous-integration) checks proposed changes, while [continuous deployment (CD)](https://docs.github.com/en/actions/get-started/continuous-deployment) applies approved changes to the system. I want a process I can repeat when the setup changes.
+
+That’s the fifth version I’m building now. The migration and recovery testing are still under way. A rebuild needs to bring back data, credentials and device pairings as well as the software.
+
+## Still trying to save myself some time
+
+The garage door brought me to Home Assistant. What kept me going was everything I hadn’t discovered yet. The more I learnt, the more possibilities I could see. It still feels as though the limit is my imagination.
+
+I got [Kubernetes](https://kubernetes.io/docs/concepts/overview/) working. I still left it out of the Proxmox build. In the next article, I’ll explain that decision and the design I chose for Proxmox.
+
+The free time can wait. I’ve got a few more things I want to build.
