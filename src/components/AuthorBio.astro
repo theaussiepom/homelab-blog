@@ -1,0 +1,50 @@
+---
+const { data } = Astro.locals.starlightRoute.entry;
+const showBio =
+  data.articleType !== 'page' &&
+  data.authors?.some(({ name }) => name === 'Ben');
+---
+
+{showBio && (
+  <section
+    class="hl-author-bio"
+    aria-labelledby="author-bio-heading"
+    data-pagefind-ignore
+  >
+    <h2 id="author-bio-heading">About Ben</h2>
+    <p>
+      I’m a software engineer, AI enthusiast, homelab tinkerer and passionate
+      gourmet cook. I love pushing boundaries, challenging conventional thinking
+      and finding simple, practical solutions to complex technical problems. I’m
+      a big believer in starting with an MVP, proving what works and building
+      from there.
+    </p>
+    <p>
+      Away from the keyboard, you’ll find me experimenting with gourmet cooking,
+      enjoying a good coffee, a great Shiraz or a pint of Guinness. Whether it’s
+      technology or food, I’m always keen to try something new.
+    </p>
+  </section>
+)}
+
+<style>
+  .hl-author-bio {
+    margin-block-start: 2rem;
+    padding: clamp(1rem, 4vw, 1.5rem);
+    border: 1px solid var(--hl-rule-soft);
+    border-radius: 0.25rem;
+    background: var(--hl-callout);
+    color: var(--hl-ink);
+  }
+  h2 {
+    margin: 0 0 0.75rem;
+    font: 700 1.25rem/1.25 var(--sl-font);
+  }
+  p {
+    margin: 0;
+    font: 1.125rem/1.7 var(--hl-reading);
+  }
+  p + p {
+    margin-block-start: 0.75rem;
+  }
+</style>
