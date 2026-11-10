@@ -27,6 +27,8 @@ export default defineConfig({
         SiteTitle: './src/components/SiteTitle.astro',
         PageTitle: './src/components/ArticleTitle.astro',
         Footer: './src/components/ArticleFooter.astro',
+        Sidebar: './src/components/ArticleSidebar.astro',
+        PageSidebar: './src/components/ArticlePageSidebar.astro',
       },
       description:
         'A public technical homelab publication. Foundation preview with placeholder content.',

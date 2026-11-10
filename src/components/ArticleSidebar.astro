@@ -1,0 +1,75 @@
+---
+import DefaultSidebar from '@astrojs/starlight/components/Sidebar.astro';
+import TableOfContents from '@astrojs/starlight/components/TableOfContents.astro';
+
+const { entry, toc } = Astro.locals.starlightRoute;
+const isArticle =
+  ['guide', 'architecture', 'investigation', 'post'].includes(
+    entry.data.articleType,
+  ) && Boolean(toc);
+---
+
+{isArticle ? (
+  <div class="hl-reader-sidebar">
+    <TableOfContents />
+    <details class="hl-site-links">
+      <summary>Browse the site</summary>
+      <DefaultSidebar />
+    </details>
+  </div>
+) : (
+  <DefaultSidebar>
+    <slot />
+  </DefaultSidebar>
+)}
+
+<style>
+  .hl-reader-sidebar :global(starlight-toc h2) {
+    margin-block: 0 0.75rem;
+    color: var(--hl-ink);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .hl-reader-sidebar :global(starlight-toc a) {
+    display: block;
+    padding-block: 0.4rem;
+    color: var(--sl-color-gray-2);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .hl-reader-sidebar :global(starlight-toc a:hover),
+  .hl-reader-sidebar :global(starlight-toc a[aria-current='true']) {
+    color: var(--hl-accent);
+  }
+  .hl-reader-sidebar :global(starlight-toc a[aria-current='true']) {
+    font-weight: 700;
+  }
+  .hl-site-links {
+    margin-block-start: 1.5rem;
+    padding-block-start: 1rem;
+    border-block-start: 1px solid var(--hl-rule-soft);
+    font-size: 0.875rem;
+  }
+  .hl-site-links summary {
+    padding-block: 0.5rem;
+    color: var(--hl-accent);
+    cursor: pointer;
+  }
+  .hl-site-links[open] summary {
+    margin-block-end: 0.75rem;
+  }
+  @media (min-width: 50rem) {
+    :global(:root:has(.hl-reader-sidebar)) {
+      --sl-mobile-toc-height: 0rem;
+    }
+    :global(:root:has(.hl-reader-sidebar) .right-sidebar-container) {
+      display: none;
+    }
+    :global(:root:has(.hl-reader-sidebar) .main-pane) {
+      width: 100%;
+      --sl-content-margin-inline: auto;
+    }
+  }
+</style>

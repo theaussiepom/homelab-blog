@@ -6,9 +6,9 @@ Version 1.3 | 11 November 2026 | Approved design direction: 04 + 05 hybrid
 
 The chosen direction combines the Technical magazine's confident homepage with the Quiet personal publication's warm, comfortable reading experience. Use this guide for future layout, typography, colour and component work. This Markdown is the maintained specification. The PDF edition was retired on 11 November 2026.
 
-The approved direction is implemented in the Astro/Starlight theme. These rules describe its shared visual language and the intentional adaptations to the native publishing shell. Reference images use synthetic content. Article wording, diagrams and dates in them are examples, not editorial requirements.
+These rules define the shared visual language and the required adaptations to the native publishing shell. Bring the implementation into conformance when it differs; record verification and deployment status in the acceptance record. Reference images use synthetic content. Article wording, diagrams and dates in them are examples, not editorial requirements.
 
-The author-reviewed draft **From a NAS VM to Proxmox: five versions of my homelab** is now the approved article benchmark for reading flow, visual pacing, image placement and contents navigation. Follow the [voice guide](../editorial/voice.md) for its conversational storytelling. Approval of this reference does not publish the draft. Where the older synthetic article image differs from the article rules below, the current rules take precedence.
+The author-reviewed article **From a NAS VM to Proxmox: five versions of my homelab** is the approved benchmark for reading flow, visual pacing, image placement and contents navigation. Follow the [voice guide](../editorial/voice.md) for its conversational storytelling. The current rules below are authoritative for article layout.
 
 Keep the bold sans-serif masthead, dark opening panel and lilac featured article. Use warm paper surfaces and serif text for article summaries and extended reading. Carry purple accents consistently from discovery into the article. The homepage may be expressive; the article should give the text room to breathe.
 
@@ -152,7 +152,7 @@ Cap the reading column at 700px inside Starlight's native article shell. For a l
 
 Below 800px, preserve the native **On this page** disclosure and labelled **Menu** control. Contents links must reach the correct heading, preserve visible focus and leave the reading area usable after selection. Keep search, theme selection and site navigation accessible. Test either side of the 800px breakpoint as well as the normal mobile and desktop widths. Section landing pages retain their normal site navigation.
 
-This article navigation is currently implemented only for the journey draft through route-specific overrides. It is the approved pattern for future long articles, not a claim that every published page already uses it. Reuse the pattern through the existing component extension points when preparing another article; review any broader rollout separately rather than silently changing unrelated pages.
+Apply this navigation consistently to guides, architecture articles, investigations and blog posts with article contents. Use the shared article components so a newly written article receives the layout automatically. Homepage, section landing pages and archive navigation retain their own documented treatments.
 
 For guides, architecture articles and investigations, use the native title followed by a description lede and a compact metadata row: type, author, publication date, optional update date and topics. A local draft notice appears after the title when needed. Blog pages retain the plugin's native author, date, reading metrics and tags; do not duplicate that metadata. Landing pages have no article introduction. Use a single H1 followed by a logical heading hierarchy. Keep paragraphs and diagrams in the reading column. Wide tables or code may scroll within their own container, never force horizontal scrolling of the page.
 
@@ -227,7 +227,7 @@ This abbreviated light palette illustrates the roles. The authoritative mappings
 
 `HomeHero.astro` supplies the homepage and falls back to the native hero elsewhere. `SiteTitle.astro` supplies the masthead. `ArticleTitle.astro` preserves the native title, adds the article lede and metadata, and labels local drafts. Keep its metadata at 14px with wrapping rows.
 
-The local, unpublished draft uses `JourneySidebar.astro` and `JourneyPageSidebar.astro` for its contents navigation, `JourneyFigure.astro` for readable native diagrams, and `JourneyTablet.astro` for the responsive image and caption. These components are still in the draft work and have not been integrated into the published source. Approval of the layout does not authorise publication of its text or image. The shared `ArticleFooter.astro` adds comments while preserving the framework footer. Keep layout decisions in components and shared styles, with article prose and visual placement in Markdown/MDX.
+Use the shared `ArticleSidebar.astro` and `ArticlePageSidebar.astro` for article contents and site browsing. Use native HTML/SVG diagrams and responsive image components with captions to meet the visual rules above. `ArticleFooter.astro` adds comments while preserving the framework footer. Keep layout decisions in components and shared styles, with article prose and visual placement in Markdown/MDX. Do not require authors to select a route-specific layout to obtain the approved reading experience.
 
 Use the [editorial workflow and templates](../editorial/workflow.md) for article structure. They use native Starlight notes and steps, Markdown tables and code. The Australian English UI dictionary supplies blog labels because plugin `en` strings do not fall back to `en-AU`; maintain it when blog controls change.
 
@@ -242,19 +242,13 @@ Use the [editorial workflow and templates](../editorial/workflow.md) for article
 
 <!-- pagebreak -->
 
-## 8. Maintenance and verification record
+## 8. Maintenance and acceptance
 
-### What is established
+### Required verification
 
-The user selected the 04 + 05 hybrid on 10 November 2026. The reference prototypes were rendered at 1200px and 390px; both homepage and article had no horizontal page overflow, their mobile menus opened, and local links resolved. This guide's solid-colour contrast ratios were calculated from the listed values. On 11 November, the author endorsed the journey draft as the article benchmark and retired the PDF specification.
+Validate formatting, lint, types, production builds, generated links, draft exclusions and browser behaviour. Check both palettes, 320-1440px layouts, article contents, mobile site browsing, search, theme persistence, system preference, enlarged text, RSS and sitemap. Inspect the result visually as well as running automated checks. Record what passed, where it was tested and any unresolved gaps in the [acceptance record](../acceptance.md).
 
-### Implementation evidence and limits
-
-The hybrid uses shared CSS and overrides for the homepage, masthead and article introduction. Validation covers formatting, lint, types, production builds, generated links and Chromium tests. Both palettes receive axe checks; responsive checks cover 320-1440px. Tests exercise navigation, search, theme persistence, system preference, enlarged text, RSS and sitemap. See the acceptance record for deployment evidence.
-
-The journey draft has also been reviewed locally in light/dark modes at 390px and 1440px, with its real text, three diagrams and tablet image. Its contents links, mobile behaviour and overflow were checked. That local review does not establish publication or technical truth. The contents adaptation remains route-specific. Templates and synthetic workflow fixtures exercise presentation, not the truth of future technical claims.
-
-Automated checks are not a complete accessibility audit, and root-text enlargement does not establish browser-zoom equivalence. Firefox, Safari and screen-reader verification remain outstanding.
+Automated checks do not replace a complete accessibility review, and root-text enlargement does not establish browser-zoom equivalence. State actual Firefox, Safari and screen-reader coverage in the acceptance record. Rendering tests establish presentation, not the truth of an article's technical claims.
 
 ### Keeping the specification current
 

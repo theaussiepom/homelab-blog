@@ -12,7 +12,7 @@ Be conversational without manufacturing friendliness. Use contractions and direc
 
 ## Approved reference and storytelling
 
-The author-reviewed draft **From a NAS VM to Proxmox: five versions of my homelab** is the current benchmark for warmth, conversational language, storytelling and pace. Its voice and layout were endorsed on 11 November 2026. It remains a draft: approval of the writing does not authorise publication or establish that the migration is complete. Use its approach when writing new material, without copying its anecdotes, jokes or section order into unrelated articles.
+The author-reviewed article **From a NAS VM to Proxmox: five versions of my homelab** is the benchmark for warmth, conversational language, storytelling and pace, endorsed on 11 November 2026. Use its approach when writing new material, without copying its anecdotes, jokes or section order into unrelated articles. This guide defines the required writing standard; the editorial workflow controls publication.
 
 Give the reader a person and a reason to care before introducing the infrastructure. The reference begins with a garage-door problem, the discovery of Home Assistant and the possibilities that made it interesting. It gives that discovery room before explaining the NAS, containers or Proxmox. A summary should invite readers into the story, not deliver an abrupt inventory of technologies or compress the whole journey into one breath.
 
@@ -77,7 +77,7 @@ Prefer connected prose for explanation. Use lists for genuine steps or parallel 
 
 ## Brief examples
 
-These excerpts from the approved draft show how the voice works. Learn from their effect; do not reuse the author's experience or repeat the jokes in another article.
+These excerpts from the approved article show how the voice works. Learn from their effect; do not reuse the author's experience or repeat the jokes in another article.
 
 | Approved wording                                                                                            | What to preserve                                                                    |
 | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
@@ -92,4 +92,4 @@ Check that the opening gives the reader a reason to care, the prerequisites matc
 
 Remove robotic phrasing, cold or dismissive asides, forced jokes and repetition. Read the opening, a technical section and the ending aloud. They should sound like the same engineer sharing something useful with another person. If the article feels rushed or underwhelming, reconsider its narrative and emphasis before substituting individual words.
 
-Use the approved draft as the current reference, and refine this guide as further articles are reviewed. Preserve the voice as technical depth grows; do not turn later articles into formal documentation merely because their prerequisites are more advanced.
+Use the approved article as the current reference, and refine this guide as further articles are reviewed. Preserve the voice as technical depth grows; do not turn later articles into formal documentation merely because their prerequisites are more advanced.

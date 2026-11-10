@@ -4,7 +4,7 @@ Public, static homelab publication at **https://theaussiepom.me** (intended prod
 
 ## Visual design
 
-The approved direction combines the Technical magazine's confident homepage with the Quiet personal publication's warm article reading experience. Follow the [visual style and layout guide](docs/design/style-guide.md) for typography, colours, spacing, components and responsive layouts. Markdown is the maintained specification; the PDF edition has been retired. The shared theme implements that direction in light and dark modes, with a system-following Auto option. The guides record the author-approved journey draft as the reference for storytelling, warmth, visual pacing and contents navigation, while keeping its publication separate.
+The approved direction combines the Technical magazine's confident homepage with the Quiet personal publication's warm article reading experience. Follow the [visual style and layout guide](docs/design/style-guide.md) for typography, colours, spacing, components and responsive layouts. Markdown is the maintained specification; the PDF edition has been retired. The guides define the author-approved standard for storytelling, warmth, visual pacing and contents navigation. Shared article components apply the reading layout in light and dark modes, with a system-following Auto option. Publication follows the separate editorial workflow.
 
 ## Stack and local development
 

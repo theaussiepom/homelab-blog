@@ -14,6 +14,8 @@ For requests such as "write an article about XYZ", read these sources before dra
 
 Use these files as the shared instructions across chats. Do not depend on remembered conversation context or invent a new style for each article. The voice guide owns the words, the template suggests structure, the visual guide owns presentation, and the workflow/schema own publishing mechanics. Evidence and public-content boundaries constrain all of them. Follow the user's explicit brief; surface consequential conflicts rather than silently relaxing a boundary.
 
+The voice and visual guides define the required result. If the implementation differs, correct the implementation and verify it against the guides. Keep deployment history and outstanding verification in the acceptance record; do not turn the guides into a description of temporary drift or relax an approved rule merely to match existing code.
+
 ## From a topic to a draft
 
 - Establish the reader's goal, article type, assumed knowledge, sources and evidence limits. Infer sensible defaults from the request; ask only for information that materially changes the article or is needed to substantiate a claim.
