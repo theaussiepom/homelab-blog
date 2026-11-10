@@ -10,7 +10,7 @@ For requests such as "write an article about XYZ", read these sources before dra
 2. [Writing workflow](docs/editorial/workflow.md): metadata, draft behaviour, validation and publication.
 3. [Public-content sanitisation](docs/editorial/sanitisation.md): what may enter this permanently public repository.
 4. The matching [guide](docs/editorial/templates/guide.mdx), [architecture](docs/editorial/templates/architecture.mdx), [investigation](docs/editorial/templates/investigation.mdx) or [post](docs/editorial/templates/post.mdx) template.
-5. [Visual style guide](docs/design/style-guide.md): established typography, colours, layout and components. Consult the Markdown specification; the PDF is its printable edition.
+5. [Visual style guide](docs/design/style-guide.md): established typography, colours, layout and components. Markdown is the maintained specification; there is no PDF edition.
 
 Use these files as the shared instructions across chats. Do not depend on remembered conversation context or invent a new style for each article. The voice guide owns the words, the template suggests structure, the visual guide owns presentation, and the workflow/schema own publishing mechanics. Evidence and public-content boundaries constrain all of them. Follow the user's explicit brief; surface consequential conflicts rather than silently relaxing a boundary.
 

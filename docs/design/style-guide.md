@@ -1,12 +1,14 @@
 # HomeLab Notes: visual style and layout guide
 
-Version 1.2 | 10 November 2026 | Approved design direction: 04 + 05 hybrid
+Version 1.3 | 11 November 2026 | Approved design direction: 04 + 05 hybrid
 
 ## 1. Direction and authority
 
-The chosen direction combines the Technical magazine's confident homepage with the Quiet personal publication's warm, comfortable reading experience. Use this guide for future layout, typography, colour and component work. The Markdown is the canonical specification; the accompanying PDF is its printable edition.
+The chosen direction combines the Technical magazine's confident homepage with the Quiet personal publication's warm, comfortable reading experience. Use this guide for future layout, typography, colour and component work. This Markdown is the maintained specification. The PDF edition was retired on 11 November 2026.
 
 The approved direction is implemented in the Astro/Starlight theme. These rules describe its shared visual language and the intentional adaptations to the native publishing shell. Reference images use synthetic content. Article wording, diagrams and dates in them are examples, not editorial requirements.
+
+The author-reviewed draft **From a NAS VM to Proxmox: five versions of my homelab** is now the approved article benchmark for reading flow, visual pacing, image placement and contents navigation. Follow the [voice guide](../editorial/voice.md) for its conversational storytelling. Approval of this reference does not publish the draft. Where the older synthetic article image differs from the article rules below, the current rules take precedence.
 
 Keep the bold sans-serif masthead, dark opening panel and lilac featured article. Use warm paper surfaces and serif text for article summaries and extended reading. Carry purple accents consistently from discovery into the article. The homepage may be expressive; the article should give the text room to breathe.
 
@@ -142,15 +144,33 @@ Use a 4px spacing scale: 4, 8, 12, 16, 20, 24, 28, 32, 40, 48 and 64px. The appr
 
 ## 5. Article layout
 
-![Approved hybrid article reference](assets/hybrid-article.png)
+![Original hybrid article prototype: typography and colour reference](assets/hybrid-article.png)
 
-Cap the reading column at 700px inside Starlight's native article shell. Retain its 240px section sidebar from 800px and right-hand contents column from 1152px; below those widths use its native collapsible navigation and contents controls. These production breakpoints deliberately replace the prototype's 930px region and 1100px contents breakpoint, preserving keyboard and responsive behaviour.
+This original prototype predates the approved left-hand article contents. Its typography and colour remain useful references; use the current navigation and pacing rules below for article composition.
+
+Cap the reading column at 700px inside Starlight's native article shell. For a long article, use the approved reading-focused navigation: from 800px, put the compact **On this page** contents list in the 240px left sidebar, with **Browse the site** collapsed beneath it. Show the current section clearly, keep the article centred in the remaining area, and omit a duplicate right-hand contents column. Readers should be able to scan the story without a large contents box pushing the opening down the page.
+
+Below 800px, preserve the native **On this page** disclosure and labelled **Menu** control. Contents links must reach the correct heading, preserve visible focus and leave the reading area usable after selection. Keep search, theme selection and site navigation accessible. Test either side of the 800px breakpoint as well as the normal mobile and desktop widths. Section landing pages retain their normal site navigation.
+
+This article navigation is currently implemented only for the journey draft through route-specific overrides. It is the approved pattern for future long articles, not a claim that every published page already uses it. Reuse the pattern through the existing component extension points when preparing another article; review any broader rollout separately rather than silently changing unrelated pages.
 
 For guides, architecture articles and investigations, use the native title followed by a description lede and a compact metadata row: type, author, publication date, optional update date and topics. A local draft notice appears after the title when needed. Blog pages retain the plugin's native author, date, reading metrics and tags; do not duplicate that metadata. Landing pages have no article introduction. Use a single H1 followed by a logical heading hierarchy. Keep paragraphs and diagrams in the reading column. Wide tables or code may scroll within their own container, never force horizontal scrolling of the page.
 
 Use sans-serif for the title, metadata and navigation; serif for the lede, body and section headings. The desktop title is 48px, the body is 18px with 1.7 line height. Mobile retains the body size. The table of contents may be sticky if it stays inside the viewport and does not obscure focus or headings.
 
 The reference screenshot is a top-of-article excerpt. Real articles must preserve useful navigation through the full page, including previous/next or related content where appropriate. Long titles, multiple authors, absent imagery and long code lines must all fit without changing the design's basic rules.
+
+### Pacing the page
+
+Let the title, lede and compact metadata lead into the opening paragraphs. The lede should invite the reader into the subject; it is not an extra technical abstract to work through. Establish the human context before presenting a large diagram or inventory. The reading column, paragraph spacing and clear section headings should give a story room without decorative interruptions or a callout around every point.
+
+Place each visual where the reader has enough context to understand it. In the approved article, the tablet image follows the real home-automation example; the five-stage diagram follows the first setup and the reason for changing it. The storage comparison appears when the NAS changes jobs, and the startup chain appears with the dependency explanation. These placements demonstrate the principle, not a required image count or a fixed article outline.
+
+Keep figures within the reading column, normally with 2rem vertical separation. Diagrams use the shared semantic colours, restrained rules, sans-serif labels and readable text rather than flattened screenshots of small type. Let comparisons and dependency chains stack on narrow screens. Explain what a connection or transition means, not only which machines exist. A graphic should carry its part of the explanation rather than repeat a nearby paragraph word for word.
+
+Use a genuine, public-safe photograph or screenshot when it helps readers picture the result. Give it meaningful alternative text, reserved dimensions, a short caption beneath it and a full-size link when the detail warrants one. The reference tablet caption uses 14px sans-serif text with a 1.6 line height. Do not manufacture a photograph of the author's home or imply that a configured behaviour has been observed live when it has not.
+
+Keep the ending in the same reading flow. Let the author finish the thought and make a useful connection to what follows. Put comments after the article body, followed by the existing footer navigation. Do not insert a large promotional panel between the final paragraphs or duplicate the article contents at the bottom.
 
 <!-- pagebreak -->
 
@@ -174,6 +194,8 @@ Size primary touch targets to at least 44px by 44px where practical, including M
 Preserve framework code-copy controls and accessible labels. Syntax-highlighting colours require their own contrast check against the code background. Do not wrap copyable shell commands in ways that alter their content; the prototype's display wrapping is not a production requirement.
 
 Use authentic article diagrams, photographs or illustrations only when they contribute to understanding. Keep imagery responsive and reserve its layout space to avoid jumps. Sanitise all technical examples and screenshots under the existing editorial policy. No private infrastructure detail belongs in design fixtures.
+
+Published articles use the embedded Giscus comment area with a clear heading, a short invitation and a link to GitHub Discussions. Reading does not require sign-in; posting does. Match the selected light/dark mode, retain the GitHub alternative if the widget is blocked, and exclude comments from the article contents and search index. Local drafts show a publication notice instead of connecting to live comments. See [comments and readership](../comments-and-analytics.md).
 
 <!-- pagebreak -->
 
@@ -205,6 +227,8 @@ This abbreviated light palette illustrates the roles. The authoritative mappings
 
 `HomeHero.astro` supplies the homepage and falls back to the native hero elsewhere. `SiteTitle.astro` supplies the masthead. `ArticleTitle.astro` preserves the native title, adds the article lede and metadata, and labels local drafts. Keep its metadata at 14px with wrapping rows.
 
+The local, unpublished draft uses `JourneySidebar.astro` and `JourneyPageSidebar.astro` for its contents navigation, `JourneyFigure.astro` for readable native diagrams, and `JourneyTablet.astro` for the responsive image and caption. These components are still in the draft work and have not been integrated into the published source. Approval of the layout does not authorise publication of its text or image. The shared `ArticleFooter.astro` adds comments while preserving the framework footer. Keep layout decisions in components and shared styles, with article prose and visual placement in Markdown/MDX.
+
 Use the [editorial workflow and templates](../editorial/workflow.md) for article structure. They use native Starlight notes and steps, Markdown tables and code. The Australian English UI dictionary supplies blog labels because plugin `en` strings do not fall back to `en-AU`; maintain it when blog controls change.
 
 ### Implementation acceptance
@@ -222,17 +246,19 @@ Use the [editorial workflow and templates](../editorial/workflow.md) for article
 
 ### What is established
 
-The user selected the 04 + 05 hybrid on 10 November 2026. The reference prototypes were rendered at 1200px and 390px; both homepage and article had no horizontal page overflow, their mobile menus opened, and local links resolved. The reference PDF was visually inspected. This guide's solid-colour contrast ratios were calculated from the listed values.
+The user selected the 04 + 05 hybrid on 10 November 2026. The reference prototypes were rendered at 1200px and 390px; both homepage and article had no horizontal page overflow, their mobile menus opened, and local links resolved. This guide's solid-colour contrast ratios were calculated from the listed values. On 11 November, the author endorsed the journey draft as the article benchmark and retired the PDF specification.
 
 ### Implementation evidence and limits
 
 The hybrid uses shared CSS and overrides for the homepage, masthead and article introduction. Validation covers formatting, lint, types, production builds, generated links and Chromium tests. Both palettes receive axe checks; responsive checks cover 320-1440px. Tests exercise navigation, search, theme persistence, system preference, enlarged text, RSS and sitemap. See the acceptance record for deployment evidence.
 
-Automated checks are not a complete accessibility audit, and root-text enlargement does not establish browser-zoom equivalence. Firefox, Safari, screen readers and real article content remain unverified. Templates and synthetic workflow fixtures exercise presentation, not the truth of future technical claims.
+The journey draft has also been reviewed locally in light/dark modes at 390px and 1440px, with its real text, three diagrams and tablet image. Its contents links, mobile behaviour and overflow were checked. That local review does not establish publication or technical truth. The contents adaptation remains route-specific. Templates and synthetic workflow fixtures exercise presentation, not the truth of future technical claims.
+
+Automated checks are not a complete accessibility audit, and root-text enlargement does not establish browser-zoom equivalence. Firefox, Safari and screen-reader verification remain outstanding.
 
 ### Keeping the specification current
 
-Edit this Markdown first. Update the PDF in the same change, including its version and date, and render every PDF page for visual inspection. Update reference images when an approved visual change makes them stale. Keep images synthetic and public-safe. Do not change the deployed design merely to make it match an outdated screenshot; resolve the specification deliberately.
+Maintain this Markdown directly, with its version and date. There is no PDF edition to regenerate. Update reference images when an approved visual change makes them stale, using synthetic, public-safe content. Keep historical references distinguishable from the current article rules. Do not change the approved article merely to make it match an outdated screenshot or specification.
 
 Use pull requests for integration and follow the existing validation gates. Changes to typography roles, primary palette, homepage composition or article reading width require an explicit design decision. Routine implementation adjustments may follow the documented responsive and accessibility rules.
 
@@ -246,7 +272,6 @@ Use pull requests for integration and follow the existing validation gates. Chan
 
 ### Document map
 
-- [Printable style guide](style-guide.pdf)
 - [Repository README](../../README.md)
 - [Architecture decision](../decisions/0001-static-publishing.md)
 - [Editorial workflow and templates](../editorial/workflow.md)
