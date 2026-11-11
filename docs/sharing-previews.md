@@ -1,6 +1,6 @@
 # URL previews
 
-Homepage sharing uses the approved v2.0 light Open Graph image at 1200 × 630. Its title is **The Curious Engineer**, its description comes from the homepage's existing metadata, and its Open Graph type is `website`. Theme selection never changes the sharing image. Other non-article pages use the same fallback artwork.
+Homepage sharing uses the supplied light Open Graph image at 1200 × 630. It is selected from `social/tap-opengraph-light.png` in the single authoritative brand kit. Its title is **The Aussie Pom**, its description comes from the homepage's existing metadata, and its Open Graph type is `website`. Theme selection never changes the sharing image. Other non-article pages use the same fallback artwork.
 
 Published guides, architecture stories, investigations and posts receive a 1200 × 630 opaque PNG automatically. The card shows the article's title and type, with the approved black portrait on lilac, the publication name and the configured site's domain. The description belongs in metadata rather than the image. Ordinary articles need no extra frontmatter.
 

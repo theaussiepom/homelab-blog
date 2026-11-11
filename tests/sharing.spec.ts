@@ -46,10 +46,10 @@ test('initial static HTML contains authoritative homepage and article previews',
       values[key] = matches[0].getAttribute('content')!;
       expect(values[key], key).toBeTruthy();
     }
-    expect(values['og:site_name']).toBe('The Curious Engineer');
+    expect(values['og:site_name']).toBe('The Aussie Pom');
     expect(values['og:type']).toBe(path === '/' ? 'website' : 'article');
     expect(values['og:title']).toBe(
-      path === '/' ? 'The Curious Engineer' : values['og:description'],
+      path === '/' ? 'The Aussie Pom' : values['og:description'],
     );
     expect(values['og:description']).toBe(
       document
@@ -71,7 +71,7 @@ test('initial static HTML contains authoritative homepage and article previews',
     const image = new URL(values['og:image']);
     expect(image.origin).toBe('https://theaussiepom.me');
     if (path === '/')
-      expect(image.pathname).toBe('/brand/social/tce-opengraph-light.png');
+      expect(image.pathname).toBe('/brand/social/tap-opengraph-light.png');
     else {
       const articleTitle = document.querySelector('h1')!.textContent!.trim();
       expect(values['og:title']).not.toBe(articleTitle);

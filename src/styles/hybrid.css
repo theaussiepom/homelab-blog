@@ -67,7 +67,7 @@
 }
 .hl-brand {
   display: block;
-  inline-size: 19.5rem;
+  inline-size: 17rem;
   max-inline-size: 100%;
   color: var(--hl-ink);
   text-decoration: none;
@@ -200,6 +200,24 @@ h1 {
 }
 .hl-hero > div > .hl-kicker {
   color: #dfd0fa;
+}
+.hl-supporting-line {
+  max-width: 28rem;
+  color: #dfd0fa;
+  font: 400 0.9375rem/1.5 var(--sl-font);
+  margin: 0;
+}
+.hl-about-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: #dfd0fa;
+  font: 1rem/1.5 var(--sl-font);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.hl-about-link:focus-visible {
+  outline-color: #dfd0fa;
 }
 .hl-hero h1 {
   color: #fff;

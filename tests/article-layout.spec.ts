@@ -115,24 +115,28 @@ test('landing and archive pages retain their normal navigation', async ({
 test('the shared bio follows the story and precedes comments for its author', async ({
   page,
 }) => {
-  const bio = page.getByRole('region', { name: 'About Ben' });
+  const bio = page.getByRole('region', { name: 'About Ben Dennis' });
   for (const path of ['/', '/blog/']) {
     await page.goto(path);
     await expect(bio).toHaveCount(0);
   }
 
   await page.goto(article);
-  await expect(bio.getByRole('heading', { level: 2 })).toHaveText('About Ben');
+  await expect(bio.getByRole('heading', { level: 2 })).toHaveText(
+    'About Ben Dennis',
+  );
   await expect(
-    bio.getByRole('link', { name: 'GitHub · @theaussiepom', exact: true }),
+    bio.getByRole('link', { name: 'Ben Dennis on GitHub', exact: true }),
   ).toHaveAttribute('href', 'https://github.com/theaussiepom');
   await expect(
-    page.getByRole('link', { name: 'GitHub', exact: true }),
+    page
+      .locator('header')
+      .getByRole('link', { name: 'Ben Dennis on GitHub', exact: true }),
   ).toHaveAttribute('href', 'https://github.com/theaussiepom');
   await expect(
-    bio.getByRole('img', { name: 'Ben at the beach' }),
+    bio.getByRole('img', { name: 'Ben Dennis at the beach' }),
   ).toBeVisible();
-  await expect(bio.locator('p')).toHaveCount(2);
+  await expect(bio.locator('p')).toHaveCount(1);
   const order = await bio.evaluate((card) => {
     const story = document.querySelector('main .sl-markdown-content');
     const comments = card.nextElementSibling;

@@ -17,7 +17,7 @@ const article = {
   draft: false,
   date: new Date('2026-11-11'),
 };
-const siteTitle = 'The Curious Engineer';
+const siteTitle = 'The Aussie Pom';
 const origin = 'https://previews.example.test/';
 const card = await createArticleImage(article, siteTitle, origin, assets);
 const metadata = await sharp(card.png).metadata();
@@ -174,7 +174,7 @@ assert.ok(
     share: {
       title: 'Shorter',
       description: article.description,
-      image: '/brand/social/tce-opengraph-light.png',
+      image: '/brand/social/tap-opengraph-light.png',
       imageAlt: 'The approved publication artwork',
     },
   }).success,

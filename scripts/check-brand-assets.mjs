@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { lstat, readFile, readdir } from 'node:fs/promises';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import sharp from 'sharp';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const archive = join(root, 'brand');
@@ -10,9 +11,7 @@ for (const directory of [root, join(root, 'public')]) {
     if (
       entry.isDirectory() &&
       entry.name !== 'brand' &&
-      /^(?:brand(?:[ _-].+|v\d.*)|The-Curious-Engineer-Brand-Suite.*)$/i.test(
-        entry.name,
-      )
+      /^(?:brand(?:[ _-].+|v\d.*)|.+-Brand-Suite.*)$/i.test(entry.name)
     ) {
       throw new Error(
         `Use the single authoritative brand/ kit; remove the extra kit folder: ${relative(root, join(directory, entry.name))}`,
@@ -30,7 +29,7 @@ const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 for (const row of rows) {
   const fields = row.split(',');
   if (fields.length !== 6) throw new Error('Unrecognised brand manifest row.');
-  const [name, , , , size, digest] = fields;
+  const [name, , width, height, size, digest] = fields;
   const path = resolve(archive, name);
   if (!path.startsWith(archive + sep) || originals.has(name)) {
     throw new Error('Invalid or duplicate brand asset path.');
@@ -40,6 +39,13 @@ for (const row of rows) {
   const bytes = await readFile(path);
   if (bytes.length !== Number(size) || hash(bytes) !== digest) {
     throw new Error(`Archived brand asset differs from its manifest: ${name}`);
+  }
+  if (width && height) {
+    const metadata = await sharp(bytes).metadata();
+    if (metadata.width !== Number(width) || metadata.height !== Number(height))
+      throw new Error(
+        `Brand asset dimensions differ from its manifest: ${name}`,
+      );
   }
   originals.set(name, digest);
 }

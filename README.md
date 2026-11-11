@@ -1,6 +1,6 @@
-# The Curious Engineer
+# The Aussie Pom
 
-The Curious Engineer is a public, static publication for homelab guides, architecture stories and investigations. The first article follows Ben’s journey from a Home Assistant VM on a NAS to his current Proxmox build. [The Curious Engineer](https://theaussiepom.me/) · [First article](https://theaussiepom.me/architecture/homelab-proxmox-journey/)
+The Aussie Pom is Ben Dennis’s publication about software, systems, AI, homelabs, architecture and experiments. **Software, systems and curiosity in action.** [Website](https://theaussiepom.me/) · [About Ben](src/content/docs/about.mdx) · [GitHub](https://github.com/theaussiepom) · [LinkedIn](https://www.linkedin.com/in/theaussiepom/)
 
 ## Visual design
 

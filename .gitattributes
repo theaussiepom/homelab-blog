@@ -1,1 +1,8 @@
 *.pdf binary
+
+# Preserve supplied brand bytes across checkouts so manifest hashes stay valid.
+brand/** -text
+public/brand/** -text
+public/favicon.svg -text
+# The supplied manifest uses CRLF; keep other whitespace checks enabled.
+brand/ASSET-MANIFEST.csv whitespace=trailing-space,space-before-tab,cr-at-eol

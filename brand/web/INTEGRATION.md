@@ -1,42 +1,63 @@
-# Website integration | v2.0
+# The Aussie Pom | Website integration v3.0
 
-This is an asset handoff. No repository or website changes have been applied.
+This pack supplies assets and examples. Integrate with the existing application and approved style guide; the snippets have not been installed in the live site.
 
-## Replace the old assets
+## Identity
 
-Use `public/brand/` as the suggested destination, keeping the chosen subfolders. Public URLs then start with `/brand/`. Replace the old brand asset directory so retired white portraits and the old pointed-beard favicon do not remain in use. If using a different base path, update the snippets and manifest together.
+- Publication: **The Aussie Pom**
+- Supporting line, exactly: **Software, systems and curiosity in action.**
+- Author: **Ben Dennis**
+- Website: https://theaussiepom.me/
+- Personal GitHub: https://github.com/theaussiepom
+- LinkedIn: https://www.linkedin.com/in/theaussiepom/
 
-## Header
+The portrait is unchanged. Use the new name-bearing files consistently across the header, footer, metadata, RSS/channel metadata, manifest and default sharing images. Keep article URLs and content intact. Update relevant brand documentation alongside implementation.
 
-The header logo uses the approved portrait **with eyes**. Use `tce-masthead-on-light.svg` and `tce-masthead-on-dark.svg`. Both contain the same black face on lilac; only the lettering changes. Do not apply CSS `invert()` or a colour filter to the image.
+## Asset paths and header
 
-The masthead canvas is 644 × 104. Start with a width of 280–320 CSS px in the site's existing 80 px header, then check the actual navigation and mobile layout. At 320 px wide its height is 51.7 px. The compact two-line logo is an alternative for a narrower placement. Other canvas dimensions are recorded in the asset manifest.
+The examples assume `public/brand/`, preserving the supplied subfolders, with public URLs beginning `/brand/`. Update all references before removing obsolete files. Do not replace unrelated article images or generated article-sharing images. If paths differ, update the snippets and manifest together.
 
-The supplied example swaps images using the existing root `data-theme="light"` / `data-theme="dark"` attribute. The link has one accessible name; the images inside it have empty alt text. For an independent logo image, use meaningful alt text such as `The Curious Engineer`.
+Use `tap-masthead-on-light.svg` and `tap-masthead-on-dark.svg` for the desktop header. The canvas is 514 x 104. At **272 CSS px** wide it is approximately **55 px** high, fitting the existing 80 px header with its 56 px inner content area. Recheck with the actual navigation.
 
-Keep the current site typography, sidebar, layout and colour system. `brand.css` only supplies an isolated starting point for the logo component; it is not a replacement stylesheet.
+At narrow widths, the sample switches to `tap-compact-on-light.svg` and `tap-compact-on-dark.svg`. This 653 x 208 canvas displays at **160 x 51 CSS px**. Adjust the breakpoint to the site's navigation, with no horizontal overflow at 320 px viewport width.
 
-## Browser favicon and home-screen icons
+The header portrait retains its eyes. Both theme variants contain the same black face on lilac. Only the lettering changes. Do not invert the entire image or recolour the face. Keep the site's existing theme mechanism. The sample CSS responds to the root `data-theme` attribute and does not introduce a second theme system.
 
-The browser favicon uses the approved face **without eyes**, black ink on a solid white circle, and transparency outside the circle. The SVG, PNG and ICO versions share that treatment. A slight stroke-weight adjustment keeps the spectacle rims and mouth visible at tiny sizes. No dark-mode recolouring is required.
+The home link has one accessible name and its logo images use empty alt text. Give a standalone logo image meaningful alt text. Preserve visible keyboard focus and existing navigation semantics. `brand.css` is an isolated component example, not a replacement stylesheet.
 
-`apple-touch-icon.png` is an opaque white 180 px square. `icon-192.png` and `icon-512.png` are white-circle icons with transparent corners. `icon-maskable-512.png` is an opaque white square with all portrait detail within the central 40%-radius safe circle. These icons also omit the eyes.
+## Supporting line and personal links
 
-The optional manifest defines ordinary browser display mode and icon metadata. It adds no service worker or offline functionality. Merge with any existing manifest rather than adding a second one.
+Place the supporting line as real text in the homepage introduction. Do not shrink it into the header logo. Preserve the approved page layout, typography, colours and existing headline treatment. The supplied banners are assets for suitable wide placements, not an instruction to replace the homepage hero with an image.
 
-## Social sharing
+Display GitHub and LinkedIn with equal visual weight alongside the existing RSS link, using the same site colour and icon sizing. Each icon-only link needs its own accessible name. The GitHub destination is the personal account above. Reuse the existing RSS URL and mobile navigation.
 
-Use a 1200 × 630 PNG as the default link-preview image. The example assumes the absolute URL `https://theaussiepom.me/brand/social/tce-opengraph-light.png`. Keep article-specific titles, descriptions and canonical URLs. Article-specific images can override the default.
+## Favicons and home-screen icons
 
-Light and dark link-preview images are alternatives; the sharing platform does not choose them based on a reader's site theme. Generic 1500 × 500 covers may need a platform-specific crop.
+The browser favicon is black on a solid white circle, transparent outside the circle, with the eyes omitted. Its approved optical weight is retained for tiny sizes. It needs no dark-mode inversion. The PNG and ICO exports are unchanged from the approved pack.
 
-## Check after integration
+- `favicon.svg`: scalable browser icon.
+- `favicon-16x16.png`, `32x32`, `48x48`, `64x64`, `96x96`: raster sizes.
+- `favicon.ico`: 16, 32 and 48 px frames.
+- `apple-touch-icon.png`: opaque white 180 px square.
+- `icon-192.png` / `icon-512.png`: white circle with transparent corners.
+- `icon-maskable-512.png`: opaque white square, with portrait detail inside the central 40%-radius safe circle.
 
-Check desktop and mobile headers, both themes, keyboard focus and accessible naming. Verify the new icon URL is requested, because browsers may cache old favicons. Inspect the 16 and 32 px icon at normal zoom, and preview social crops on the destination platform. The supplied snippets have not been installed or exercised in the live application.
+Merge the optional manifest into any existing one. It declares normal browser display mode and icons, without adding installation prompts, a service worker or offline features. The sample uses a version query for favicon/header cache refresh; use the application's own asset-versioning approach where available.
 
-## References
+## Link previews and covers
 
-- Existing repository: `theaussiepom/homelab-blog`, `docs/design/style-guide.md` v1.5 and `docs/editorial/voice.md` v1.1, reviewed 11 November 2026.
-- [MDN: Define your app icons](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/How_to/Define_app_icons).
-- [web.dev: Maskable icons](https://web.dev/articles/maskable-icon).
-- [Apple: Configuring Web Applications](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html), archived Apple touch-icon guidance.
+The two 1200 x 630 Open Graph PNGs are alternatives. A sharing service will not choose one based on the viewer's website theme. Choose one default for homepage sharing; the light version is the sample default.
+
+Merge `head-snippet.html` into the existing metadata component. Emit one set of tags per page. Use absolute HTTPS image and canonical URLs. Keep article-specific titles, descriptions, URLs, article metadata and generated preview images. An article should use its own preview when available and this default only as a fallback. A normal browser favicon is independent of the large sharing image.
+
+The supplied SVGs are editable templates, not a dynamic article image generator. Update any existing article-image generator's branding and typography through the site's normal implementation. Preserve prominent article titles rather than substituting the homepage card for every article.
+
+The 1500 x 500 covers are generic wide artwork. LinkedIn backgrounds have separate **1584 x 396** PNG/SVG files, with essential text away from the lower-left profile-photo area. Check the crop after uploading on desktop and mobile. The LinkedIn cover omits a second portrait because the profile photo already supplies it.
+
+LinkedIn sizing reference: https://www.linkedin.com/help/linkedin/answer/a568217/
+
+## Before shipping
+
+Check both themes at desktop, tablet and 320 px mobile width; logo height, navigation spacing, image proportions, keyboard focus and accessible names. Confirm favicon requests and inspect 16/32 px renderings at normal zoom. Check homepage and article metadata in rendered HTML, absolute image URLs and sharing crops. Existing social-preview caches may need refreshing through the destination service's tools.
+
+No repository, website or profile changes were made while producing this pack.

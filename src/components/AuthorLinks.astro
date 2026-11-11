@@ -1,0 +1,44 @@
+---
+import { author } from '../lib/author.mjs';
+
+interface Props {
+  includeAbout?: boolean;
+}
+const { includeAbout = false } = Astro.props;
+---
+
+<nav class="hl-author-links" aria-label={`${author.name} profile links`}>
+  {includeAbout && <a href={author.aboutPath}>More about Ben</a>}
+  <a
+    href={author.github}
+    aria-label={`${author.name} on GitHub`}
+    title={`${author.name} on GitHub`}
+  >
+    GitHub
+  </a>
+  <a
+    href={author.linkedin}
+    aria-label={`${author.name} on LinkedIn`}
+    title={`${author.name} on LinkedIn`}
+  >
+    LinkedIn
+  </a>
+</nav>
+
+<style>
+  .hl-author-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    margin-block-start: 0.5rem;
+    font: 0.9375rem/1.5 var(--sl-font);
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    color: var(--hl-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+</style>

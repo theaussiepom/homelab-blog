@@ -15,6 +15,7 @@ const samples = [
 ];
 const pages = [
   '/',
+  '/about/',
   story,
   '/architecture/proxmox-without-kubernetes/',
   '/architecture/what-i-built-on-proxmox/',
@@ -56,8 +57,8 @@ test('homepage uses the shared sidebar and links directly to published stories',
     }),
   ).toHaveAttribute('href', '/architecture/proxmox-without-kubernetes/');
   await expect(page.locator('.hl-topics')).toHaveCount(0);
-  await expect(page.locator('.hl-brand')).toHaveText('The Curious Engineer');
-  await expect(page).toHaveTitle('Home | The Curious Engineer');
+  await expect(page.locator('.hl-brand')).toHaveText('The Aussie Pom');
+  await expect(page).toHaveTitle('Home | The Aussie Pom');
   await expect(page.locator('.hl-brand small')).toHaveCount(0);
   await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
   await expect(page.locator('.hl-discovery a')).toHaveText([
@@ -305,7 +306,9 @@ test('article introduction exposes shared metadata in both themes', async ({
       if (path === story) {
         await expect(page.locator('.hl-lede')).toContainText('garage door');
       }
-      await expect(page.locator('.hl-article-meta')).toContainText('Ben');
+      await expect(page.locator('.hl-article-meta')).toContainText(
+        'Ben Dennis',
+      );
       await expect(page.locator('.hl-reading-time')).toContainText(
         'Estimated reading time',
       );

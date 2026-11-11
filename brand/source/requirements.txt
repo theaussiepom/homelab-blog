@@ -1,0 +1,4 @@
+cairosvg>=2.9,<3
+fonttools>=4,<5
+reportlab>=4,<6
+Pillow>=10,<14

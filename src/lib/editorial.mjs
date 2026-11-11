@@ -1,4 +1,5 @@
 import { z } from 'astro/zod';
+import { resolveAuthor } from './author.mjs';
 
 export const articleTypes = ['guide', 'architecture', 'investigation', 'post'];
 export const isPublishedArticle = (data) =>
@@ -37,6 +38,7 @@ export const articleFields = z.object({
   authors: z
     .array(z.object({ name: z.string().trim().min(1) }))
     .min(1)
+    .transform((authors) => authors.map((entry) => resolveAuthor(entry)))
     .optional(),
   tags: z
     .array(z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/))

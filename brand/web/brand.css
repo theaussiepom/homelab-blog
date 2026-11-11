@@ -1,6 +1,16 @@
-/* Preserve the site's existing layout and theme tokens. Do not invert the image. */
-.tce-brand { display: inline-flex; align-items: center; max-inline-size: 100%; }
-.tce-brand img { display: block; inline-size: clamp(13.75rem,26vw,20rem); max-inline-size: 100%; block-size: auto; }
-.tce-brand .tce-brand__dark { display: none; }
-html[data-theme="dark"] .tce-brand .tce-brand__light { display: none; }
-html[data-theme="dark"] .tce-brand .tce-brand__dark { display: block; }
+/* Example only: integrate with the existing header and root theme attribute. */
+.tap-brand { display: inline-flex; align-items: center; max-inline-size: 100%; flex: 0 1 auto; }
+.tap-brand img { display: block; block-size: auto; max-inline-size: 100%; max-block-size: 3.5rem; object-fit: contain; }
+.tap-brand__wide { inline-size: 17rem; }
+.tap-brand .tap-brand__compact { display: none; inline-size: 10rem; }
+.tap-brand .tap-brand__dark { display: none; }
+html[data-theme="dark"] .tap-brand .tap-brand__light { display: none; }
+html[data-theme="dark"] .tap-brand .tap-brand__wide.tap-brand__dark { display: block; }
+@media (max-width: 28rem) {
+  .tap-brand .tap-brand__wide,
+  html[data-theme="dark"] .tap-brand .tap-brand__wide.tap-brand__dark { display: none; }
+  .tap-brand .tap-brand__compact.tap-brand__light { display: block; }
+  html[data-theme="dark"] .tap-brand .tap-brand__compact.tap-brand__light { display: none; }
+  html[data-theme="dark"] .tap-brand .tap-brand__compact.tap-brand__dark { display: block; }
+}
+/* Preserve the application's visible focus treatment. Never filter/invert this image. */

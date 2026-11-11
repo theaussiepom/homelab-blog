@@ -4,15 +4,16 @@ import { resolve, sep } from 'node:path';
 import opentype from 'opentype.js';
 import sharp from 'sharp';
 import { isPublishedArticle } from './editorial.mjs';
+import { brandAsset } from './site.mjs';
 
-export const fallbackImage = '/brand/social/tce-opengraph-light.png?v=2';
+export const fallbackImage = brandAsset('social/tap-opengraph-light.png');
 export const fallbackImageAlt =
-  'The Curious Engineer, with an illustrated portrait of Ben Dennis';
+  'The Aussie Pom, with an illustrated portrait of Ben Dennis';
 
 export async function loadCardAssets() {
   const [font, portrait, template] = await Promise.all([
     readFile('brand/source/fonts/LiberationSans-Bold.ttf'),
-    readFile('brand/icons/svg/tce-portrait-lilac.svg', 'utf8'),
+    readFile('brand/icons/svg/tap-portrait-lilac.svg', 'utf8'),
     readFile('src/lib/share-card.svg', 'utf8'),
   ]);
   return { font, portrait, template };
