@@ -1,13 +1,22 @@
-# Source artwork | v2.0
+# Source artwork | v3.0
 
-The approved source is `reference/approved-portrait.png`: thin glasses, subtle eyes, a rounded connected goatee and a smaller balanced smile, black on lilac. Earlier white-inverted faces and the pointed-beard artwork are superseded.
+The native portrait geometry is carried forward unchanged from the approved suite. The name-bearing layouts and supporting line have been rebuilt for **The Aussie Pom**.
 
-The exact approved drawing was isolated and converted to smooth vector paths. The circle and flat production colours are constructed as SVG geometry. The face was not regenerated separately for each logo. The main master contains six named paths: hair-and-glasses, eye-right, eye-left, goatee, mouth and under-lip. The micro master omits only the two eye paths; the other path data is identical.
+`tap-portrait-master.svg` has six named paths: hair-and-glasses, eye-right, eye-left, goatee, mouth and under-lip. `tap-micro-master.svg` uses the same paths, omitting only the two eyes. Both are tightly fitted 658 x 881 drawings. Preserve their tilt, proportions, thin frames, connected goatee and small balanced smile.
 
-The favicon adds a small optical stroke-weight adjustment to those same micro paths for tiny rendering. It keeps the white circle and transparent corners. The main portrait retains the approved thin frames.
+The micro favicon retains its approved optical stroke weight. It has a white circle and transparent corners. The main portrait uses black on lilac in both themes; only logo lettering changes from dark ink to warm white.
 
-`tce-portrait-master.svg` and `tce-micro-master.svg` are tightly fitted native vector drawings. `tce-primary-editable-text.svg` retains live type for editing. Install the bundled Liberation Sans Bold to edit that text; applications may lay it out slightly differently. Use production outlined SVG/PDF files for the supplied lettering geometry.
+Production SVG/PDF lettering is outlined. `tap-primary-editable-text.svg` retains live text for editing. Install `fonts/LiberationSans-Bold.ttf` before editing it; application text layout may differ slightly from the outlined production assets. The font is distributed under the SIL Open Font License in `fonts/OFL-Liberation.txt`.
 
-The typeface is licensed under the SIL Open Font License; see `fonts/OFL-Liberation.txt`. Logo lettering uses adjusted tracking and font kerning. The website's Arial/Helvetica and Georgia typography roles remain unchanged.
+## Rebuilding
 
-Preserve the head tilt and proportions. Keep the face black. On dark backgrounds use the lilac backing and pale lettering. White and purple alternatives are supplied for the name-only wordmark, not as face colours. All production files are RGB and use flat fills. Export additional sizes from SVG rather than enlarging a small PNG.
+From a Python environment with the dependencies in `requirements.txt`:
+
+    python3 source/build_assets.py
+    python3 source/build_docs.py
+
+The scripts locate this kit from their own path. They rebuild name-bearing artwork, brand tokens, HTML preview, documentation and the PDF guide. The approved icon, favicon and avatar exports are supplied unchanged; these scripts do not regenerate them. `build-info.json` records layout canvas sizes and measured text widths. Refresh the file manifest after rebuilding assets.
+
+The live website remains Arial/Helvetica for headings and UI, and Georgia for reading. Bundled Liberation Sans is for logo source editing and the guide, not a request to change the site's typography.
+
+Use SVG for new sizes instead of enlarging PNGs. Keep the original aspect ratio, flat fills and clear space. The approved raster in `reference/` is a visual reference only. All production artwork is RGB; proof separately for colour-critical printing.

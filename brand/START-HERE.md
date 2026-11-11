@@ -1,49 +1,48 @@
-# The Curious Engineer | Brand suite v2.0
+# The Aussie Pom | Brand suite v3.0
 
-Approved portrait revision, 11 November 2026.
+12 November 2026
 
-Extract the whole ZIP, then open **START-HERE.html** for the visual preview or **Brand-Guide.pdf** for the usage guide.
+**Software, systems and curiosity in action.**
+
+Extract the complete ZIP and open **START-HERE.html** for the visual catalogue. **Brand-Guide.pdf** explains the artwork and how to use it. For implementation, start with **web/INTEGRATION.md**.
 
 ## What changed
 
-The entire suite now uses the approved portrait with a rounded connected goatee, thinner glasses, subtle eyes and a smaller, balanced smile. The favicon uses the same drawing without eyes. The rejected pointed beard and white inverted portraits are no longer included.
+The publication name and all name-bearing artwork now read **The Aussie Pom**. The approved portrait is preserved, including its rounded goatee, thin glasses, subtle eyes and balanced smile. The supporting line appears on banners, covers and sharing cards. Header logos remain uncluttered.
 
-**The face stays black in both themes.** Main logos use a soft lilac circle. Only the wordmark changes from dark ink on light backgrounds to warm white on dark backgrounds. Browser favicons retain a solid white circle with transparent corners.
+The main portrait stays black on lilac in both themes; only the lettering changes to warm white on dark surfaces. The favicon stays eyeless, black on a solid white circle, transparent outside the circle. Name-free portrait and favicon PNGs are carried forward unchanged.
 
-This package replaces v1.0. When integrating it, replace the old brand asset folder rather than merging in obsolete files. The repository and website have not been changed by this work.
+This package supersedes the earlier brand suite. This is an asset handoff; the repository, live website and social profiles have not been changed.
 
 ## Start with these files
 
-| Placement | File |
+| Placement | Recommended files |
 | --- | --- |
-| Primary logo on light | `logos/svg/tce-primary-on-light.svg` |
-| Primary logo on dark | `logos/svg/tce-primary-on-dark.svg` |
-| Website header | `logos/svg/tce-masthead-on-light.svg` and `tce-masthead-on-dark.svg` |
-| Compact two-line name | `logos/svg/tce-compact-on-light.svg` and `tce-compact-on-dark.svg` |
-| Name only | `logos/svg/tce-wordmark-on-light.svg` and `tce-wordmark-on-dark.svg` |
-| Browser favicon | `favicons/favicon.svg`, with the PNG and ICO fallbacks |
-| Social profile on dark | `social/tce-avatar-ink.png` |
-| Social profile on lilac | `social/tce-avatar-lilac.png` |
-| Website banner | `banners/tce-masthead-light.png` or `tce-masthead-dark.png` |
-| Social cover | `social/tce-social-banner-light.png` or `tce-social-banner-dark.png` |
-| Link preview | `social/tce-opengraph-light.png` or `tce-opengraph-dark.png` |
+| Primary logo | `logos/svg/tap-primary-on-light.svg` and `tap-primary-on-dark.svg` |
+| Desktop website header | `logos/svg/tap-masthead-on-light.svg` and `tap-masthead-on-dark.svg` |
+| Compact website header | `logos/svg/tap-compact-on-light.svg` and `tap-compact-on-dark.svg` |
+| Name without portrait | `logos/svg/tap-wordmark-on-light.svg` and `tap-wordmark-on-dark.svg` |
+| Browser favicon | `favicons/favicon.svg` plus supplied PNG and ICO fallbacks |
+| Social profile | `social/tap-avatar-lilac.png` or `tap-avatar-ink.png` |
+| Website banner | `banners/tap-masthead-light.png` or `tap-masthead-dark.png` |
+| Generic social cover | `social/tap-social-banner-light.png` or `tap-social-banner-dark.png` |
+| LinkedIn background | `social/tap-linkedin-cover-light.png` or `tap-linkedin-cover-dark.png` |
+| Default link preview | `social/tap-opengraph-light.png` or `tap-opengraph-dark.png` |
 
 ## Folder guide
 
-- **logos/**: SVG, transparent PNG and vector PDF. Primary, horizontal, masthead and compact layouts each have on-light, on-dark and black variants. The black variant uses a white circle for monochrome reproduction. Name-only wordmarks also include purple and white.
-- **icons/**: main portrait with eyes and micro portrait without eyes. Bare black artwork is transparent. On-dark versions have lilac backing for the main face and white backing for the micro face. There are no inverted faces.
-- **favicons/**: SVG; 16, 32, 48, 64 and 96 px PNGs; ICO containing 16/32/48 px frames; Apple touch, web-manifest icons and an optional manifest. Browser-icon strokes have a small weight adjustment to remain visible at tiny sizes.
-- **social/**: 1024 px avatars, 1500 × 500 covers and 1200 × 630 link previews, with SVG originals.
-- **banners/**: 1600 × 400 mastheads in SVG and PNG.
-- **source/**: vector masters, live-text primary logo, font and licence. The portrait master has six named paths; the micro master uses the same paths with the two eyes omitted.
-- **reference/**: the approved portrait image. This is a reference, not the asset to deploy.
+- **logos/**: SVG, transparent PNG and vector PDF. Primary, horizontal, masthead and compact layouts each have light-surface, dark-surface and monochrome variants. Name-only wordmarks also include white and purple.
+- **icons/**: main portrait with eyes and eyeless micro portrait, in SVG and PNG. Bare artwork and backed versions are supplied.
+- **favicons/**: SVG; 16, 32, 48, 64 and 96 px PNGs; ICO with 16/32/48 px frames; touch and web-manifest icons; optional manifest.
+- **social/**: 1024 px avatars, 1500 x 500 generic covers, 1584 x 396 LinkedIn covers and 1200 x 630 link previews, with SVG originals.
+- **banners/**: 1600 x 400 website mastheads in SVG and PNG.
+- **source/**: approved vector masters, editable-text primary logo, build scripts, font and licence.
+- **reference/**: approved portrait image, for reference rather than deployment.
 - **web/**: integration guidance, HTML/CSS examples and colour tokens.
-- **ASSET-MANIFEST.csv**: file inventory, dimensions, sizes and SHA-256 checksums; excludes itself.
+- **ASSET-MANIFEST.csv**: file dimensions, byte sizes and SHA-256 checksums, excluding the manifest itself.
 
-## Format and colour notes
+## Formats
 
-Production SVG and PDF lettering is outlined. No font installation is required to display it. The editable text source uses the included Liberation Sans Bold, a metrically compatible alternative to Arial. The website continues to use Arial/Helvetica for UI and headings, and Georgia for reading.
+Use SVG for scalable website artwork, PNG for uploads, and PDF for vector placement in print/layout software. Production lettering is outlined, so no font installation is needed. The live-text source uses the bundled Liberation Sans Bold. Website UI/headings remain Arial/Helvetica; reading text remains Georgia.
 
-All production artwork uses flat RGB colours. SVG is preferred for web and editing, PNG for uploads, and PDF for vector placement in print layouts. Obtain a printer-specific proof for colour-critical print work.
-
-The browser favicon has transparent corners. Apple touch and maskable home-screen icons are separate opaque-white square assets for platform cropping. Those squares are not the browser favicon.
+Artwork uses flat RGB colours. For colour-critical print, obtain a printer-specific proof. Browser favicons have transparent corners; Apple touch and maskable icons are separate opaque white squares for platform cropping.

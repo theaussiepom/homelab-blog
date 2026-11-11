@@ -3,6 +3,7 @@ import { z } from 'astro/zod';
 import { articleFields, validateArticle } from '../src/lib/editorial.mjs';
 import { createSatteriMarkdownProcessor } from '@astrojs/markdown-satteri';
 import { articleReadingTime } from '../src/lib/reading-time.mjs';
+import { author } from '../src/lib/author.mjs';
 
 const processor = await createSatteriMarkdownProcessor({
   mdastPlugins: [articleReadingTime],
@@ -35,6 +36,12 @@ const article = {
 };
 for (const articleType of ['guide', 'architecture', 'investigation', 'post'])
   assert.ok(schema.safeParse({ ...article, articleType }).success);
+const legacyAuthor = { name: 'Ben' };
+const resolved = schema.parse({ ...article, authors: [legacyAuthor] });
+assert.equal(legacyAuthor.name, 'Ben', 'Do not rewrite the source attribution');
+assert.equal(resolved.authors[0].name, author.name);
+assert.equal(resolved.authors[0].url, 'https://theaussiepom.me/about/');
+assert.deepEqual(schema.parse(article).authors, article.authors);
 assert.ok(schema.safeParse({ articleType: 'page', title: 'Index' }).success);
 for (const field of ['description', 'date', 'authors', 'tags']) {
   const invalid = { ...article };

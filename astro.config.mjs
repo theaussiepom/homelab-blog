@@ -3,9 +3,16 @@ import { satteri } from '@astrojs/markdown-satteri';
 import starlight from '@astrojs/starlight';
 import starlightBlog from 'starlight-blog';
 import { articleReadingTime } from './src/lib/reading-time.mjs';
-import { siteTitle } from './src/lib/site.mjs';
+import {
+  siteTitle,
+  siteDescription,
+  siteOrigin,
+  brandAsset,
+} from './src/lib/site.mjs';
+import { author } from './src/lib/author.mjs';
+import { primaryNavigation } from './src/lib/navigation.mjs';
 
-const site = process.env.SITE_URL || 'https://theaussiepom.me';
+const site = process.env.SITE_URL || siteOrigin;
 const url = new URL(site);
 if (
   url.protocol !== 'https:' ||
@@ -28,7 +35,7 @@ export default defineConfig({
     starlight({
       title: siteTitle,
       routeMiddleware: './src/shareRouteData.ts',
-      favicon: '/brand/favicons/favicon.ico?v=2',
+      favicon: brandAsset('favicons/favicon.ico'),
       customCss: ['./src/styles/hybrid.css'],
       components: {
         Hero: './src/components/HomeHero.astro',
@@ -37,16 +44,21 @@ export default defineConfig({
         Footer: './src/components/ArticleFooter.astro',
         Sidebar: './src/components/ArticleSidebar.astro',
         PageSidebar: './src/components/ArticlePageSidebar.astro',
+        SocialIcons: './src/components/SocialIcons.astro',
       },
-      description:
-        'Practical guides, architecture stories and investigations from a curious homelab.',
+      description: siteDescription,
       defaultLocale: 'root',
       locales: { root: { label: 'English (Australia)', lang: 'en-AU' } },
       social: [
         {
           icon: 'github',
-          label: 'GitHub',
-          href: 'https://github.com/theaussiepom',
+          label: `${author.name} on GitHub`,
+          href: author.github,
+        },
+        {
+          icon: 'linkedin',
+          label: `${author.name} on LinkedIn`,
+          href: author.linkedin,
         },
       ],
       head: [
@@ -57,7 +69,7 @@ export default defineConfig({
             rel: 'icon',
             type: 'image/png',
             sizes: '32x32',
-            href: '/brand/favicons/favicon-32x32.png?v=2',
+            href: brandAsset('favicons/favicon-32x32.png'),
           },
         },
         {
@@ -66,7 +78,7 @@ export default defineConfig({
             rel: 'icon',
             type: 'image/svg+xml',
             sizes: 'any',
-            href: '/brand/favicons/favicon.svg?v=2',
+            href: brandAsset('favicons/favicon.svg'),
           },
         },
         {
@@ -74,19 +86,19 @@ export default defineConfig({
           attrs: {
             rel: 'apple-touch-icon',
             sizes: '180x180',
-            href: '/brand/favicons/apple-touch-icon.png?v=2',
+            href: brandAsset('favicons/apple-touch-icon.png'),
           },
         },
         {
           tag: 'link',
           attrs: {
             rel: 'manifest',
-            href: '/brand/favicons/site.webmanifest?v=2',
+            href: brandAsset('favicons/site.webmanifest'),
           },
         },
       ],
       sidebar: [
-        { label: 'Home', link: '/' },
+        ...primaryNavigation,
         {
           label: 'Stories',
           items: [{ autogenerate: { directory: 'architecture' } }],
@@ -94,8 +106,7 @@ export default defineConfig({
       ],
       plugins: [
         starlightBlog({
-          title: siteTitle,
-          description: 'Shorter notes from Ben’s homelab.',
+          title: 'Notes',
           navigation: 'none',
         }),
       ],

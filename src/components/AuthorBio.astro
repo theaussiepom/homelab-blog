@@ -1,11 +1,13 @@
 ---
 import { Image } from 'astro:assets';
 import portrait from '../assets/authors/ben.jpg';
+import { author, isSiteAuthor } from '../lib/author.mjs';
+import AuthorLinks from './AuthorLinks.astro';
 
 const { data } = Astro.locals.starlightRoute.entry;
 const showBio =
   data.articleType !== 'page' &&
-  data.authors?.some(({ name }) => name === 'Ben');
+  data.authors?.some(({ name }) => isSiteAuthor(name));
 ---
 
 {showBio && (
@@ -15,15 +17,12 @@ const showBio =
     data-pagefind-ignore
   >
     <div class="hl-author-heading">
-      <h2 id="author-bio-heading">About Ben</h2>
-      <a class="hl-author-github" href="https://github.com/theaussiepom">
-        GitHub · @theaussiepom
-      </a>
+      <h2 id="author-bio-heading">About {author.name}</h2>
     </div>
     <Image
       class="hl-author-portrait"
       src={portrait}
-      alt="Ben at the beach"
+      alt={author.portraitAlt}
       width={112}
       height={112}
       widths={[64, 112, 128, 224]}
@@ -31,18 +30,8 @@ const showBio =
       loading="lazy"
     />
     <div class="hl-author-copy">
-      <p>
-        I’m a software engineer, AI enthusiast, homelab tinkerer and passionate
-        gourmet cook. I love pushing boundaries, challenging conventional
-        thinking and finding simple, practical solutions to complex technical
-        problems. I’m a big believer in starting with an MVP, proving what works
-        and building from there.
-      </p>
-      <p>
-        Away from the keyboard, you’ll find me experimenting with gourmet
-        cooking, enjoying a good coffee, a great Shiraz or a pint of Guinness.
-        Whether it’s technology or food, I’m always keen to try something new.
-      </p>
+      <p>{author.shortBio}</p>
+      <AuthorLinks includeAbout />
     </div>
   </section>
 )}
@@ -69,13 +58,6 @@ const showBio =
   h2 {
     margin: 0;
     font: 700 1.25rem/1.25 var(--sl-font);
-  }
-  .hl-author-github {
-    display: inline-block;
-    margin-block-start: 0.25rem;
-    color: var(--hl-accent);
-    font: 0.875rem/1.75 var(--sl-font);
-    text-decoration: underline;
   }
   .hl-author-portrait {
     grid-area: portrait;

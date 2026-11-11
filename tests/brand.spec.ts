@@ -15,7 +15,7 @@ for (const theme of ['light', 'dark']) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(story);
       const brand = page.getByRole('link', {
-        name: 'The Curious Engineer',
+        name: 'The Aussie Pom',
         exact: true,
       });
       await expect(brand).toHaveCount(1);
@@ -54,7 +54,7 @@ for (const theme of ['light', 'dark']) {
       }
     }
     const brand = page.getByRole('link', {
-      name: 'The Curious Engineer',
+      name: 'The Aussie Pom',
       exact: true,
     });
     await brand.focus();
@@ -74,7 +74,7 @@ test('branded icons and sharing metadata preserve each article identity', async 
     if (path === '/') {
       await expect(image).toHaveAttribute(
         'content',
-        'https://theaussiepom.me/brand/social/tce-opengraph-light.png?v=2',
+        'https://theaussiepom.me/brand/social/tap-opengraph-light.png?v=3',
       );
     } else {
       await expect(image).toHaveAttribute(
@@ -107,7 +107,7 @@ test('branded icons and sharing metadata preserve each article identity', async 
         'content',
         description,
       );
-      await expect(page).toHaveTitle(`${storyTitle} | The Curious Engineer`);
+      await expect(page).toHaveTitle(`${storyTitle} | The Aussie Pom`);
       await expect(
         page.locator('meta[property="og:description"]'),
       ).toHaveAttribute('content', description);
@@ -127,7 +127,7 @@ test('branded icons and sharing metadata preserve each article identity', async 
   const response = await request.get(manifestPath!);
   expect(response.ok()).toBe(true);
   const manifest = await response.json();
-  expect(manifest.name).toBe('The Curious Engineer');
+  expect(manifest.name).toBe('The Aussie Pom');
   expect(manifest.display).toBe('browser');
   expect(
     manifest.icons.some(
@@ -142,7 +142,7 @@ test('branded icons and sharing metadata preserve each article identity', async 
       icon.sizes,
     );
   }
-  const social = await request.get('/brand/social/tce-opengraph-light.png');
+  const social = await request.get('/brand/social/tap-opengraph-light.png');
   expect(social.ok()).toBe(true);
   const bytes = await social.body();
   expect([bytes.readUInt32BE(16), bytes.readUInt32BE(20)]).toEqual([1200, 630]);

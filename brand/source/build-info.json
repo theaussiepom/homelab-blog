@@ -1,0 +1,251 @@
+{
+  "version": "3.0",
+  "canvases": {
+    "primary": [
+      976,
+      360
+    ],
+    "horizontal": [
+      806,
+      176
+    ],
+    "masthead": [
+      514,
+      104
+    ],
+    "compact": [
+      653,
+      208
+    ],
+    "wordmark": [
+      766,
+      130
+    ]
+  },
+  "text_bounds": [
+    {
+      "text": "The Aussie Pom",
+      "size": 96,
+      "x": 400,
+      "baseline": 183,
+      "width": 712.0968750000002,
+      "max_width": 1124
+    },
+    {
+      "text": "Software, systems and curiosity in action.",
+      "size": 36,
+      "x": 404,
+      "baseline": 258,
+      "width": 681.3070312500005,
+      "max_width": 1120
+    },
+    {
+      "text": "theaussiepom.me",
+      "size": 24,
+      "x": 406,
+      "baseline": 318,
+      "width": 194.33437500000005,
+      "max_width": 1118
+    },
+    {
+      "text": "The Aussie Pom",
+      "size": 92,
+      "x": 432,
+      "baseline": 218,
+      "width": 682.426171875,
+      "max_width": 992
+    },
+    {
+      "text": "Software, systems and curiosity in action.",
+      "size": 34,
+      "x": 436,
+      "baseline": 291,
+      "width": 643.4566406249995,
+      "max_width": 988
+    },
+    {
+      "text": "theaussiepom.me",
+      "size": 24,
+      "x": 438,
+      "baseline": 351,
+      "width": 194.33437500000005,
+      "max_width": 986
+    },
+    {
+      "text": "The",
+      "size": 46,
+      "x": 438,
+      "baseline": 194,
+      "width": 79.48027343750002,
+      "max_width": 698
+    },
+    {
+      "text": "Aussie Pom",
+      "size": 96,
+      "x": 434,
+      "baseline": 306,
+      "width": 527.915625,
+      "max_width": 702
+    },
+    {
+      "text": "Software, systems",
+      "size": 34,
+      "x": 440,
+      "baseline": 384,
+      "width": 284.97910156250003,
+      "max_width": 696
+    },
+    {
+      "text": "and curiosity in action.",
+      "size": 34,
+      "x": 440,
+      "baseline": 431,
+      "width": 350.73124999999993,
+      "max_width": 696
+    },
+    {
+      "text": "Ben Dennis",
+      "size": 24,
+      "x": 72,
+      "baseline": 554,
+      "width": 126.62343750000002,
+      "max_width": 450
+    },
+    {
+      "text": "The Aussie Pom",
+      "size": 72,
+      "x": 430,
+      "baseline": 142,
+      "width": 534.0726562499999,
+      "max_width": 1074
+    },
+    {
+      "text": "Software, systems and curiosity in action.",
+      "size": 31,
+      "x": 434,
+      "baseline": 215,
+      "width": 586.6810546875005,
+      "max_width": 1070
+    },
+    {
+      "text": "Ben Dennis  /  theaussiepom.me",
+      "size": 23,
+      "x": 436,
+      "baseline": 272,
+      "width": 336.08525390625016,
+      "max_width": 1068
+    },
+    {
+      "text": "The Aussie Pom",
+      "size": 96,
+      "x": 400,
+      "baseline": 183,
+      "width": 712.0968750000002,
+      "max_width": 1124
+    },
+    {
+      "text": "Software, systems and curiosity in action.",
+      "size": 36,
+      "x": 404,
+      "baseline": 258,
+      "width": 681.3070312500005,
+      "max_width": 1120
+    },
+    {
+      "text": "theaussiepom.me",
+      "size": 24,
+      "x": 406,
+      "baseline": 318,
+      "width": 194.33437500000005,
+      "max_width": 1118
+    },
+    {
+      "text": "The Aussie Pom",
+      "size": 92,
+      "x": 432,
+      "baseline": 218,
+      "width": 682.426171875,
+      "max_width": 992
+    },
+    {
+      "text": "Software, systems and curiosity in action.",
+      "size": 34,
+      "x": 436,
+      "baseline": 291,
+      "width": 643.4566406249995,
+      "max_width": 988
+    },
+    {
+      "text": "theaussiepom.me",
+      "size": 24,
+      "x": 438,
+      "baseline": 351,
+      "width": 194.33437500000005,
+      "max_width": 986
+    },
+    {
+      "text": "The",
+      "size": 46,
+      "x": 438,
+      "baseline": 194,
+      "width": 79.48027343750002,
+      "max_width": 698
+    },
+    {
+      "text": "Aussie Pom",
+      "size": 96,
+      "x": 434,
+      "baseline": 306,
+      "width": 527.915625,
+      "max_width": 702
+    },
+    {
+      "text": "Software, systems",
+      "size": 34,
+      "x": 440,
+      "baseline": 384,
+      "width": 284.97910156250003,
+      "max_width": 696
+    },
+    {
+      "text": "and curiosity in action.",
+      "size": 34,
+      "x": 440,
+      "baseline": 431,
+      "width": 350.73124999999993,
+      "max_width": 696
+    },
+    {
+      "text": "Ben Dennis",
+      "size": 24,
+      "x": 72,
+      "baseline": 554,
+      "width": 126.62343750000002,
+      "max_width": 450
+    },
+    {
+      "text": "The Aussie Pom",
+      "size": 72,
+      "x": 430,
+      "baseline": 142,
+      "width": 534.0726562499999,
+      "max_width": 1074
+    },
+    {
+      "text": "Software, systems and curiosity in action.",
+      "size": 31,
+      "x": 434,
+      "baseline": 215,
+      "width": 586.6810546875005,
+      "max_width": 1070
+    },
+    {
+      "text": "Ben Dennis  /  theaussiepom.me",
+      "size": 23,
+      "x": 436,
+      "baseline": 272,
+      "width": 336.08525390625016,
+      "max_width": 1068
+    }
+  ]
+}

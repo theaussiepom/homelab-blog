@@ -1,0 +1,36 @@
+---
+import config from 'virtual:starlight/user-config';
+import { Icon } from '@astrojs/starlight/components';
+---
+
+{config.social?.map(({ label, href, icon }) => (
+  <a
+    class="hl-social-link"
+    {href}
+    aria-label={label}
+    title={icon === 'rss' ? 'Subscribe by RSS' : label}
+    rel={icon === 'rss' ? 'alternate' : 'me'}
+  >
+    <Icon name={icon} aria-hidden="true" />
+  </a>
+))}
+
+<style>
+  .hl-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    flex-shrink: 0;
+    color: var(--sl-color-text-accent);
+    border-radius: 0.25rem;
+  }
+  .hl-social-link:hover {
+    color: var(--sl-color-white);
+  }
+  .hl-social-link :global(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+</style>

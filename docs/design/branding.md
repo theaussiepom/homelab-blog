@@ -1,57 +1,63 @@
-# The Curious Engineer: brand identity
+# The Aussie Pom: brand identity
 
-Version 2.0 | 11 November 2026
+Version 3.0 | 12 November 2026
 
-Use the supplied portrait identity with the existing warm paper, ink and purple palette. The [visual style guide](style-guide.md) controls page layout and reading typography; the [voice guide](../editorial/voice.md) controls the writing. This Markdown defines how the identity is used in the site.
+Use the supplied identity with the established warm paper, ink and purple palette. The [visual style guide](style-guide.md) controls layout and typography; the [voice guide](../editorial/voice.md) controls the writing.
 
-## Artwork and authority
+## Identity and ownership
 
-`brand/` is the single authoritative kit. Update it in place when artwork is approved; do not keep numbered, versioned or historical kit folders in the repository or public assets. `public/brand/` is only the selected runtime export of that same kit, verified byte for byte against its originals.
+| Item                | Required value                             |
+| ------------------- | ------------------------------------------ |
+| Publication         | The Aussie Pom                             |
+| Author display name | Ben Dennis                                 |
+| Supporting line     | Software, systems and curiosity in action. |
+| Homepage headline   | There’s always one more thing to build.    |
+| Website             | https://theaussiepom.me/                   |
+| GitHub              | https://github.com/theaussiepom            |
+| LinkedIn            | https://www.linkedin.com/in/theaussiepom/  |
 
-The complete supplied v2.0 suite lives in [brand/](../../brand/START-HERE.md), including vector masters, PNG and PDF exports, social artwork, the original usage guide and the source font licence. Preserve its 118 files byte for byte against [ASSET-MANIFEST.csv](../../brand/ASSET-MANIFEST.csv). The manifest is a separate file. The original PDF is an archived brand resource, not a second maintained edition of the layout guide.
+[Site settings](../../src/lib/site.mjs) own the publication name, origin, description, supporting line and asset cache version. [Author data](../../src/lib/author.mjs) owns Ben’s display name, biography and profile links. Preserve `Ben` as the existing source attribution key; the content schema resolves it to Ben Dennis and the About URL for display and native blog metadata. Unknown contributors retain their own attribution.
 
-Production SVG lettering is outlined. It needs no installed font, font service or browser font download. The bundled Liberation Sans Bold and its SIL Open Font License belong with the editable source. Website headings and controls continue to use Arial/Helvetica; long-form reading continues to use Georgia.
+Keep the domain, repository ownership, article paths and canonical URLs. The supporting line belongs in the homepage introduction as readable text with natural wrapping. Keep it out of the shared masthead and article titles. The homepage retains its personal introduction and featured story, with an About Ben link near the introduction.
 
-Use the approved portrait with its rounded connected goatee, thin glasses, subtle eyes and small smile. The face stays black in both themes, on the supplied soft lilac circle. Only the wordmark changes from dark ink on light surfaces to warm white on dark surfaces. Do not invert the image or apply colour filters. The black monochrome lockup uses a white circle; white and purple variants are available for the name-only wordmark, never the face.
+## One authoritative kit
 
-Keep the supplied aspect ratios and head tilt. Leave clear space around the artwork, approximately a quarter of the portrait circle's diameter. Avoid shadows, glow, gradients, stretching or additional technology symbols in the identity.
+`brand/` is the single authoritative kit. Its [manifest](../../brand/ASSET-MANIFEST.csv) identifies all 127 supplied originals, including usage guidance, production exports, editable masters, build scripts and licensed fonts. The manifest itself is separate. `public/brand/` contains only the 18 selected runtime exports, verified byte for byte against those originals. Do not keep competing numbered, versioned or historical kit directories in the repository.
 
-## Choosing artwork
+Distribute the complete kit as **The-Aussie-Pom-Brand-Suite.zip**, with its manifest and editable sources. The supplied PDF is archived brand guidance; the Markdown visual guide remains the website layout specification. Preserve supplied files against their checksums. Refresh the manifest deliberately if future approved artwork is rebuilt, and verify dimensions as well as bytes.
 
-| Placement                                 | Required treatment                                                                                  |
-| ----------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| Shared website header                     | Approved portrait with eyes; masthead or compact lockup according to available width.               |
-| Larger logo, introduction or presentation | Full-portrait primary or horizontal lockup.                                                         |
-| Avatar                                    | Supplied full-portrait square or circular avatar.                                                   |
-| Browser favicon                           | Black micro portrait without eyes, on a solid white circle with transparent corners in both themes. |
-| Apple touch icon                          | Separate opaque-white 180 px square.                                                                |
-| Maskable icon                             | Separate opaque-white 512 px square with the portrait inside its safe circle.                       |
-| Homepage and fallback link preview        | Supplied 1200 × 630 light PNG, independent of the reader's selected theme.                          |
-| Published article link preview            | Generated editorial card with the article title, type and a small approved portrait on lilac.       |
-| Author biography                          | The author's approved photograph and supplied biography. The logo does not replace the photograph.  |
+Production SVG/PDF lettering is outlined. Logo editing and sharing-card rendering use bundled Liberation Sans Bold with its font licence. The website retains Arial/Helvetica for headings and controls and Georgia for reading. Do not add a font service or replace the website typography with the logo font.
 
-The approved portrait under `brand/reference/` is a visual reference. Use the standalone production assets for the site. The main portrait retains its eyes; the micro portrait omits only the two eye paths, with a slight stroke-weight adjustment in the browser favicon for small sizes. Keep the larger banners and alternate print/social formats available in the archive; add them to the public asset set when a concrete placement needs them.
+## Portrait, palette and themes
 
-## Header and themes
+Preserve the approved geometry, head tilt, rounded connected goatee, thin glasses, subtle eyes and balanced smile. Do not redraw, regenerate, stretch or filter the face. It stays black on the supplied lilac circle in both themes. Only the wordmark lettering changes from ink to warm white for dark surfaces. The monochrome black lockup uses a white circle.
 
-[SiteTitle.astro](../../src/components/SiteTitle.astro) supplies one home link whose accessible name comes from Starlight's configured site title. The images are decorative within that named link. Show the on-light or on-dark artwork according to Starlight's existing `data-theme` value, including system-following Auto mode. Do not add another theme switcher or colour-scheme store.
+Use paper `#FAF8F3`, ink `#252535`, purple `#62429A` and lilac `#E2D7F5`, with the visual guide’s dark-mode roles. Preserve aspect ratios and clear space. Avoid shadows, glow, gradients or extra technology symbols in the identity.
 
-The existing header remains 80 px tall. Use the 644 × 104 masthead at up to 312 CSS pixels wide. At 448 px and narrower, use the 745 × 240 compact lockup at 160 CSS pixels wide. Both fit the header's approximately 56 px content height. Preserve intrinsic dimensions, scale proportionally and keep search and Menu usable at 320 px. The compact layout keeps the lettering readable without squeezing a single line beside the controls.
+The main portrait and author photograph have separate roles. Use the supplied illustrated portrait in the identity and share-card signature. Use the approved photograph for the About page and article biography.
 
-Print uses the on-light artwork. Images outside a named decorative link need appropriate alternative text, such as “The Curious Engineer”.
+## Header, navigation and profiles
 
-## Icons and sharing metadata
+[SiteTitle.astro](../../src/components/SiteTitle.astro) provides one home link with the publication’s accessible name and decorative images. Use `tap-masthead-on-light.svg` and `tap-masthead-on-dark.svg`, with intrinsic dimensions 514 × 104. Display at 272 CSS pixels wide, approximately 55 pixels high inside the existing 80-pixel header. At 448 pixels and narrower, use the 653 × 208 compact lockup at 160 pixels wide. Keep search, Menu and focus rings usable at 320 pixels.
 
-Runtime files live under `public/brand/`, preserving the suite's subfolders. The matching files in `brand/` are their originals. `public/favicon.svg` retains the previous favicon URL with the new supplied artwork. Header and head-metadata asset URLs carry `?v=2` so clients request the revised files rather than reusing an earlier version at the same URL. This does not alter the archived bytes or guarantee refresh of an external sharing platform's cache.
+Follow the native Light/Dark/Auto mechanism. Do not add another theme store. Print uses the on-light artwork. A standalone logo needs meaningful alternative text; the decorative image within the named home link uses empty alternative text.
 
-[Astro configuration](../../astro.config.mjs) selects the ICO fallback, SVG and 32 px PNG favicons, Apple touch icon and the single manifest. The manifest references the separate web and maskable icons and keeps ordinary browser display mode. It does not introduce a service worker or offline application.
+Order social controls GitHub, LinkedIn, RSS. Use equal optical sizing, the site’s colours, 44-pixel interaction targets, descriptive accessible names and useful hover labels. Preserve the native separator from theme selection and the existing mobile-menu placement. The blog plugin supplies the RSS destination automatically; do not add a duplicate feed link. GitHub points to Ben’s personal profile.
 
-Use an absolute public URL for sharing images, derived from the configured site origin. The light Open Graph image is the homepage image and site-wide fallback. The dark version is available as an alternative artwork asset; sharing platforms do not select it from the reader's theme. Published articles receive a 1200 × 630 opaque editorial card with their title as the dominant element, a small article-type label, the approved portrait on lilac, the publication name and domain. Use generous margins, bold Liberation Sans lettering and the warm paper/ink/purple palette. Keep the description in metadata. Do not add technology imagery or a large decorative logo.
+Add About Ben to the existing global navigation, separate from technical stories. The About page uses the established reading layout, the author photograph and clearly labelled profile links. Article cards retain their compact design and photograph, with “About Ben Dennis”, a 40–60 word biography, a link to the full About page and separate GitHub and LinkedIn links. Do not duplicate that card on the homepage or About page.
 
-The [URL preview guide](../sharing-previews.md) defines automatic generation, content-hashed paths, text-fit checks and validated `share` overrides. Article artwork carries the title; the article's short description supplies the social text caption beneath it. Starlight route middleware supplies a final, non-duplicated metadata set after plugin middleware; native page titles, descriptions, canonical routes, feeds and structured data retain their roles. Use `share` fields rather than competing social tags in native `head` frontmatter.
+## Icons and previews
 
-## Updating and checking
+The favicon is the eyeless micro portrait in black on a solid white circle, transparent outside the circle. Preserve its optical stroke weight. Apple touch uses an opaque white 180-pixel square; the maskable icon has its separately specified white background and safe area. Do not invert these in dark mode. The supplied manifest keeps browser display mode without adding a service worker, installation prompt or offline behaviour.
 
-Replace the archive and runtime asset directories from an updated suite rather than merging obsolete artwork into them. Keep the manifest, public copies, intrinsic dimensions and documentation consistent. Retired pointed-beard and inverted-face assets must not remain alongside the approved suite. Do not run formatters over supplied artwork, manifests, font files or original guidance. Those directories are excluded from Prettier so their original checksums remain useful.
+The `brandAsset()` helper adds the shared cache version to header, icon, manifest and fallback-preview references. Keep intrinsic dimensions, paths and checksums consistent when changing assets. `public/favicon.svg` preserves the earlier favicon URL as an alias of the supplied new SVG.
 
-Run `npm run test:brand` to verify the archived checksums, reject unlisted archive files and check the public copies. It is included in `npm run validate`. Check the header visually in both themes at mobile and desktop widths, confirm keyboard focus and the link's accessible name, and verify that icons and manifest assets load. Check sharing metadata on an article as well as the homepage. Destination-platform social crops and browser icon caches require their own live checks after deployment.
+The fixed homepage/fallback preview is `social/tap-opengraph-light.png`, 1200 × 630. Sharing services do not select its theme from the viewer’s website preference. Published article previews retain the existing generated editorial template: dominant article title, small category label, black portrait on lilac, publication name and domain. Follow [URL previews](../sharing-previews.md) for hashing, overrides, draft exclusion and caption metadata.
+
+## Validation and maintenance
+
+Run `npm run validate` and the source-safety checks. `npm run test:brand` verifies original checksums, rejects unlisted assets or competing kit folders, decodes declared image dimensions and compares runtime exports with their originals. Check the replacement ZIP against the same manifest and files.
+
+Inspect homepage, About and an article at desktop and narrow mobile widths, in both themes. Check masthead geometry, keyboard focus, mobile navigation, author links, sharing cards, 16/32-pixel icons and Auto theme behaviour. Receiving platforms control final preview layout and caching; local checks do not establish their presentation.
+
+Reciprocal links from Ben’s GitHub and LinkedIn profiles to the website are a separate follow-up. Do not change external profile settings while integrating the site identity.

@@ -2,6 +2,16 @@
 
 Evidence recorded on 10 November 2026. Configuration presence is distinguished from actual execution.
 
+## The Aussie Pom rebrand, local review, 12 November 2026
+
+The review branch uses The Aussie Pom as the publication and Ben Dennis as the public author. Shared identity and author data supply the supporting line, personal profile links, article credits, short biography and About page. Existing `Ben` source attribution keys resolve to Ben Dennis; other contributors retain their own names. The 287-word About page includes the supplied community motivation and the blog's early-days context. Article cards use a 54-word biography and link to About, GitHub and LinkedIn. The existing three article files and their canonical routes are unchanged.
+
+The supplied suite replaces the prior kit in `brand/`, with 127 manifest-verified originals and 18 byte-matched runtime exports. Portrait and micro-master geometry is identical to the preceding approved artwork; only their name-bearing accessibility metadata changes. Favicon PNG and ICO bytes are unchanged. The new mastheads use their supplied dimensions, and shared asset references use cache version 3. The complete replacement ZIP was verified file for file against the authoritative kit, including the manifest, source fonts, licences, editable artwork and build scripts. Git attributes preserve supplied line endings and asset bytes across checkouts.
+
+Local `npm run validate` passed all required checks and 50 Chromium tests. Checks include About and profile navigation on documentation and blog routes, 44px profile controls in GitHub/LinkedIn/RSS order, keyboard focus, native Auto behaviour, both themes, 320px reflow, author cards, static identity/author metadata, feeds, canonical routes, generated share images and draft exclusion. Source/history secret scans and their synthetic negative case passed. Visual review covered homepage, About, article, mobile navigation, author cards and homepage/article sharing images at full size and thumbnail size.
+
+The earlier publication name remains only in dated historical entries below and negative regression assertions, not active site branding or current guidance. No dependencies, external account settings, repository ownership or existing article content were changed. Reciprocal profile links are a separate follow-up. No push, hosted PR preview, merge or deployment was performed during local review. The author subsequently authorised publication; the integrating PR and GitHub Actions runs record hosted validation and delivery. Receiving-platform previews and caches still require their own post-deployment verification.
+
 ## Light-mode code panels, 12 November 2026
 
 The approved treatment uses callout-lilac code surfaces, stronger lilac title bars, purple file titles and a purple-toned frame border. Shared Expressive Code variables cover code surfaces, file headers, terminal headers and copy controls. The visual guide records the treatment.

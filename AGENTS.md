@@ -1,4 +1,4 @@
-# Working in The Curious Engineer
+# Working in The Aussie Pom
 
 Start in exploration when the user is discussing an idea. Implement when they ask to proceed. Stay within the requested scope. An article-writing request normally means prepare a draft; it does not by itself authorise publication. Honour explicit publishing authority already given in the conversation without asking again.
 
