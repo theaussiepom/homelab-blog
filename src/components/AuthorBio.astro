@@ -14,7 +14,12 @@ const showBio =
     aria-labelledby="author-bio-heading"
     data-pagefind-ignore
   >
-    <h2 id="author-bio-heading">About Ben</h2>
+    <div class="hl-author-heading">
+      <h2 id="author-bio-heading">About Ben</h2>
+      <a class="hl-author-github" href="https://github.com/theaussiepom">
+        GitHub · @theaussiepom
+      </a>
+    </div>
     <Image
       class="hl-author-portrait"
       src={portrait}
@@ -58,10 +63,19 @@ const showBio =
     background: var(--hl-callout);
     color: var(--hl-ink);
   }
-  h2 {
+  .hl-author-heading {
     grid-area: heading;
+  }
+  h2 {
     margin: 0;
     font: 700 1.25rem/1.25 var(--sl-font);
+  }
+  .hl-author-github {
+    display: inline-block;
+    margin-block-start: 0.25rem;
+    color: var(--hl-accent);
+    font: 0.875rem/1.75 var(--sl-font);
+    text-decoration: underline;
   }
   .hl-author-portrait {
     grid-area: portrait;
@@ -89,7 +103,7 @@ const showBio =
         'copy copy';
       column-gap: 0.75rem;
     }
-    h2 {
+    .hl-author-heading {
       align-self: center;
     }
   }

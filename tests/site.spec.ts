@@ -12,7 +12,14 @@ const samples = [
   '/blog/tags/placeholder/',
   '/blog/authors/homelab-notes/',
 ];
-const pages = ['/', '/start-here/', '/architecture/', story, '/blog/'];
+const pages = [
+  '/',
+  '/start-here/',
+  '/architecture/',
+  story,
+  '/architecture/proxmox-without-kubernetes/',
+  '/blog/',
+];
 for (const path of pages) {
   test(`renders accessibly: ${path}`, async ({ page }) => {
     const response = await page.goto(path);
