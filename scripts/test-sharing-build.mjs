@@ -163,7 +163,7 @@ try {
   for (const path of [
     'guides/share-build-check',
     'blog/custom-share-route',
-    'architecture/what-i-built-on-proxmox',
+    'guides/editorial-draft-canary',
   ]) {
     await assert.rejects(readFile(join(scratch, 'dist', path, 'index.html')), {
       code: 'ENOENT',

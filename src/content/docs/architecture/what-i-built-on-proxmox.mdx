@@ -1,0 +1,244 @@
+---
+title: How I deploy my Proxmox homelab with GitHub Actions
+description: Adding another service shouldn’t mean doing the same setup work all over again. That led to a Proxmox build I can describe in configuration, review and deploy again.
+articleType: architecture
+date: 2026-11-11
+authors:
+  - name: Ben
+tags:
+  - homelab
+  - proxmox
+  - automation
+  - deployment
+draft: false
+---
+
+import ProxmoxDecisionFigure from '../../../components/ProxmoxDecisionFigure.astro';
+import ArticleScreenshot from '../../../components/ArticleScreenshot.astro';
+import deploymentRun from '../../../assets/articles/homelab-proxmox-journey/github-actions-deploy.png';
+
+I enjoy working out how to get something running. I’d like the next thing I build to benefit from that work, too.
+
+For this [Proxmox](https://www.proxmox.com/en/products/proxmox-virtual-environment/overview) build, I’d made plenty of decisions about where applications should run, how I’d reach them and what needed monitoring and backing up. I wanted those decisions to do more than sit in my notes.
+
+A reviewed change in [Git](https://git-scm.com/) can now become a running service in my homelab. I describe what I want in configuration files, and the deployment uses them to set it up. For the applications it supports, that can include somewhere to run, a web route, monitoring and backup preparation.
+
+There’s a fair amount of work behind that sentence.
+
+I use [GitHub Actions](https://docs.github.com/en/actions) to run the process. [Continuous integration (CI)](https://docs.github.com/en/actions/get-started/continuous-integration) checks proposed changes before they reach the house. [Continuous deployment (CD)](https://docs.github.com/en/actions/get-started/continuous-deployment) puts approved changes into use.
+
+The deployment is already in use, and I’m still refining how I describe it. The examples below use clearer endpoint names and shared backup defaults that I’ve checked together locally. Those revisions are under review and haven’t been deployed yet. The workflow screenshot later in the story shows the earlier working version.
+
+## Make the decision once
+
+Take [Home Assistant](https://www.home-assistant.io/). Getting its application container running is part of the job. I also need to decide which machine runs it, where its files live and how I’ll open it in a browser.
+
+If I tell the deployment one thing and the reverse proxy another, I’ve given myself a problem to find later. I wanted them to use the same answer.
+
+The [HomeLab framework](https://github.com/theaussiepom/homelab/blob/main/docs/start-here.md) calls the configuration for a particular installation a _site_. Mine describes the Proxmox guests, the virtual machines or Linux containers that run my applications. [HomeLab Stack](https://github.com/theaussiepom/homelab-stack/blob/main/docs/guides/design-your-homelab.md) supplies reusable application profiles and guest templates. My site connects those definitions to the machines, networks and storage in my house.
+
+In the site, I assign applications like Home Assistant to a guest by name. That guest already has its resource and network settings. The application profile provides named connections, called _endpoints_, that other parts of the setup can refer to without repeating the address and port.
+
+Here’s how that works for my Home Assistant installation. The configuration uses [YAML](https://yaml.org/), a text format that lets me give these choices names and refer to them elsewhere. I keep the app, guest and route in separate files, selected from `site.yaml`:
+
+```yaml title="site.yaml: selecting the Home Assistant files"
+guests:
+  automation:
+    source: guests/automation.yaml
+apps:
+  homeassistant:
+    source: apps/homeassistant.yaml
+exposures:
+  homeassistant:
+    source: exposures/homeassistant.yaml
+```
+
+`homeassistant` is the app instance’s name; `automation` is its guest. Each `source` points to the file containing that declaration. I’ve shortened the excerpts to the parts we’re following, leaving out private addresses, credentials and the other service bindings.
+
+The app declaration connects Home Assistant to its guest, network and files:
+
+```yaml title="apps/homeassistant.yaml: placement, web access and configuration"
+profile: homeassistant-custom
+guest: automation
+lifecycle: retained
+interfaces:
+  web_interface:
+    interface: http_backend
+storage:
+  config:
+    volume: data
+    subpath: data/homeassistant/config
+```
+
+I use a custom Home Assistant image, so I select the library’s [custom-image profile](https://github.com/theaussiepom/homelab-stack/blob/72fc4f757d3b9a2764cb8d39acd0a3cd1742f818/apps/homeassistant-custom.yaml). `lifecycle: retained` tells the deployment to continue an instance it already manages, keeping its recorded identity and existing configuration.
+
+The profile defines the `web_interface` network role and `config` storage role. I bind `web_interface` to the guest interface called `http_backend`, which supplies the address used for the web endpoint. I bind `config` to the guest’s `data` volume and the directory `data/homeassistant/config` within it.
+
+The full app file also has bindings for device discovery, databases, metrics and messaging, along with the existing runtime identity. The [profile guide](https://github.com/theaussiepom/homelab-stack/blob/72fc4f757d3b9a2764cb8d39acd0a3cd1742f818/docs/reference/apps/homeassistant-custom.md) explains those roles and requirements.
+
+<ProxmoxDecisionFigure kind="declaration" />
+
+That separation gives me somewhere to make each kind of change. Improving how Home Assistant gets installed belongs in its shared profile. Choosing where my copy runs belongs in my site. Someone else can use the same profile with a different arrangement at home.
+
+There’s more to build up front, but each supported installation gives me something I can use repeatedly.
+
+## Giving the applications a home
+
+That `guest: automation` reference takes me to `guests/automation.yaml`. It’s one of the [Linux containers (LXCs)](https://github.com/proxmox/pve-docs/blob/master/pct.adoc) in the [layout I settled on during the Kubernetes investigation](/architecture/proxmox-without-kubernetes/). These guests share the physical server’s Linux kernel, with limits on the memory and processor time each can use. Spare capacity remains available to the others, giving me room to separate services on the same 32 GB machine.
+
+Home Assistant and [Node-RED](https://nodered.org/), which runs my automation flows, share this guest. They each have their own [Docker](https://docs.docker.com/get-started/docker-overview/) container, so I can update one application while the other stays running. If I restart their guest, both are affected.
+
+The guest’s resources and application storage sit together:
+
+```yaml title="guests/automation.yaml: resources and application storage"
+template: docker
+resources:
+  cpu_cores: 4
+  memory_mib: 4096
+  root_gib: 16
+volumes:
+  data:
+    storage: guest
+    slot: 0
+    path: /srv/homelab
+    size_gib: 16
+```
+
+`template: docker` selects the library’s [Docker guest defaults](https://github.com/theaussiepom/homelab-stack/blob/main/templates/docker.yaml), including Docker installation, startup and security settings. I set this guest to four processor cores, a memory limit of 4096 MiB (4 GiB), and a 16 GiB root disk. If I want to change the memory limit, there’s one `memory_mib` setting to review.
+
+The `data` volume is a separate 16 GiB allocation. `storage: guest` refers to my site’s storage declaration called `guest`; `slot: 0` selects the Proxmox mount slot. Inside the guest, that volume appears at `/srv/homelab`.
+
+That gives the earlier app binding a concrete path. Combine `/srv/homelab` with `data/homeassistant/config`, and Home Assistant’s configuration is at `/srv/homelab/data/homeassistant/config`, mounted into the application at `/config`. Node-RED has its own directory on the same volume. Those paths come from the guest’s volume and each app’s binding, so I don’t need to repeat the full path throughout the deployment.
+
+Getting existing data into that location is part of the migration. These declarations record where Home Assistant should find its configuration; they don’t copy it from the old installation. Ordinary deployments then keep using those bindings to maintain the same instance.
+
+The message broker, which carries messages between services, has its own guest. So do the databases and [Traefik](https://traefik.io/traefik), which directs web requests to the applications. I can work on those shared services separately from the apps that use them.
+
+The deployment reads those assignments from the site. An application update and a change to its guest’s resources can be different jobs.
+
+## From a change to a running service
+
+The deployment needs somewhere to start. I install Proxmox, prepare the required network and storage, and set up a small guest with a [GitHub Actions runner](https://docs.github.com/en/actions/concepts/runners/self-hosted-runners). That’s the machine that picks up the deployment jobs from GitHub.
+
+That initial preparation is the bootstrap. I want to keep it small enough that I’m not manually recreating half the homelab before the deployment can help.
+
+From there, GitHub Actions can pick up the repeatable guest and service setup. I propose a change in Git, review it and let CI check the configuration before deployment uses it. If a route names an endpoint its application profile doesn’t provide, that check refuses the configuration. I’d rather find that in a failed check than while wondering why Home Assistant won’t open.
+
+Two tools do much of the work that follows. [OpenTofu](https://opentofu.org/) manages the guests and their resources. [Ansible](https://docs.ansible.com/) configures what runs inside them. The framework prepares the inputs for both from the same site configuration.
+
+<ProxmoxDecisionFigure kind="change" />
+
+## The jobs I don’t want to remember afterwards
+
+Home Assistant now has somewhere to run and a path to its configuration. The next connection is the one I use to reach it.
+
+Traefik has its own guest so it can reach the applications over private connections without needing access to the internals of their containers.
+
+I choose which services should be reachable and what their routes should do. The route refers to the application’s named endpoint. Deployment writes the routing information into the guest’s Proxmox metadata, where Traefik’s [Proxmox provider plugin](https://github.com/NX211/traefik-proxmox-provider) discovers it and configures the route.
+
+The route file refers back to that same Home Assistant instance:
+
+```yaml title="exposures/homeassistant.yaml: routing to Home Assistant"
+type: http
+target:
+  app: homeassistant
+  endpoint: web_endpoint
+domain: homeassistant
+ingress:
+  app: traefik
+  endpoint: https_endpoint
+tls: public-cert
+resolver: pihole
+```
+
+The `exposures` entry in `site.yaml` names this route `homeassistant`. Its `target` selects that app instance and the endpoint called `web_endpoint` supplied by its profile.
+
+That endpoint exports Home Assistant’s browser connection using Hypertext Transfer Protocol (HTTP). In the profile, it refers to `web_listener`, the listener on port 8123, and gets its address through the `web_interface` role bound earlier. The names distinguish the exported connection, the listener and the application’s network role:
+
+| Piece of the reference   | Where it comes from            | What it selects                          |
+| ------------------------ | ------------------------------ | ---------------------------------------- |
+| `app: homeassistant`     | The site’s `apps` section      | My Home Assistant instance               |
+| `endpoint: web_endpoint` | The application profile        | Its exported HTTP connection             |
+| `web_listener`           | The application profile        | The listener on port 8123                |
+| `web_interface`          | The app’s binding to its guest | The network role bound to `http_backend` |
+
+The profile supplies the port, the guest supplies the address, and the route selects them through the named endpoint. I don’t have to write another copy of that address and port into Traefik’s configuration.
+
+`domain: homeassistant` selects the hostname declared under that name in my site. `ingress` chooses the `https_endpoint` connection on my `traefik` app, and `tls: public-cert` selects my certificate policy.
+
+`resolver: pihole` also uses this declaration to prepare the internal name lookup through [Pi-hole](https://github.com/theaussiepom/homelab-stack/blob/main/docs/reference/apps/pihole.md). The hostname itself lives in one place, and this route carries it through to both the proxy and the resolver. My access policies, middleware and aliases are outside the excerpt; the [route reference](https://github.com/theaussiepom/homelab/blob/be1ab443b5f2841e200b01af67c705870d4f2505/docs/reference/exposures.md) covers the complete declaration.
+
+I wanted monitoring to come with the guest, too. I enable `zabbix:` once in the site. The guest template selects Linux host monitoring, and the application profile adds Docker monitoring. Deployment uses those selections to prepare the [Zabbix agent](https://www.zabbix.com/documentation/current/en/manual/concepts/agent), which reports information about the machine. I don’t have to remember to go back and install the agent afterwards.
+
+## Following the data into the backup
+
+Home Assistant’s [recorder](https://www.home-assistant.io/integrations/recorder/), which stores its history, uses the separate [MariaDB guest](https://github.com/theaussiepom/homelab-stack/blob/main/docs/reference/apps/mariadb.md). Recovering the configuration directory alone would leave that database behind. I need both in the backup plan.
+
+When I enrol a guest in application backups, deployment prepares its client for [Proxmox Backup Server (PBS)](https://www.proxmox.com/en/products/proxmox-backup-server/overview). The same service and storage declarations tell the backup setup where to find the data.
+
+The shared destination, schedule and client defaults are defined once in `site.yaml`:
+
+```yaml title="site.yaml: selected fields from the shared backup job"
+backup:
+  profile: pbs-client
+  defaults:
+    interface: storage
+    staging_volume: pbs_stage
+  job:
+    name: nightly-app-recovery
+    destination:
+      endpoint:
+        external: pbs_storage
+      datastore: recovery
+      namespace: applications
+    schedule:
+      calendar: '16:15'
+      jitter_seconds: 120
+```
+
+`pbs_storage` refers to the PBS endpoint declared elsewhere in my site. `recovery` is the datastore, and `applications` is the namespace under which the job’s guest archives are kept. The scheduler uses Coordinated Universal Time (UTC), so `16:15` gives me a daily run at 2:15 am in Brisbane, with up to two minutes of random delay.
+
+The defaults select a guest’s network interface for reaching PBS and its volume for temporary capture files. Each guest still defines its own `storage` interface and `pbs_stage` volume, with the network settings and space it needs. The defaults save me repeating which ones the backup should use.
+
+The `automation` guest joins the job in its own file. I also raise its capture limit there:
+
+```yaml title="guests/automation.yaml: backup enrolment"
+backup:
+  limits:
+    max_bytes: 4294967296
+```
+
+The guest inherits the shared interface and staging-volume choices. The `max_bytes` setting raises its capture limit to 4 GiB, while the other limits still come from the shared job. A guest that uses all the shared settings can opt in with a bare `backup:`.
+
+Home Assistant and Node-RED share this guest’s backup client. MariaDB joins through its own guest file, bringing its database export into the same coordinated job. The framework builds the client list from those enrolled guests, so I don’t have another list to keep in step when I add one.
+
+The application’s storage binding supplies the data path. Home Assistant’s profile classifies its `config` role as application state, so the job follows that binding to `/srv/homelab/data/homeassistant/config`. I don’t have to type the path into the backup job again.
+
+The full job also permits Home Assistant and Node-RED to be paused while their files and MariaDB’s database export are captured. That gives me a coordinated copy of the application’s files and history. The profiles describe how the data needs to be saved; the site provides the bindings and permission to do it.
+
+The next version gives PBS server configuration its own Deploy job, alongside the one for the Domain Name System (DNS) resolver. Backup activation then waits for that server configuration and the enrolled guest deployments before it installs the coordinated schedule.
+
+The [complete backup setup](https://github.com/theaussiepom/homelab/blob/cbc7c0118a39239c90379d8654f0841781607bcf/docs/backup/README.md) covers the credentials, recovery keys and checks omitted from the excerpt. Installing the software and setting the timer are steps towards protection; a successful capture and restore establish what I can actually recover.
+
+My live application files and databases use local guest storage. The [network-attached storage (NAS)](https://www.synology.com/en-global/dsm/solution/what-is-nas/for-home) box is now the destination for PBS backups. The application can work on its files locally, with its backup going elsewhere.
+
+There’s a whole article in setting up PBS and restoring a service. Here, the useful part is that the backup setup follows the storage bindings I’ve already written for the applications. Deciding where Home Assistant’s files belong also tells the backup where to find them.
+
+## Seventeen green ticks, and the next test
+
+I’ve already had the homelab’s Deploy workflow complete with all 17 jobs green, from validation and guest checks through service jobs and backup.
+
+<ArticleScreenshot
+  src={deploymentRun}
+  alt="GitHub Actions Deploy workflow graph with green checks on all 17 jobs, including validation, guest checks, services and backup."
+  caption="A successful homelab deployment on 10 November 2026, before the configuration refinements described here. The jobs cover guest checks, services and backup."
+  fullSizeLabel="View the deployment at full size"
+/>
+
+I can open that run and follow what happened to each part of the setup. As I continue the migration, those jobs give me something concrete to inspect when a service needs attention.
+
+A complete rebuild is the bigger test ahead. If I have to replace the server, I’ll want the house back up as quickly as possible. That means recovering the data, credentials and existing device pairings as well as installing the software. I haven’t run that full recovery test yet.
+
+For everyday changes, I already have the guest setup and integrations ready for another supported application. I can work out what it needs, review those choices and use the deployment to put them into place.
+
+I’ll keep finding things I want the house to do. Now the work behind one of them can help with the next.

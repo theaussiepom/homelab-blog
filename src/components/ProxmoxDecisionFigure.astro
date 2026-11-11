@@ -1,0 +1,167 @@
+---
+interface Props {
+  kind: 'declaration' | 'change';
+}
+
+const { kind } = Astro.props;
+
+const outputs = [
+  {
+    name: 'Guests',
+    services: 'Resources, networks and storage',
+    detail: 'The places the applications will run.',
+  },
+  {
+    name: 'Applications',
+    services: 'Profiles and guest assignments',
+    detail: 'The supported service setup, with choices from the site.',
+  },
+  {
+    name: 'Routing',
+    services: 'Named application endpoints',
+    detail: 'Traefik routing information derived from those endpoints.',
+  },
+  {
+    name: 'Shared setup',
+    services: 'Monitoring and enrolled backups',
+    detail: 'Guest monitoring and the selected backup preparation.',
+  },
+];
+
+const steps = [
+  { tool: 'Review', action: 'Change the site configuration in Git.' },
+  {
+    tool: 'HomeLab framework',
+    action: 'Check the configuration and prepare deployment inputs.',
+  },
+  { tool: 'OpenTofu', action: 'Manage guests and their resources.' },
+  { tool: 'Ansible', action: 'Configure services and the shared guest setup.' },
+];
+---
+
+<figure class="decision-figure">
+  {kind === 'declaration' && (
+    <>
+      <p class="figure-title">One description, used throughout the build</p>
+      <div class="declaration-source">Reviewed site configuration</div>
+      <ul class="guest-options" role="list">
+        {outputs.map(({ name, services, detail }) => (
+          <li class="figure-card">
+            <strong>{name}</strong>
+            <span class="services">{services}</span>
+            <span class="detail">{detail}</span>
+          </li>
+        ))}
+      </ul>
+      <figcaption>
+        The site selects guests, applications and integrations. The framework
+        uses those choices to prepare the deployment inputs. Backup preparation
+        applies to enrolled guests.
+      </figcaption>
+    </>
+  )}
+  {kind === 'change' && (
+    <>
+      <p class="figure-title">One description feeds the deployment</p>
+      <ol class="change-flow">
+        {steps.map(({ tool, action }, index) => (
+          <li class="figure-card">
+            <span class="step-number">{index + 1}</span>
+            <strong>{tool}</strong>
+            <span>{action}</span>
+          </li>
+        ))}
+      </ol>
+      <div class="service-check">
+        <strong>Verify the result</strong>
+        <span>
+          Connect as a client and check that the expected data is there.
+        </span>
+      </div>
+      <figcaption>
+        The framework prepares OpenTofu and Ansible inputs from the reviewed
+        site configuration. Service checks establish what works after
+        deployment.
+      </figcaption>
+    </>
+  )}
+</figure>
+
+<style>
+  .decision-figure {
+    container-type: inline-size;
+    margin: 2rem 0;
+    padding: clamp(0.875rem, 3vw, 1.25rem);
+    border: 1px solid var(--hl-rule-soft);
+    color: var(--hl-ink);
+    font: 1rem/1.5 var(--sl-font);
+    overflow-wrap: anywhere;
+  }
+  .decision-figure :is(p, div, ul, ol, li, strong, span) {
+    margin: 0;
+  }
+  .decision-figure :is(ul, ol) {
+    padding: 0;
+  }
+  .decision-figure .figure-title {
+    margin-block-end: 1rem;
+    font-weight: 700;
+  }
+  .decision-figure .declaration-source {
+    margin-block-end: 1rem;
+    padding: 0.75rem;
+    border-inline-start: 2px solid var(--hl-accent);
+    background: var(--hl-feature);
+    font-weight: 700;
+  }
+  .guest-options,
+  .change-flow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    list-style: none;
+  }
+  .figure-card {
+    display: grid;
+    align-content: start;
+    gap: 0.625rem;
+    padding: 0.875rem;
+    border-block-start: 2px solid var(--hl-accent);
+    background: var(--hl-callout);
+  }
+  .services {
+    padding: 0.5rem;
+    border: 1px solid var(--hl-rule);
+    background: var(--hl-paper);
+  }
+  .detail {
+    font-size: 0.875rem;
+  }
+  .step-number {
+    color: var(--hl-accent);
+    font-weight: 700;
+  }
+  .decision-figure .service-check {
+    display: grid;
+    gap: 0.25rem;
+    margin-block-start: 0.75rem;
+    padding: 0.75rem 0.875rem;
+    border-inline-start: 2px solid var(--hl-accent);
+    background: var(--hl-feature);
+  }
+  figcaption {
+    margin-block-start: 0.875rem;
+    font: 0.875rem/1.6 var(--sl-font);
+  }
+  @container (max-width: 30rem) {
+    .guest-options,
+    .change-flow {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media print {
+    .decision-figure {
+      break-inside: avoid;
+    }
+  }
+</style>

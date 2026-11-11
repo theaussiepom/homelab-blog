@@ -17,6 +17,7 @@ const pages = [
   '/',
   story,
   '/architecture/proxmox-without-kubernetes/',
+  '/architecture/what-i-built-on-proxmox/',
   '/blog/',
 ];
 for (const path of pages) {
@@ -59,7 +60,10 @@ test('homepage uses the shared sidebar and links directly to published stories',
   await expect(page).toHaveTitle('Home | The Curious Engineer');
   await expect(page.locator('.hl-brand small')).toHaveCount(0);
   await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
-  await expect(page.locator('.hl-discovery a')).toHaveCount(1);
+  await expect(page.locator('.hl-discovery a')).toHaveText([
+    'How I deploy my Proxmox homelab with GitHub Actions',
+    'Why I chose not to use Kubernetes inside Proxmox',
+  ]);
   for (const path of retiredPages) {
     await expect(page.locator(`a[href="${path}"]`)).toHaveCount(0);
   }
@@ -167,7 +171,12 @@ for (const theme of ['light', 'dark']) {
     );
     for (const width of [320, 390, 700, 768, 1024, 1200, 1440]) {
       await page.setViewportSize({ width, height: 900 });
-      for (const path of ['/', story, '/blog/']) {
+      for (const path of [
+        '/',
+        story,
+        '/architecture/what-i-built-on-proxmox/',
+        '/blog/',
+      ]) {
         await page.goto(path);
         expect(
           await page.evaluate(
@@ -282,7 +291,11 @@ test('article introduction exposes shared metadata in both themes', async ({
   page,
 }) => {
   for (const theme of ['light', 'dark']) {
-    for (const path of [story, '/architecture/proxmox-without-kubernetes/']) {
+    for (const path of [
+      story,
+      '/architecture/proxmox-without-kubernetes/',
+      '/architecture/what-i-built-on-proxmox/',
+    ]) {
       await page.goto(path);
       await page
         .locator('starlight-theme-select select')
