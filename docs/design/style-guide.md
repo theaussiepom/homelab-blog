@@ -1,6 +1,6 @@
 # The Curious Engineer: visual style and layout guide
 
-Version 1.8 | 11 November 2026 | Approved hybrid with v2 portrait identity and sharing cards
+Version 1.9 | 12 November 2026 | Approved hybrid with portrait identity, sharing cards and light code panels
 
 ## 1. Direction and authority
 
@@ -181,22 +181,24 @@ Keep the ending in the same reading flow. Let the author finish the thought and 
 
 ## 6. Components and interaction
 
-| Component             | Required treatment                                                                                                                                              |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Links                 | Accent on light surfaces; inverse accent on dark. Underline prose links. Hover may strengthen the underline; focus must remain explicit.                        |
-| Navigation            | Clear active item using text weight plus an indicator. Preserve visible labels and access to search. Do not rely on colour alone.                               |
-| Mobile menu           | Labelled button with expanded state. Keyboard operable; keep focus order logical. Restore focus on close when using a modal drawer.                             |
-| Featured article      | Lilac surface, serif title, concise summary and one primary reading action. Avoid nested interactive targets.                                                   |
-| Informational callout | Callout surface, 3px accent left edge, clear text label, 16px body and 16-20px padding. Do not use this style for every severity.                               |
-| Code block            | Native light/dark syntax themes, 14px monospace and framework line height. Preserve command whitespace; offer local scrolling for long lines.                   |
-| Inline code           | Monospace, restrained tinted surface, enough padding to distinguish it without breaking line rhythm.                                                            |
-| Table                 | 16px text, strong column headers, generous cell padding and light row rules. Associate headers semantically. Scroll only the table when needed.                 |
-| Diagram               | Callout-tinted nodes, labelled connections and readable text. Provide a meaningful text alternative. Distinguish states with shape or labels as well as colour. |
-| Search                | Retain Pagefind/Starlight search behaviour, keyboard access, result feedback and empty states. Style without replacing its semantics.                           |
+| Component             | Required treatment                                                                                                                                                                                                             |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Links                 | Accent on light surfaces; inverse accent on dark. Underline prose links. Hover may strengthen the underline; focus must remain explicit.                                                                                       |
+| Navigation            | Clear active item using text weight plus an indicator. Preserve visible labels and access to search. Do not rely on colour alone.                                                                                              |
+| Mobile menu           | Labelled button with expanded state. Keyboard operable; keep focus order logical. Restore focus on close when using a modal drawer.                                                                                            |
+| Featured article      | Lilac surface, serif title, concise summary and one primary reading action. Avoid nested interactive targets.                                                                                                                  |
+| Informational callout | Callout surface, 3px accent left edge, clear text label, 16px body and 16-20px padding. Do not use this style for every severity.                                                                                              |
+| Code block            | Native syntax colours, 14px monospace and framework line height. In light mode, use the callout-tinted code surface, lilac title bar, purple title and a purple-toned border. Preserve command whitespace and local scrolling. |
+| Inline code           | Monospace, restrained tinted surface, enough padding to distinguish it without breaking line rhythm.                                                                                                                           |
+| Table                 | 16px text, strong column headers, generous cell padding and light row rules. Associate headers semantically. Scroll only the table when needed.                                                                                |
+| Diagram               | Callout-tinted nodes, labelled connections and readable text. Provide a meaningful text alternative. Distinguish states with shape or labels as well as colour.                                                                |
+| Search                | Retain Pagefind/Starlight search behaviour, keyboard access, result feedback and empty states. Style without replacing its semantics.                                                                                          |
 
 Size primary touch targets to at least 44px by 44px where practical, including Menu, search and copy buttons. Avoid hover-only information. Respect reduced-motion preferences; transitions should be brief and functional, with no automatic animation required for reading.
 
 Preserve framework code-copy controls and accessible labels. Syntax-highlighting colours require their own contrast check against the code background. Do not wrap copyable shell commands in ways that alter their content; the prototype's display wrapping is not a production requirement.
+
+Light-mode code panels use `--hl-callout` (#F0EBF5), with `--hl-feature` (#E2D7F5) for file and terminal headers. Use the accent for file-title text, and mix 60% accent with 40% paper for the thin frame border. Apply these through Expressive Code's shared surface and frame variables so titled blocks, untitled blocks and copy controls belong to the same panel. Retain the existing dark-mode code treatment. Code backgrounds are flat, without shadows or decorative left stripes.
 
 Use authentic article diagrams, photographs or illustrations only when they contribute to understanding. Keep imagery responsive and reserve its layout space to avoid jumps. Sanitise all technical examples and screenshots under the existing editorial policy. No private infrastructure detail belongs in design fixtures.
 

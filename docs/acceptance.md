@@ -2,6 +2,12 @@
 
 Evidence recorded on 10 November 2026. Configuration presence is distinguished from actual execution.
 
+## Light-mode code panels, 12 November 2026
+
+The approved treatment uses callout-lilac code surfaces, stronger lilac title bars, purple file titles and a purple-toned frame border. Shared Expressive Code variables cover code surfaces, file headers, terminal headers and copy controls. The visual guide records the treatment.
+
+The deployment article's six YAML blocks were visually reviewed at desktop and mobile sizes. Checks at 320, 390 and 1200 px found no page overflow, unchanged code text and identical dark-mode appearance before and after the edit. The lowest measured syntax-text contrast against the new light surface was 5.07:1. Keyboard copying preserved exact text, indentation and line breaks. The full required local validation passed, including all 44 Chromium tests; source/history secret scans and their synthetic negative case passed too. The author approved publication after reviewing the local result. Hosted preview and production evidence belongs to the integrating PR and its workflow runs.
+
 ## Article URL-preview captions, 11 November 2026
 
 The author requested a short description beneath the share image instead of repeating the title already in the artwork. Published articles now use their existing description, or `share.description`, for the Open Graph and Twitter title and description fields. The card title still comes from `title` or `share.title`. Homepage metadata, native page titles, article headings, routes and structured data are preserved. Artwork and generated image URLs are unchanged.
