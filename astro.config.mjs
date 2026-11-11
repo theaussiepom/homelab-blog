@@ -45,6 +45,8 @@ export default defineConfig({
         Sidebar: './src/components/ArticleSidebar.astro',
         PageSidebar: './src/components/ArticlePageSidebar.astro',
         SocialIcons: './src/components/SocialIcons.astro',
+        MobileMenuToggle: './src/components/MobileMenuToggle.astro',
+        MobileMenuFooter: './src/components/MobileMenuFooter.astro',
       },
       description: siteDescription,
       defaultLocale: 'root',

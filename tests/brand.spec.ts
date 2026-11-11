@@ -74,7 +74,7 @@ test('branded icons and sharing metadata preserve each article identity', async 
     if (path === '/') {
       await expect(image).toHaveAttribute(
         'content',
-        'https://theaussiepom.me/brand/social/tap-opengraph-light.png?v=3',
+        'https://theaussiepom.me/brand/social/tap-opengraph-light.png?v=1',
       );
     } else {
       await expect(image).toHaveAttribute(

@@ -1,12 +1,12 @@
 # The Aussie Pom: visual style and layout guide
 
-Version 2.0 | 12 November 2026 | The Aussie Pom identity with the approved hybrid layout
+Version 1.0 | 12 November 2026 | Initial approved responsive design
 
 ## 1. Direction and authority
 
 The chosen direction combines the Technical magazine's confident homepage with the Quiet personal publication's warm, comfortable reading experience. Use this guide for future layout, typography, colour and component work. This Markdown is the maintained specification. The PDF edition was retired on 11 November 2026.
 
-These rules define the shared visual language and the required adaptations to the native publishing shell. Bring the implementation into conformance when it differs; record verification and deployment status in the acceptance record. Reference images use synthetic content. Article wording, diagrams and dates in them are examples, not editorial requirements.
+These rules define the shared visual language and the required adaptations to the native publishing shell. Bring the implementation into conformance when it differs; record verification and deployment status in the acceptance record. Visual references are layout targets. Published content supplies titles, descriptions, dates and routes; reference snapshots do not override current content or protected About wording.
 
 The author-reviewed article **From a NAS VM to Proxmox: five versions of my homelab** is the approved benchmark for reading flow, visual pacing, image placement and contents navigation. Follow the [voice guide](../editorial/voice.md) for its conversational storytelling. The current rules below are authoritative for article layout.
 
@@ -14,9 +14,9 @@ Keep the bold sans-serif masthead, dark opening panel and lilac featured article
 
 Use the supplied portrait identity according to the [brand identity guide](branding.md). The approved portrait with eyes and outlined wordmark form the shared masthead. Its face stays black on lilac in both themes; only the lettering changes colour. Reserve the eyeless micro portrait for favicons and home-screen icons. The brand suite preserves this palette and the typography roles below.
 
-![Approved hybrid homepage reference](assets/hybrid-home.png)
+The [reviewed responsive handoff references](references/responsive/README.md) define the homepage and shared navigation: portrait and Ben Dennis, headline, one supporting line, short introduction, handwritten note and text-led feature. Use the written responsive rules below with those precise PNG targets. Production portrait/logo artwork is original supplied SVG; the note and pointers are approved new native SVG decoration. Reference drawings are visual targets, not evidence of application testing.
 
-The reference image illustrates typography, palette and visual pacing. Follow the publication name, shared sidebar and responsive rules specified below for the current composition. Dark mode is specified below. Editorial templates apply this guide alongside the voice and publishing requirements.
+The [earlier geometric homepage prototype](assets/hybrid-home.png) is superseded for composition and decoration. Keep it only as historical design context. The approved article remains the reading benchmark; this homepage refresh does not change its reading column, typography, code or contents layout. Existing About wording is protected verbatim, including its title, headings, paragraphs, captions and link text.
 
 <!-- pagebreak -->
 
@@ -34,6 +34,8 @@ Sharing images use that bundled bold font for deterministic rendering. Published
 | Article body, lede, section headings, card titles | Georgia, 'Times New Roman', serif                                    | 400; 700 for inline emphasis              |
 | Code, commands, identifiers                       | ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace | 400                                       |
 
+Homepage supporting text uses bold 23px / 30px above 700px and 20px / 28px through 700px. The introduction uses 17px / 27px; feature descriptions use 16px / 25px. The author row uses a 12px bold uppercase name, vertically centred beside the portrait with a 16px gap. It contains the portrait and Ben Dennis only, without a subtitle, job title or second tagline.
+
 ### Type specimens
 
 > Display / Arial: Small systems. Big understanding.
@@ -46,7 +48,7 @@ Use genuine available weights. Arial commonly provides regular and bold; use 700
 
 | Element                | Desktop size / line height | Mobile size / line height            |
 | ---------------------- | -------------------------- | ------------------------------------ |
-| Homepage headline      | 60px / 1.03                | 36-45px / 1.03                       |
+| Homepage headline      | Fluid 45–60px / 1.03       | Fluid 36–45px / 1.03                 |
 | Article title          | 48px / 1.08                | 32px / 1.08                          |
 | Featured article title | 33px / 1.15                | 29px / 1.15                          |
 | Article lede           | 23px / 1.45                | 22px / 1.50                          |
@@ -67,19 +69,25 @@ Use at most -0.04em tracking for display headings and -0.02em for serif titles. 
 
 Use semantic roles rather than scattering literal colours through component CSS. The light theme uses warm paper and a dark homepage panel. The dark theme uses an ink reading surface and muted violet panels. The hero retains its fixed dark surface in both modes.
 
-| Token               | Value   | Intended use                               |
-| ------------------- | ------- | ------------------------------------------ |
-| --hl-paper          | #FAF8F3 | Page and article background                |
-| --hl-ink            | #252535 | Primary text (hero uses fixed ink)         |
-| --hl-accent         | #62429A | Links, labels, active navigation and focus |
-| --hl-feature        | #E2D7F5 | Featured article background                |
-| --hl-on-dark        | #FFFFFF | Display headings on dark surfaces          |
-| --hl-inverse-body   | #EEEAF3 | Body text on dark surfaces                 |
-| --hl-inverse-accent | #DFD0FA | Links and labels on dark surfaces          |
-| --hl-callout        | #F0EBF5 | Informational callout background           |
-| --hl-rule           | #BEB9B1 | Decorative section separators              |
-| --hl-rule-soft      | #D0CBC3 | Decorative column dividers                 |
-| --hl-diagram-paper  | #F4F0E9 | Diagram node background                    |
+| Token                | Value   | Intended use                                 |
+| -------------------- | ------- | -------------------------------------------- |
+| --hl-paper           | #FAF8F3 | Page and article background                  |
+| --hl-ink             | #252535 | Primary text (hero uses fixed ink)           |
+| --hl-accent          | #62429A | Links, labels, active navigation and focus   |
+| --hl-feature         | #E2D7F5 | Featured article background                  |
+| --hl-on-dark         | #FFFFFF | Display headings on dark surfaces            |
+| --hl-inverse-body    | #EEEAF3 | Body text on dark surfaces                   |
+| --hl-inverse-accent  | #DFD0FA | Links and labels on dark surfaces            |
+| --hl-callout         | #F0EBF5 | Informational callout background             |
+| --hl-rule            | #BEB9B1 | Decorative section separators                |
+| --hl-rule-soft       | #D0CBC3 | Decorative column dividers                   |
+| --hl-diagram-paper   | #F4F0E9 | Diagram node background                      |
+| --hl-hero-surface    | #252535 | Fixed hero background, both themes           |
+| --hl-hero-heading    | #FFFFFF | Hero H1                                      |
+| --hl-hero-body       | #EEEAF3 | Hero introduction                            |
+| --hl-hero-accent     | #DFD0FA | Supporting line, author, note and About link |
+| --hl-hero-circle     | #383044 | Flat cropped circle behind the author        |
+| --hl-control-outline | #8B8391 | Recognisable light-theme field boundary      |
 
 Use ink for body text and the framework's contrast-tested grey scale for supporting UI; establish hierarchy with size, weight and spacing instead of low-opacity text. The two rule colours are decorative only. Use the accent or ink for a boundary that is necessary to recognise an input, button or selected state.
 
@@ -105,15 +113,16 @@ Underline links within prose. Pair status colours with text or an icon and a lab
 
 The following semantic overrides belong to the same hybrid design. Keep display hierarchy, spacing and typography identical across modes. Do not use a blanket colour inversion.
 
-| Token          | Value   | Intended use                     |
-| -------------- | ------- | -------------------------------- |
-| --hl-paper     | #1B1B27 | Page and article background      |
-| --hl-ink       | #F1EEE8 | Primary reading text             |
-| --hl-accent    | #CBB5F1 | Links, active controls and focus |
-| --hl-feature   | #332B46 | Featured article panel           |
-| --hl-callout   | #2A2539 | Notes, diagrams and inline code  |
-| --hl-rule      | #615A6D | Decorative section separators    |
-| --hl-rule-soft | #484252 | Decorative dividers              |
+| Token                | Value   | Intended use                           |
+| -------------------- | ------- | -------------------------------------- |
+| --hl-paper           | #1B1B27 | Page and article background            |
+| --hl-ink             | #F1EEE8 | Primary reading text                   |
+| --hl-accent          | #CBB5F1 | Links, active controls and focus       |
+| --hl-feature         | #332B46 | Featured article panel                 |
+| --hl-callout         | #2A2539 | Notes, diagrams and inline code        |
+| --hl-rule            | #615A6D | Decorative section separators          |
+| --hl-rule-soft       | #484252 | Decorative dividers                    |
+| --hl-control-outline | #81758F | Recognisable dark-theme field boundary |
 
 The fixed hero remains #252535 with white headings, #EEEAF3 body text and #DFD0FA labels. The feature card uses the theme-dependent panel, text and accent roles. Native search, sidebar, contents, menus and code blocks follow the same selected theme. Warning, danger and tip treatments retain their native semantic colours.
 
@@ -123,27 +132,46 @@ Light, Dark and Auto must remain usable on desktop and mobile. In Auto, changing
 
 ## 4. Homepage layout and responsive rules
 
-### Desktop: 1100px and wider
+Use the [responsive reference index](references/responsive/README.md), dated 12 November 2026. Main content begins 24px beneath the normal 80px header. The homepage is centred within the space beside the 240px native sidebar, with a maximum width of 1160px. All heights follow content. Use rem-based sizing, natural line wraps and actual published content; no fixed hero heights, viewport-height composition, no-wrap title fragments, clipping or ellipses.
 
-Use a centred homepage content wrapper with a maximum width of 1160px in the space beside the shared 240px sidebar. Native Starlight outer gutters surround it; the hero adds 42px internal side padding when there is enough space. The header is 80px tall. Place the masthead at left, native search in the middle and theme/social controls at right. Order profile controls GitHub, LinkedIn, RSS, with descriptive accessible names, hover labels and 44px interaction targets. Retain the native separator and mobile-menu placement. Use the supplied approved portrait masthead with the publication name, The Aussie Pom, and no subtitle. Its light/dark lettering follows the native theme while the black portrait and lilac circle stay consistent. Scale the 514 × 104 artwork to at most 272px wide; at 448px and narrower, use the 653 × 208 compact lockup at 160px wide. Both fit the header content height and retain one accessible home-link name. See the [brand guide](branding.md) for asset paths and usage. Use the sidebar for Home, About Ben and direct links to published stories. Keep About separate from the Stories group. Keep editorial samples as drafts. The homepage has no separate topic navigation or section landing-page cards.
+| Viewport         | Header artwork        | Navigation     | Hero                                                | Outer gutters       |
+| ---------------- | --------------------- | -------------- | --------------------------------------------------- | ------------------- |
+| 320–359px        | Compact, 140px wide   | Native Menu    | Stacked, 20px inner sides                           | 12px                |
+| 360–448px        | Compact, 160px wide   | Native Menu    | Stacked, 22px inner sides                           | 16px                |
+| 449–700px        | Masthead, up to 272px | Native Menu    | Stacked, 22px inner sides                           | 16px                |
+| 701–799px        | Masthead, up to 272px | Native Menu    | Stacked, 28px inner sides                           | 24px                |
+| 800–1099px       | Masthead, up to 272px | Shared sidebar | Stacked, 28px inner sides                           | 24px beside sidebar |
+| 1100px and wider | Masthead, up to 272px | Shared sidebar | Split only above 960px of available container width | 24px beside sidebar |
 
-The hero spans the wrapper's full width. Above 960px of available container width, use two columns with a 1.18:1 ratio, a 46px gap and 34px vertical padding. Stack them when the sidebar leaves less space. Align the introduction and featured article near their vertical centres. The left column contains the supporting line “Software, systems and curiosity in action.” in readable sentence case, the unchanged headline “There’s always one more thing to build.”, a concise personal introduction and an About Ben link. Let the supporting line wrap naturally; keep it out of the shared masthead. Limit the introduction to about 455px. Avoid fixed heights or manual line breaks that fail at intermediate widths.
+**The 800px navigation threshold is independent of the hero split.** At 1024px the sidebar is visible and the hero is stacked. With the standard shell, 1200px is also stacked, 1248px gives a 960px container and stays stacked, and widths above that can split. Use the `homepage` container query with the viewport guard; do not switch to columns merely because the viewport reaches 1100px.
 
-The lilac feature uses 24-28px padding, one representative diagram or image, a serif article title, a short summary, metadata and a clear reading link. Its image should support the subject. Abstract graphics in the reference are placeholders, not a permanent brand asset.
+### Content and composition
 
-Below the hero, show the other published articles under an understated Keep exploring label. List them by publication date, newest first, then alphabetically by title when dates match. Link their actual titles and show their summaries. Use 24-32px gaps, serif titles and simple rows or columns. Omit the section when there are no other published articles. Drafts receive no homepage card or public navigation link.
+Keep one semantic sequence: author portrait/name; H1 “There’s always one more thing to build.”; supporting line “Software, systems and curiosity in action.”; introduction and More about me link; feature associated with the decorative note; Keep exploring. CSS places the feature beside the copy in wide layouts without duplicating the content.
 
-### Tablet: 701-1099px
+The homepage-only introduction is: “I’m Ben, a software engineer who likes understanding how things work, trying ideas and making them useful.” It does not replace any About text. Both About Ben and More about me link to the existing `/about/` route. There is no second biography card on the homepage.
 
-Use the native outer gutters and 28px internal hero padding. The shared sidebar changes to the native labelled Menu control below 800px on the homepage and article pages. Theme and social controls remain accessible through the mobile menu. Stack the hero by default; use two columns only when the available container width supports them. Article rows may use two columns. Do not shrink text to preserve a desktop composition.
+The author portrait is 48px through 700px, 64px in stacked tablet layouts and 76px in the wide split layout. Keep 24px between the author row and H1 and 20px between H1, supporting line and introduction. Give the About action a 44px target. The introduction has a maximum readable measure of 576px stacked and 482px wide. Use a fluid H1 with a rem component so enlarged text remains effective; do not insert manual line breaks to copy a drawing.
 
-### Mobile: up to 700px
+Stacked heroes have 28px vertical padding. Their note/pointer group follows the introduction, uses about 66px of flow space and leaves at least 12px clear of the card. Longer text pushes it down naturally. Split heroes use a 1.18:1 column ratio, 46px gap, 42px side padding, 34px top inset and 24px bottom padding. Centre the card vertically against the copy where possible. The desktop pointer follows the card’s lower-left edge; position it relative to the grid, not fixed viewport coordinates.
 
-Use native outer gutters and 22px internal hero side padding. Stack the hero and article rows. Use 28px hero vertical padding, 20px feature padding and about 26px between the introduction and feature. The homepage uses the same labelled Menu button, sidebar and 80px masthead as article pages. Keep search visible and theme selection available in the menu. Do not add a second homepage navigation row.
+Use a single low-contrast flat CSS circle behind the author area, centred about 20px from the hero’s left and 12px below its top. Its radius is about 165px on phones, 205px on stacked tablets and 230px wide. Clip only the decoration to the hero surface; do not clip content or focus rings. The original SVG handwriting reads “What happens if…?” and uses the fixed hero accent, about 196px wide below 360px and 218px elsewhere. Choose the supplied stacked or desktop pointer. Hide the group from assistive technology, keep SVGs non-focusable and non-interactive, and omit only this nonessential note when enlarged text leaves less than 12rem of container width, and add no animation, texture, grain, glow or further motif.
 
-### Shared spacing and geometry
+The featured story remains the existing selected published article. Read its actual title, full description, type, date and route from content. Keep the text-led card, 2px corners, 20px padding through 700px and 28px otherwise. Use serif 29px / 34px phone titles and 33px / 38px larger titles, 12px / 18px metadata and a real 44px reading action. Remove the former geometric SVG entirely. Do not substitute stock technology imagery. Omit the card and note together when no featured published article exists.
 
-Use a 4px spacing scale: 4, 8, 12, 16, 20, 24, 28, 32, 40, 48 and 64px. The approved 22px gutter, 34px hero padding and 46px hero gap are documented composition exceptions. Use square or subtly rounded corners, 0-4px. Use thin rules and colour blocks for structure; shadows are not the default. Prefer content-driven heights.
+Keep exploring begins 36px after the hero, with an uppercase 12px label and a thin divider. Exclude the feature, retain publication-date-descending and title tie-break sorting, and omit the entire empty section. Use one column through 700px. Above that, use two columns only at 640px or more of actual available width, with a 28px gap. The sidebar can reduce that width enough to return discovery to one column. Titles use 25px / 30px serif; descriptions use 16px / 25px. No drafts, empty cards or invented entries.
+
+### Shared header and native menu
+
+Keep one accessible logo home link and the native search, popover and theme controllers. Use the compact lockup through 448px, masthead above, original aspect ratios and the black portrait on lilac in both themes. Mobile header order is logo, visible 44px search target, labelled Menu/Close control with glyph and a minimum 72px × 44px target. Use 12px header gutters below 360px and 16px through 799px, with 8px control gaps and safe-area support. Allow accessible reflow at enlarged text rather than clipping the logo or controls.
+
+Below 800px the native menu shows Home, About Ben, real Stories, Appearance with the native theme selector, then Find me elsewhere with labelled GitHub, LinkedIn and RSS links. Use 24px side padding, reduced to 20px below 360px; allow long labels to wrap and use at least 44px targets. The header/Close button stays available as the menu scrolls. At 800–1099px show accessible social icons and theme selection in the header; at 1100px and wider show readable social labels where space permits. Preserve the native RSS source and platform-specific search shortcut hint.
+
+Use the installed Starlight popover semantics, native dismissal and focus handling. There is one sidebar popover, one search dialog and one native theme state. Escape and closing return focus appropriately; opening search from the menu must not leave competing overlays or an inert reading area. The native popover’s existing background-scroll/focus behaviour remains authoritative. Do not add a separate modal drawer, theme store or search input.
+
+On long articles, desktop contents and collapsed Browse the site remain unchanged. In the phone menu the same site-navigation content is visible directly, while native On this page remains a separate mobile disclosure. Article reading width, serif body, code panels, footer and sharing behaviour remain governed by section 5 and their existing components.
+
+Use the 4px spacing scale with the documented composition exceptions (22px phone padding, 34px wide top padding and 46px column gap). Surfaces stay flat, square or subtly rounded. Modest font-metric wrap differences between Arial/Georgia and the reference renderer’s Liberation fonts are acceptable; substantial scale, palette or spacing differences require correction.
 
 <!-- pagebreak -->
 
@@ -221,12 +249,12 @@ Start with theme tokens and typography, then the custom homepage and shared arti
   --hl-accent: #62429a;
   --hl-feature: #e2d7f5;
   --hl-callout: #f0ebf5;
-  --hl-font-ui: Arial, Helvetica, sans-serif;
-  --hl-font-reading: Georgia, 'Times New Roman', serif;
-  --hl-font-code:
+  --sl-font: Arial, Helvetica, sans-serif;
+  --hl-reading: Georgia, 'Times New Roman', serif;
+  --sl-font-mono:
     ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
-  --hl-reading-size: 1.125rem;
-  --hl-reading-line-height: 1.7;
+  --hl-hero-circle: #383044;
+  --hl-control-outline: #8b8391;
 }
 ```
 
@@ -240,8 +268,9 @@ Use the [editorial workflow and templates](../editorial/workflow.md) for article
 
 ### Implementation acceptance
 
-- Compare the rendered homepage and article with the approved references at 1200px and 390px.
-- Check 320px, 700px, 768px, 1024px and 1440px widths, long titles and 200% zoom.
+- Capture and open homepage full-page/viewport comparisons at 320×900 light, 390×844 both themes, 430×932 light, 768×1024 both, 1024×768 light and 1440×1040 both. Compare menu screenshots at 390×844 both and 320×900 light with the supplied references.
+- Check 360, 448/449, 700/701, 799/800, 1100, 1200 and either side of the 960px container threshold. Check long titles, an extra sidebar story, unbroken article URLs, 200% text and actual 200% browser zoom.
+- Verify phone/desktop article regressions in both themes and compare protected About wording before and after.
 - Verify menu, search, article anchors, focus order, visible focus, copy controls and theme switching with keyboard input.
 - Check actual text, control and syntax colours; run automated accessibility checks and inspect the result manually.
 - Check article prose, lists, tables, code, diagrams, callouts and image captions with realistic synthetic content.
@@ -259,7 +288,7 @@ Automated checks do not replace a complete accessibility review, and root-text e
 
 ### Keeping the specification current
 
-Maintain this Markdown directly, with its version and date. There is no PDF edition to regenerate. Update reference images when an approved visual change makes them stale, using synthetic, public-safe content. Keep historical references distinguishable from the current article rules. Do not change the approved article merely to make it match an outdated screenshot or specification.
+Maintain this initial specification as version 1 with its date while the first blog design is being settled, as requested by the author. Keep the single active guide current. There is no PDF edition to regenerate. Update reference images when an approved visual change makes them stale, using synthetic, public-safe content. Keep historical references distinguishable from the current article rules. Do not change the approved article merely to make it match an outdated screenshot or specification.
 
 Use pull requests for integration and follow the existing validation gates. Changes to typography roles, primary palette, homepage composition or article reading width require an explicit design decision. Routine implementation adjustments may follow the documented responsive and accessibility rules.
 

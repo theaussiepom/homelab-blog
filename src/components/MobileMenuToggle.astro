@@ -1,0 +1,50 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+---
+
+<button
+  popovertarget="starlight__sidebar"
+  class="sl-menu-button hl-menu-button sl-flex md:sl-hidden print:hidden"
+>
+  <span class="hl-menu-open">Menu</span>
+  <span class="hl-menu-close">Close</span>
+  <Icon name="bars" class="hl-menu-open" aria-hidden="true" />
+  <Icon name="close" class="hl-menu-close" aria-hidden="true" />
+</button>
+
+<style is:global>
+  /* The installed PageFrame owns the popover, focus model and native menu state. */
+  .hl-menu-button {
+    position: fixed;
+    top: calc((var(--sl-nav-height) - 2.75rem) / 2);
+    inset-inline-end: var(--sl-nav-pad-x);
+    z-index: var(--sl-z-index-navbar);
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-inline-size: 4.5rem;
+    min-block-size: 2.75rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--hl-ink);
+    font: 0.875rem/1.5 var(--sl-font);
+    cursor: pointer;
+  }
+  .hl-menu-button svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .hl-menu-button:has(~ :popover-open) .hl-menu-open,
+  .hl-menu-button:not(:has(~ :popover-open)) .hl-menu-close {
+    display: none;
+  }
+  body:has(#starlight__sidebar:popover-open) {
+    overflow: hidden;
+  }
+  @media (min-width: 50rem) {
+    body:has(#starlight__sidebar:popover-open) {
+      overflow: auto;
+    }
+  }
+</style>

@@ -85,7 +85,7 @@ for (const theme of ['light', 'dark']) {
       );
       await expect(page).toHaveURL(new RegExp(`${target}$`));
       await page.getByRole('button', { name: 'Menu', exact: true }).click();
-      await page.locator('.hl-site-links > summary').click();
+      await expect(page.locator('.hl-site-links')).toHaveAttribute('open');
       const siteLink = page
         .locator('#starlight__sidebar')
         .getByRole('link', { name: 'Home', exact: true })

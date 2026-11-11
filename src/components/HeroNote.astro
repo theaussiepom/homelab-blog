@@ -1,0 +1,13 @@
+---
+import note from '../../brand/decor/tap-curiosity-note.svg?raw';
+import down from '../../brand/decor/tap-arrow-mobile.svg?raw';
+import across from '../../brand/decor/tap-arrow-desktop.svg?raw';
+const decorative = (svg: string) =>
+  svg.replace('<svg ', '<svg focusable="false" aria-hidden="true" ');
+---
+
+<div class="hl-curiosity" aria-hidden="true">
+  <span class="hl-curiosity-note" set:html={decorative(note)} />
+  <span class="hl-curiosity-down" set:html={decorative(down)} />
+  <span class="hl-curiosity-across" set:html={decorative(across)} />
+</div>

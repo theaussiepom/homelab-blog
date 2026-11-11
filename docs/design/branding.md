@@ -1,6 +1,6 @@
 # The Aussie Pom: brand identity
 
-Version 3.0 | 12 November 2026
+Version 1.0 | 12 November 2026 | Initial website identity
 
 Use the supplied identity with the established warm paper, ink and purple palette. The [visual style guide](style-guide.md) controls layout and typography; the [voice guide](../editorial/voice.md) controls the writing.
 
@@ -18,11 +18,11 @@ Use the supplied identity with the established warm paper, ink and purple palett
 
 [Site settings](../../src/lib/site.mjs) own the publication name, origin, description, supporting line and asset cache version. [Author data](../../src/lib/author.mjs) owns Ben’s display name, biography and profile links. Preserve `Ben` as the existing source attribution key; the content schema resolves it to Ben Dennis and the About URL for display and native blog metadata. Unknown contributors retain their own attribution.
 
-Keep the domain, repository ownership, article paths and canonical URLs. The supporting line belongs in the homepage introduction as readable text with natural wrapping. Keep it out of the shared masthead and article titles. The homepage retains its personal introduction and featured story, with an About Ben link near the introduction.
+Keep the domain, repository ownership, article paths and canonical URLs. The supporting line belongs in the homepage introduction as readable text with natural wrapping. Keep it out of the shared masthead and article titles. The homepage uses the reviewed short introduction and a More about me link to the existing About page. Its author row contains the portrait and Ben Dennis only. Preserve all existing About wording verbatim; homepage copy does not replace it.
 
 ## One authoritative kit
 
-`brand/` is the single authoritative kit. Its [manifest](../../brand/ASSET-MANIFEST.csv) identifies all 127 supplied originals, including usage guidance, production exports, editable masters, build scripts and licensed fonts. The manifest itself is separate. `public/brand/` contains only the 18 selected runtime exports, verified byte for byte against those originals. Do not keep competing numbered, versioned or historical kit directories in the repository.
+`brand/` is the single authoritative kit. Its [manifest](../../brand/ASSET-MANIFEST.csv) identifies all supplied originals and the three approved native decoration SVGs, including usage guidance, production exports, editable masters, build scripts and licensed fonts. The manifest itself is separate. `public/brand/` contains only the 19 selected runtime exports, verified byte for byte against those originals. Do not keep competing numbered, versioned or historical kit directories in the repository.
 
 Distribute the complete kit as **The-Aussie-Pom-Brand-Suite.zip**, with its manifest and editable sources. The supplied PDF is archived brand guidance; the Markdown visual guide remains the website layout specification. Preserve supplied files against their checksums. Refresh the manifest deliberately if future approved artwork is rebuilt, and verify dimensions as well as bytes.
 
@@ -38,13 +38,19 @@ The main portrait and author photograph have separate roles. Use the supplied il
 
 ## Header, navigation and profiles
 
-[SiteTitle.astro](../../src/components/SiteTitle.astro) provides one home link with the publication’s accessible name and decorative images. Use `tap-masthead-on-light.svg` and `tap-masthead-on-dark.svg`, with intrinsic dimensions 514 × 104. Display at 272 CSS pixels wide, approximately 55 pixels high inside the existing 80-pixel header. At 448 pixels and narrower, use the 653 × 208 compact lockup at 160 pixels wide. Keep search, Menu and focus rings usable at 320 pixels.
+[SiteTitle.astro](../../src/components/SiteTitle.astro) provides one home link with the publication’s accessible name and decorative images. Use `tap-masthead-on-light.svg` and `tap-masthead-on-dark.svg`, with intrinsic dimensions 514 × 104. Display at 272 CSS pixels wide, approximately 55 pixels high inside the existing 80-pixel header. At 360–448 pixels, use the 653 × 208 compact lockup at 160 pixels wide; below 360 pixels use 140 pixels. Keep search, Menu and focus rings usable at 320 pixels.
 
 Follow the native Light/Dark/Auto mechanism. Do not add another theme store. Print uses the on-light artwork. A standalone logo needs meaningful alternative text; the decorative image within the named home link uses empty alternative text.
 
-Order social controls GitHub, LinkedIn, RSS. Use equal optical sizing, the site’s colours, 44-pixel interaction targets, descriptive accessible names and useful hover labels. Preserve the native separator from theme selection and the existing mobile-menu placement. The blog plugin supplies the RSS destination automatically; do not add a duplicate feed link. GitHub points to Ben’s personal profile.
+Order social controls GitHub, LinkedIn, RSS. Use equal optical sizing, the site’s colours, 44-pixel interaction targets, descriptive accessible names and useful hover labels. Preserve the native separator from theme selection. At 800–1099px show header icons; at 1100px and wider use readable labels where space permits. Below 800px place the native theme selector under Appearance, followed by Find me elsewhere and labelled social links. Use the native popover and one theme state; Menu/Close remains visible and search stays in the header. The blog plugin supplies the RSS destination automatically; do not add a duplicate feed link. GitHub points to Ben’s personal profile.
 
 Add About Ben to the existing global navigation, separate from technical stories. The About page uses the established reading layout, the author photograph and clearly labelled profile links. Article cards retain their compact design and photograph, with “About Ben Dennis”, a 40–60 word biography, a link to the full About page and separate GitHub and LinkedIn links. Do not duplicate that card on the homepage or About page.
+
+## Approved decoration
+
+The [responsive references](references/responsive/README.md) and current visual guide specify a cropped flat CSS circle in `#383044`, plus `brand/decor/tap-curiosity-note.svg`, `tap-arrow-mobile.svg` and `tap-arrow-desktop.svg`. Those three new SVG decorations are separate from the unchanged original portrait/logo artwork. Inline their original paths with `currentColor`, the fixed hero accent `#DFD0FA`, `aria-hidden` and `focusable="false"`. They remain in flow and do not intercept links. Do not use screenshots as UI, redraw the portrait, add grain/glow or retain the former geometric motif.
+
+Version 1 is the active website design and identity specification. Unchanged supplied archive files retain their original provenance metadata and checksums; they are not competing website specifications.
 
 ## Icons and previews
 
