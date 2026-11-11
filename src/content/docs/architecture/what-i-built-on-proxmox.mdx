@@ -17,6 +17,17 @@ import ProxmoxDecisionFigure from '../../../components/ProxmoxDecisionFigure.ast
 import ArticleScreenshot from '../../../components/ArticleScreenshot.astro';
 import deploymentRun from '../../../assets/articles/homelab-proxmox-journey/github-actions-deploy.png';
 
+export const authoringBrief = {
+  readerAndGoal:
+    'Third connected story, centred on the configuration-driven CI/CD system the author built. Follow one set of declared choices through validation, guests, applications, routing, monitoring and backups, then explain what this means for later changes and recovery. Architecture serves this thread throughout.',
+  assumedKnowledge:
+    'An interest in running services at home. Explain configuration references, guests and CI/CD as they become relevant. This stands alone and does not retell the NAS-to-Proxmox or Kubernetes investigations.',
+  evidence:
+    'Author-supplied design and experiences, public framework and library source, and six source-checked configuration excerpts. Naming and backup-default refinements compile together locally; that is source compatibility, not a deployed combined release or a full recovery test. The existing screenshot is evidence of the earlier successful 17-job workflow. Update it when an approved replacement is available.',
+  voice:
+    'Follow the warmth and pace of the two approved stories. Start with the author’s wish to make each new project benefit from work already done, then follow that through concrete examples. Keep configuration-driven CI/CD as the premise. Use conversational Australian English, varied sentence lengths and natural transitions. Explain a consequence once, let the diagrams help, and avoid abstract benefit summaries, a platform recap, a Git tutorial or a service inventory.',
+};
+
 I enjoy working out how to get something running. I’d like the next thing I build to benefit from that work, too.
 
 For this [Proxmox](https://www.proxmox.com/en/products/proxmox-virtual-environment/overview) build, I’d made plenty of decisions about where applications should run, how I’d reach them and what needed monitoring and backing up. I wanted those decisions to do more than sit in my notes.
@@ -26,8 +37,6 @@ A reviewed change in [Git](https://git-scm.com/) can now become a running servic
 There’s a fair amount of work behind that sentence.
 
 I use [GitHub Actions](https://docs.github.com/en/actions) to run the process. [Continuous integration (CI)](https://docs.github.com/en/actions/get-started/continuous-integration) checks proposed changes before they reach the house. [Continuous deployment (CD)](https://docs.github.com/en/actions/get-started/continuous-deployment) puts approved changes into use.
-
-The deployment is already in use, and I’m still refining how I describe it. The examples below use clearer endpoint names and shared backup defaults that I’ve checked together locally. Those revisions are under review and haven’t been deployed yet. The workflow screenshot later in the story shows the earlier working version.
 
 ## Make the decision once
 
@@ -216,7 +225,7 @@ The application’s storage binding supplies the data path. Home Assistant’s p
 
 The full job also permits Home Assistant and Node-RED to be paused while their files and MariaDB’s database export are captured. That gives me a coordinated copy of the application’s files and history. The profiles describe how the data needs to be saved; the site provides the bindings and permission to do it.
 
-The next version gives PBS server configuration its own Deploy job, alongside the one for the Domain Name System (DNS) resolver. Backup activation then waits for that server configuration and the enrolled guest deployments before it installs the coordinated schedule.
+PBS server configuration gets its own Deploy job, alongside the one for the Domain Name System (DNS) resolver. The separate backup-activation job waits for that server configuration and the enrolled guest deployments before it installs the coordinated schedule.
 
 The [complete backup setup](https://github.com/theaussiepom/homelab/blob/cbc7c0118a39239c90379d8654f0841781607bcf/docs/backup/README.md) covers the credentials, recovery keys and checks omitted from the excerpt. Installing the software and setting the timer are steps towards protection; a successful capture and restore establish what I can actually recover.
 
@@ -231,7 +240,7 @@ I’ve already had the homelab’s Deploy workflow complete with all 17 jobs gre
 <ArticleScreenshot
   src={deploymentRun}
   alt="GitHub Actions Deploy workflow graph with green checks on all 17 jobs, including validation, guest checks, services and backup."
-  caption="A successful homelab deployment on 10 November 2026, before the configuration refinements described here. The jobs cover guest checks, services and backup."
+  caption="A successful homelab deployment. The jobs cover guest checks, services and backup."
   fullSizeLabel="View the deployment at full size"
 />
 

@@ -4,7 +4,7 @@ Evidence recorded on 10 November 2026. Configuration presence is distinguished f
 
 ## Proxmox deployment article publication, 11 November 2026
 
-The author authorised publication of **How I deploy my Proxmox homelab with GitHub Actions**. The article contains six real configuration excerpts, two responsive diagrams and the existing dated screenshot. Internal authoring notes are removed from the public source. The introduction distinguishes the running deployment from the endpoint-naming and inherited-backup-default refinements still under review. The PBS job-placement paragraph describes the next version; the screenshot remains evidence of the earlier successful 17-job run, not a later workflow execution.
+The author authorised publication of **How I deploy my Proxmox homelab with GitHub Actions**. The article contains six real configuration excerpts, two responsive diagrams and the existing screenshot, with undated captions. The reviewed narrative is retained. A public-safe authoring brief records source evidence and validation limits without private source identifiers. No picture was replaced.
 
 All six excerpts match the previously checked source. An independent disposable composition using the published backup Framework revision `cbc7c0118a39239c90379d8654f0841781607bcf` with the naming revisions compiled successfully offline. All 14 complete guest deployment packets remained unchanged. This verifies local source compatibility, not a released combined selection, deployment or recovery test.
 
