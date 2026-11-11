@@ -34,6 +34,7 @@
   --hl-callout: #f0ebf5;
   --hl-rule: #beb9b1;
   --hl-rule-soft: #d0cbc3;
+  --hl-code-border: color-mix(in srgb, var(--hl-accent) 60%, var(--hl-paper));
   --sl-color-white: #252535;
   --sl-color-gray-1: #252535;
   --sl-color-gray-2: #343342;
@@ -141,6 +142,21 @@ h1 {
 }
 .sl-markdown-content .expressive-code pre {
   max-width: 100%;
+}
+:root[data-theme='light']
+  .sl-markdown-content
+  .expressive-code:not([data-theme='dark']) {
+  --ec-codeBg: var(--hl-callout);
+  --ec-brdCol: var(--hl-code-border);
+  --ec-frm-edBg: var(--hl-callout);
+  --ec-frm-trmBg: var(--hl-callout);
+  --ec-frm-edActTabBg: var(--hl-feature);
+  --ec-frm-edActTabFg: var(--hl-accent);
+  --ec-frm-edActTabBrdCol: var(--hl-code-border);
+  --ec-frm-edTabBarBg: var(--hl-feature);
+  --ec-frm-edTabBarBrdCol: var(--hl-code-border);
+  --ec-frm-trmTtbBg: var(--hl-feature);
+  --ec-frm-trmTtbBrdBtmCol: var(--hl-code-border);
 }
 .sl-markdown-content .hl-diagram {
   display: flex;
