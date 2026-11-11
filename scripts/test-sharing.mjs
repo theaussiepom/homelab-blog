@@ -223,7 +223,8 @@ const value = (key) => {
   assert.equal(matches.length, 1, key);
   return matches[0].attrs.content;
 };
-assert.equal(value('og:title'), 'The short title');
+assert.equal(value('og:title'), 'A separate description for the preview.');
+assert.equal(value('og:title'), value('og:description'));
 assert.equal(value('twitter:title'), value('og:title'));
 assert.equal(value('twitter:description'), value('og:description'));
 assert.equal(value('twitter:image'), value('og:image'));
@@ -240,6 +241,32 @@ assert.equal(
     ({ tag, attrs }) => tag === 'link' && attrs?.rel === 'canonical',
   ).length,
   1,
+);
+for (const data of [
+  article,
+  { ...article, share: { title: 'Card title only' } },
+]) {
+  const metadata = withShareMetadata(head, {
+    data,
+    siteTitle,
+    pathname: '/actual-route/',
+    site: origin,
+    image: card,
+  });
+  assert.equal(
+    metadata.find(({ attrs }) => attrs?.property === 'og:title').attrs.content,
+    article.description,
+  );
+}
+const home = withShareMetadata(head, {
+  data: { title: 'Home', description: article.description },
+  siteTitle,
+  pathname: '/',
+  site: origin,
+});
+assert.equal(
+  home.find(({ attrs }) => attrs?.property === 'og:title').attrs.content,
+  siteTitle,
 );
 assert.throws(
   () =>

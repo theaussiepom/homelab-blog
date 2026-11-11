@@ -2,9 +2,15 @@
 
 Evidence recorded on 10 November 2026. Configuration presence is distinguished from actual execution.
 
+## Article URL-preview captions, 11 November 2026
+
+The author requested a short description beneath the share image instead of repeating the title already in the artwork. Published articles now use their existing description, or `share.description`, for the Open Graph and Twitter title and description fields. The card title still comes from `title` or `share.title`. Homepage metadata, native page titles, article headings, routes and structured data are preserved. Artwork and generated image URLs are unchanged.
+
+Local validation passed: formatting, lint, Astro/TypeScript, editorial and brand checks, renderer and metadata checks, two isolated builds, the production build, draft exclusion, internal links, negative guards and all 44 Chromium tests. The browser suite passed after permission was granted for its local-only preview listener. Focused checks cover ordinary article captions, a shorter card title, description overrides, retained page identity and the homepage title. Hosted preview and production evidence belongs to the integrating PR and its workflow runs. Destination-app rendering and cached previews remain unverified.
+
 ## Proxmox deployment article publication, 11 November 2026
 
-The author authorised publication of **How I deploy my Proxmox homelab with GitHub Actions**. The article contains six real configuration excerpts, two responsive diagrams and the existing dated screenshot. Internal authoring notes are removed from the public source. The introduction distinguishes the running deployment from the endpoint-naming and inherited-backup-default refinements still under review. The PBS job-placement paragraph describes the next version; the screenshot remains evidence of the earlier successful 17-job run, not a later workflow execution.
+The author authorised publication of **How I deploy my Proxmox homelab with GitHub Actions**. The article contains six real configuration excerpts, two responsive diagrams and the existing screenshot, with undated captions. The reviewed narrative is retained. A public-safe authoring brief records source evidence and validation limits without private source identifiers. No picture was replaced.
 
 All six excerpts match the previously checked source. An independent disposable composition using the published backup Framework revision `cbc7c0118a39239c90379d8654f0841781607bcf` with the naming revisions compiled successfully offline. All 14 complete guest deployment packets remained unchanged. This verifies local source compatibility, not a released combined selection, deployment or recovery test.
 
