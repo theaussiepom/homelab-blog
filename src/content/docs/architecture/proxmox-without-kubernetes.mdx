@@ -1,0 +1,109 @@
+---
+title: Kubernetes worked. Here’s why I left it out of my Proxmox build
+description: Early in my Proxmox plans, I wanted Kubernetes to run my apps. I got it working in a test lab. Then I looked at what I still needed the cluster to do for the house.
+articleType: architecture
+date: 2026-11-11
+authors:
+  - name: Ben
+tags:
+  - homelab
+  - proxmox
+  - kubernetes
+  - docker
+draft: false
+---
+
+import RecoveryComparison from '../../../components/RecoveryComparison.astro';
+
+export const authoringBrief = {
+  readerAndGoal:
+    'Follow the Kubernetes investigation and understand how the needs of the house shaped the decision to leave it out of the Proxmox build.',
+  assumedKnowledge:
+    'An interest in running services at home. Explain the relevant parts of Docker, Proxmox and Kubernetes in context.',
+  evidence:
+    'Use the original planning and migration conversations, design history, isolated lab trials and site source. Treat the lab results, design and deployed behaviour separately. The watchdog environment setting was verified enabled on the running Pi instance before publication. Recovery from an induced fault has not been tested.',
+  voice:
+    'Follow the approved first article and editorial voice guide. Use concrete decisions, natural Australian English and supported first-person experience.',
+};
+
+I set up an isolated test lab running [Proxmox Virtual Environment](https://www.proxmox.com/en/products/proxmox-virtual-environment/overview) to work through the design before moving the house over. I could create virtual machines and Linux containers, try [Kubernetes](https://kubernetes.io/docs/concepts/overview/) and test networking, storage and recovery. The existing setup kept running the house while I experimented.
+
+One test used a web server with a single job. It served a page from a file on disk. I paused the server so it stopped answering requests while its container kept running. I wanted to see what Kubernetes would do. It stopped sending traffic to the server and restarted the container. The page loaded again. The file was still there.
+
+## Why I wanted to move on
+
+Before Proxmox, I ran my apps in [Docker](https://docs.docker.com/get-started/docker-overview/) on a standalone server, with shared files on a network-attached storage (NAS) box. [Docker Compose](https://docs.docker.com/compose/) started the apps and [Docker Swarm](https://docs.docker.com/engine/swarm/) gave them a private network across the server and the [Raspberry Pis](https://www.raspberrypi.com/). That was the setup I was moving away from. [The first story follows how I got there.](/architecture/homelab-proxmox-journey/)
+
+I’d already had to get the startup order right on that server. The network adapter had to be ready before it could reach the NAS. The correct share had to be mounted before Docker started the applications that used it. I used [systemd](https://systemd.io/), Linux’s service manager, to make the services wait in that order. Those checks protected an app from starting against the empty local directory underneath a missing share, where its real data should have been.
+
+Swarm added another dependency. After a reboot, I’d seen containers come back before its shared network was ready. The apps needed that network to reach each other across the server and Pis. Bringing the house back meant getting those connections back as well as starting the containers.
+
+That was a big reason I started looking at Kubernetes as I planned the move to Proxmox. I wanted to decide where the apps ran, control what they could talk to and check when they were ready to do their jobs. I also wanted a service to be able to recover if it stopped answering. The web-server test was one part of finding out whether that would work.
+
+## Nine virtual machines, then five
+
+I started by sketching where the existing Docker apps might go. My first layout gave groups of services such as cameras, databases and home automation their own virtual machines (VMs). Proxmox calls the virtual machines and Linux containers it runs _guests_. The physical server they run on is the _host_.
+
+The plan got to nine VMs. That meant nine copies of [Debian](https://www.debian.org/) to patch and enough memory for nine guest operating systems as well as the things I actually wanted to run. I cut the plan back to five.
+
+Then I looked at what I’d put in the general applications guest. Automation, monitoring, identity and passwords had ended up together because they all needed a home. I’d saved a few operating systems and made it harder to explain what a reboot would take down.
+
+That startup chain made me think about what the house needed to keep working while I maintained the server. I wanted it to be able to look up an address even while I was working on the NAS or one of the apps.
+
+I already had a Raspberry Pi running one Domain Name System (DNS) resolver. I could leave that Pi doing its job and put the other resolver in a small guest with local storage. If I needed to take the main server down, the house could still ask the Pi where things were.
+
+One proposal assumed I’d go from 32 GB to 64 GB. Both memory slots were already occupied by 16 GB modules, so upgrading meant replacing both. The extra memory was going to cost me A$1,000. I wanted to see what I could do with the hardware I already had.
+
+With [Linux containers (LXCs)](https://github.com/proxmox/pve-docs/blob/master/pct.adoc), each guest could have its own Linux environment while sharing the host’s kernel, CPU time and memory. A 2 GB memory limit was a ceiling. If a guest only needed 400 MB, the rest was available to the host and the other guests. The same idea applied to CPU time. That gave me a way to separate services on the machine I already had. I’d use a VM when a workload needed its own kernel, stronger isolation or software that wouldn’t run in an LXC.
+
+## Trying Kubernetes without touching the house
+
+I chose [K3s](https://docs.k3s.io/), a lightweight distribution of Kubernetes, to see how the cluster design would work in practice. I first tried it in an unprivileged LXC, where even the administrator inside the guest has limited permissions on the host. The node never became ready. I hit permission errors, and the workarounds went further than I was comfortable with. I could still try it in VMs.
+
+The two Debian VMs gave me a working cluster. I could reach the test app across nodes and see the network rules let some connections through and block others. I changed the app image and upgraded K3s. The test data was still there.
+
+I also restarted both VMs. Checks afterwards confirmed that the app was healthy, its data was still there and it could be reached from the other node. In that lab, the K3s setup brought the application connections back after a reboot. That addressed a real problem I’d seen with Docker.
+
+Restoring a backup of the powered-off server VM also brought back the app and the data stored with it. I still needed to work out reliable shutdowns and how to recover data stored elsewhere. I had a working cluster to build the rest of the design around.
+
+## What was left for Kubernetes to run?
+
+While I was testing the cluster, I kept refining the rest of the design. The resolver already had its own home. I wanted the databases to have their own space too, so an app update and a database upgrade could be two separate jobs.
+
+I gave [Traefik](https://traefik.io/traefik), my reverse proxy, a guest of its own. I wanted it to forward requests to the apps without needing access to the internals of the containers running them.
+
+[Home Assistant](https://www.home-assistant.io/) changed the plan again. I wanted to edit its configuration from outside a VM while it used the same files inside. I set up isolated tests comparing files on the VM’s own storage, a folder shared through [VirtioFS](https://virtio-fs.gitlab.io/) and a network share. I checked whether Home Assistant could start, whether I could read and save files, and whether changes made outside the VM reached the file watcher inside it.
+
+That last check mattered. A file watcher waits for the Linux kernel to report changes. Edits made inside the VM triggered those notifications. When I replaced a shared file from outside the VM, I could open the new version inside, but the watcher received nothing. Anything in Home Assistant waiting for that notification would miss the edit.
+
+I repeated the file tests in an LXC using local storage. A VM has its own kernel. An LXC shares the host’s kernel, so the host and container could use the same local files and the same kernel to report changes. Edits made inside the LXC triggered notifications. I also tested writing from the host with the user identity correctly mapped into the container. The new file was visible, and the watcher inside the LXC received the notification.
+
+That local layout gave me a way forward. I took Home Assistant out of the VM and kept its live files in an LXC. [Node-RED](https://nodered.org/), which runs my automation flows, naturally followed into Home Assistant’s LXC. Two more services now had a home outside the proposed Kubernetes cluster.
+
+Later, I dropped the network share and chose guest-local storage for the live files. That made the shared-file notification problem a moot point in the final setup. I could have kept the files inside a VM and edited them there too.
+
+I kept the LXC arrangement because it met my needs with less overhead. A dedicated VM would need to offer enough benefit to justify the extra resources. If Home Assistant or Node-RED later needs dedicated compute, I can revisit where they run. For now, LXC is fine.
+
+Then there were the radios. [Zigbee2MQTT](https://www.zigbee2mqtt.io/) and my [Thread](https://threadgroup.org/What-is-Thread/Overview) border routers needed to talk to USB adapters plugged into machines around the house. I couldn’t pass those adapters through to the containers in the Kubernetes setup I was planning. I kept the radio services in Docker Compose, where I could [give each container access to its adapter](https://docs.docker.com/reference/compose-file/services/#devices) on the machine it was plugged into.
+
+I still wanted private connections between services. Proxmox could connect guests through a [Linux bridge](https://github.com/proxmox/pve-docs/blob/master/pve-network.adoc), which acts like a virtual switch. Where traffic needed to cross physical machines, a [virtual local area network (VLAN)](https://help.ui.com/hc/en-us/articles/26136851868695-Using-VLANs-for-Network-Security-and-Performance) and firewall rules could give the services the connections they needed. Traefik could reach the apps on those private networks while their ports stayed off the general household network.
+
+I’d also tested Compose in a Linux container. That trial mattered more as the list of apps for Kubernetes got smaller. I could update one test app, keep its data and leave the message broker running. Compose could restart a process that exited. When the app hung, the health check picked it up and I’d still need something to restart it. That was the job the Kubernetes [liveness probe](https://kubernetes.io/docs/concepts/workloads/pods/probes/) had done in the web server test.
+
+Where I’ve seen problems, I use recovery mechanisms tailored to the service. Zigbee2MQTT’s own [watchdog](https://www.zigbee2mqtt.io/guide/installation/15_watchdog.html) is one example. It can try to recover from a disconnected adapter, and I’ve enabled it after finding it was switched off. I haven’t made that as elegant as K3s yet.
+
+<RecoveryComparison />
+
+I went back to the cluster design. I’d pencilled in two VMs to run the apps. One was down to the security services and their supporting software. The other had a small group of general apps.
+
+The Kubernetes control plane, which decides where the apps run and keeps track of them, would run in a third VM. That meant three guest operating systems drawing CPU time and memory from the same 32 GB server, all for a handful of apps.
+
+I’d started out looking for a home for each application. I was now looking for enough applications to justify the cluster.
+
+I still liked the way Kubernetes recovered the web server and brought the application connections back after a reboot. However, I decided to leave the cluster out of the Proxmox build.
+
+---
+
+If the server died tomorrow, I’d want the house back up as quickly as possible. I wanted the decisions about which services to install, where to put them and what to start first written into configuration files. The deployment could use those files to set the services up again on a replacement server.
+
+In the next article, I’ll show the setup I built and the process that turns those files into running services. A reviewed change starts that process automatically, through [continuous deployment](https://docs.github.com/en/actions/get-started/continuous-deployment). When I have to replace the server, I’ll have the same configuration ready, with fewer decisions to make while the house is waiting.

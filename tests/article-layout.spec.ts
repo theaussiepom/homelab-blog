@@ -124,6 +124,12 @@ test('the shared bio follows the story and precedes comments for its author', as
   await page.goto(article);
   await expect(bio.getByRole('heading', { level: 2 })).toHaveText('About Ben');
   await expect(
+    bio.getByRole('link', { name: 'GitHub · @theaussiepom', exact: true }),
+  ).toHaveAttribute('href', 'https://github.com/theaussiepom');
+  await expect(
+    page.getByRole('link', { name: 'GitHub', exact: true }),
+  ).toHaveAttribute('href', 'https://github.com/theaussiepom');
+  await expect(
     bio.getByRole('img', { name: 'Ben at the beach' }),
   ).toBeVisible();
   await expect(bio.locator('p')).toHaveCount(2);
