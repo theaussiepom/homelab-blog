@@ -6,6 +6,10 @@ The Curious Engineer is a public, static publication for homelab guides, archite
 
 The approved direction combines the Technical magazine's confident homepage with the Quiet personal publication's warm article reading experience. Follow the [visual style and layout guide](docs/design/style-guide.md) for typography, colours, spacing, components and responsive layouts. Markdown is the maintained specification; the PDF edition has been retired. The guides define the author-approved standard for storytelling, warmth, visual pacing and contents navigation. Shared article components apply the reading layout in light and dark modes, with a system-following Auto option. Publication follows the separate editorial workflow.
 
+The approved portrait identity is maintained in the single authoritative [brand kit](brand/START-HERE.md). Follow the [brand identity guide](docs/design/branding.md) for the themed masthead, favicons, social previews and asset selection. Update `brand/` in place rather than adding versioned kits. The complete original suite is preserved with checksums; only the selected web assets are served from `public/brand/`. Run `npm run test:brand` to verify integrity and reject extra kit folders.
+
+[URL previews](docs/sharing-previews.md) documents automatic article share cards, optional frontmatter overrides and receiving-platform validation. The homepage uses the approved brand image; published articles receive content-hashed PNGs during the static build. Drafts receive no generated card. Run `npm run test:sharing` for focused validation.
+
 ## Stack and local development
 
 Astro 7.4.8, Starlight 0.42.10 and starlight-blog 0.30.2 provide static Markdown/MDX documentation, a blog, Pagefind search, RSS, sitemap, responsive navigation and article tables of contents. Direct npm dependencies use exact versions; `package-lock.json` pins the transitive graph with integrity hashes.
@@ -50,6 +54,7 @@ The scanner guard deliberately generates a fake token in temporary storage and r
 - `src/content.config.ts`: Starlight and blog content schemas.
 - `astro.config.mjs`: presentation, navigation and canonical origin.
 - `public/`: static assets and HTTP security headers.
+- `brand/`: the complete supplied brand suite, original manifest, editable artwork and font licence.
 - `scripts/` and `tests/`: validation and deployment gates.
 - `.github/`: GitHub-hosted CI, dependency updates and contribution template.
 - `docs/design/`: maintained Markdown visual specification and synthetic reference images.

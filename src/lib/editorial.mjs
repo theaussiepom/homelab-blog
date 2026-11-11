@@ -1,5 +1,9 @@
 import { z } from 'astro/zod';
 
+export const articleTypes = ['guide', 'architecture', 'investigation', 'post'];
+export const isPublishedArticle = (data) =>
+  articleTypes.includes(data.articleType) && data.draft === false;
+
 // Reuse the native Starlight/blog metadata names; articleType distinguishes landing pages.
 export const articleFields = z.object({
   articleType: z
@@ -7,6 +11,27 @@ export const articleFields = z.object({
     .default('page'),
   title: z.string().trim().min(1),
   description: z.string().trim().min(20).max(240).optional(),
+  share: z
+    .strictObject({
+      title: z.string().trim().min(1).max(180).optional(),
+      description: z.string().trim().min(20).max(240).optional(),
+      image: z
+        .string()
+        .regex(
+          /^\/(?!\/)(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_.-]+\.(?:png|jpe?g|webp)$/,
+        )
+        .optional(),
+      imageAlt: z.string().trim().min(1).max(500).optional(),
+    })
+    .superRefine((share, context) => {
+      if (share.image && !share.imageAlt)
+        context.addIssue({
+          code: 'custom',
+          path: ['imageAlt'],
+          message: 'A custom share image requires meaningful imageAlt text.',
+        });
+    })
+    .optional(),
   date: z.date().optional(),
   lastUpdated: z.union([z.date(), z.literal(false)]).optional(),
   authors: z

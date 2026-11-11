@@ -3,5 +3,37 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
 ---
 
 <a class="hl-brand" href={siteTitleHref}>
-  <span translate="no">{siteTitle}</span>
+  <picture class="hl-brand-light" aria-hidden="true">
+    <source
+      media="(max-width: 28rem)"
+      srcset="/brand/logos/svg/tce-compact-on-light.svg?v=2"
+      width="745"
+      height="240"
+    />
+    <img
+      src="/brand/logos/svg/tce-masthead-on-light.svg?v=2"
+      width="644"
+      height="104"
+      alt=""
+      decoding="async"
+    />
+  </picture>
+  <picture class="hl-brand-dark" aria-hidden="true">
+    <source
+      media="(max-width: 28rem)"
+      srcset="/brand/logos/svg/tce-compact-on-dark.svg?v=2"
+      width="745"
+      height="240"
+    />
+    <img
+      src="/brand/logos/svg/tce-masthead-on-dark.svg?v=2"
+      width="644"
+      height="104"
+      alt=""
+      decoding="async"
+    />
+  </picture>
+  <span class="sr-only" translate="no">
+    {siteTitle}
+  </span>
 </a>

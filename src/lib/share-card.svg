@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#FAF8F3"/>
+  <rect x="72" y="64" width="40" height="5" fill="#62429A"/>
+  <g fill="#62429A">{{category}}</g>
+  <g fill="#252535">{{title}}</g>
+  <svg x="72" y="494" width="96" height="96" viewBox="0 0 1000 1000">{{portrait}}</svg>
+  <g fill="#252535">{{publication}}</g>
+  <g fill="#62429A">{{domain}}</g>
+</svg>
