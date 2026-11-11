@@ -2,6 +2,12 @@
 
 Evidence recorded on 10 November 2026. Configuration presence is distinguished from actual execution.
 
+## Article URL-preview captions, 11 November 2026
+
+The author requested a short description beneath the share image instead of repeating the title already in the artwork. Published articles now use their existing description, or `share.description`, for the Open Graph and Twitter title and description fields. The card title still comes from `title` or `share.title`. Homepage metadata, native page titles, article headings, routes and structured data are preserved. Artwork and generated image URLs are unchanged.
+
+The static portions of `npm run validate` passed: formatting, lint, Astro/TypeScript, editorial and brand checks, renderer and metadata checks, two isolated builds, the production build, draft exclusion, internal links and negative guards. Focused checks cover ordinary article captions, a shorter card title, description overrides, retained page identity and the homepage title. Chromium tests could not start because the sandbox refused their local-only preview listener; automatic permission review then timed out on the retry. GitHub access was also blocked by an approval-review timeout, so this correction has not been pushed or deployed. Destination-app rendering and cached previews remain unverified.
+
 ## Proxmox deployment article publication, 11 November 2026
 
 The author authorised publication of **How I deploy my Proxmox homelab with GitHub Actions**. The article contains six real configuration excerpts, two responsive diagrams and the existing screenshot, with undated captions. The reviewed narrative is retained. A public-safe authoring brief records source evidence and validation limits without private source identifiers. No picture was replaced.

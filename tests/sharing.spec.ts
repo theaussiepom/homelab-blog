@@ -49,9 +49,7 @@ test('initial static HTML contains authoritative homepage and article previews',
     expect(values['og:site_name']).toBe('The Curious Engineer');
     expect(values['og:type']).toBe(path === '/' ? 'website' : 'article');
     expect(values['og:title']).toBe(
-      path === '/'
-        ? 'The Curious Engineer'
-        : document.querySelector('h1')!.textContent!.trim(),
+      path === '/' ? 'The Curious Engineer' : values['og:description'],
     );
     expect(values['og:description']).toBe(
       document
@@ -75,6 +73,10 @@ test('initial static HTML contains authoritative homepage and article previews',
     if (path === '/')
       expect(image.pathname).toBe('/brand/social/tce-opengraph-light.png');
     else {
+      const articleTitle = document.querySelector('h1')!.textContent!.trim();
+      expect(values['og:title']).not.toBe(articleTitle);
+      expect(document.title).toContain(articleTitle);
+      expect(values['og:image:alt']).toContain(articleTitle);
       expect(image.pathname).toMatch(/^\/og\/[a-f0-9]{64}\.png$/);
       generated.add(image.pathname.split('/').at(-1)!);
       expect(

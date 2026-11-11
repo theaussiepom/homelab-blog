@@ -98,15 +98,16 @@ test('branded icons and sharing metadata preserve each article identity', async 
       `https://theaussiepom.me${path}`,
     );
     if (path === story) {
-      await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
-        'content',
-        storyTitle,
-      );
       const description = await page
         .locator('meta[name="description"]')
         .getAttribute('content');
       if (description === null)
         throw new Error('Article description is missing.');
+      await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+        'content',
+        description,
+      );
+      await expect(page).toHaveTitle(`${storyTitle} | The Curious Engineer`);
       await expect(
         page.locator('meta[property="og:description"]'),
       ).toHaveAttribute('content', description);

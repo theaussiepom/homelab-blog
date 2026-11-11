@@ -4,6 +4,8 @@ Homepage sharing uses the approved v2.0 light Open Graph image at 1200 × 630. I
 
 Published guides, architecture stories, investigations and posts receive a 1200 × 630 opaque PNG automatically. The card shows the article's title and type, with the approved black portrait on lilac, the publication name and the configured site's domain. The description belongs in metadata rather than the image. Ordinary articles need no extra frontmatter.
 
+For articles, `og:title` and `twitter:title` use the short description, so clients that show a caption beneath the image can introduce the story instead of repeating the title already in the artwork. `og:description` and `twitter:description` carry the same summary. The article's heading, browser title, search metadata and structured-data title stay unchanged. The homepage keeps the publication name as its social title. Receiving platforms choose which fields to display; some may show both summary fields or omit a caption.
+
 ## Generation and metadata
 
 [The static endpoint](../src/pages/og/%5Bcard%5D.png.ts) reads the validated Astro content collection and uses the shared `isPublishedArticle()` helper. It follows the existing `draft: false` publication rule; a future date is editorial metadata, not a separate scheduling mechanism. Drafts do not get cards, even in development. Published custom slugs remain authoritative for page URLs.
@@ -30,7 +32,7 @@ share:
   imageAlt: A diagram showing the applications and their Proxmox guests.
 ```
 
-All four fields are optional. `share.title` changes the title on the card and in social metadata; it does not rename the article, its browser title or its route. `share.description` changes only the sharing description. `share.imageAlt` can also customise the generated card's alternative text without supplying another image.
+All four fields are optional. `share.title` changes the title on the card; it does not rename the article, its browser title or its route. `share.description` changes the sharing summary, including the text caption supplied through the social title fields. Without that override, the article's existing description supplies the caption. `share.imageAlt` can also customise the generated card's alternative text without supplying another image.
 
 Custom images must be still PNG, JPEG or WebP files inside `public/`, referenced by a root-relative path. Remote URLs, traversal paths and SVG overrides are rejected. A custom image requires meaningful `imageAlt`. The build decodes it, fits the complete image into 1200 × 630 without cropping, fills any unused area with warm paper and produces an opaque PNG. Prefer preparing artwork at 1200 × 630 to use the whole card. Missing or invalid files fail the build.
 

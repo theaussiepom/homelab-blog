@@ -21,14 +21,20 @@ export function withShareMetadata(
     );
   }
   const article = articleTypes.includes(data.articleType);
-  const title =
-    pathname === '/' ? siteTitle : (data.share?.title ?? data.title);
   const description =
     data.share?.description ??
     data.description ??
     head.find(
       ({ tag, attrs }) => tag === 'meta' && attrs?.name === 'description',
     )?.attrs?.content;
+  // Rich-link clients may show only og:title beneath the image. Article
+  // artwork already carries the title, so use the summary as that caption.
+  // Native browser titles, headings and structured data retain the article title.
+  const title = article
+    ? description
+    : pathname === '/'
+      ? siteTitle
+      : (data.share?.title ?? data.title);
   const canonical = new URL(pathname, origin).href;
   const shareImage = image ?? {
     path: fallbackImage,

@@ -48,7 +48,7 @@ Runtime files live under `public/brand/`, preserving the suite's subfolders. The
 
 Use an absolute public URL for sharing images, derived from the configured site origin. The light Open Graph image is the homepage image and site-wide fallback. The dark version is available as an alternative artwork asset; sharing platforms do not select it from the reader's theme. Published articles receive a 1200 × 630 opaque editorial card with their title as the dominant element, a small article-type label, the approved portrait on lilac, the publication name and domain. Use generous margins, bold Liberation Sans lettering and the warm paper/ink/purple palette. Keep the description in metadata. Do not add technology imagery or a large decorative logo.
 
-The [URL preview guide](../sharing-previews.md) defines automatic generation, content-hashed paths, text-fit checks and validated `share` overrides. Starlight route middleware supplies a final, non-duplicated metadata set after plugin middleware; native page titles, descriptions, canonical routes, feeds and structured data retain their roles. Use `share` fields rather than competing social tags in native `head` frontmatter.
+The [URL preview guide](../sharing-previews.md) defines automatic generation, content-hashed paths, text-fit checks and validated `share` overrides. Article artwork carries the title; the article's short description supplies the social text caption beneath it. Starlight route middleware supplies a final, non-duplicated metadata set after plugin middleware; native page titles, descriptions, canonical routes, feeds and structured data retain their roles. Use `share` fields rather than competing social tags in native `head` frontmatter.
 
 ## Updating and checking
 

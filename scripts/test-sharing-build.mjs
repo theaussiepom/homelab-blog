@@ -99,9 +99,12 @@ try {
   const postDoc = await parse('blog/custom-share-route/index.html');
   assert.equal(
     meta(guideDoc, 'og:title'),
-    'A shorter “share” title & its route',
+    'A synthetic article used only in the isolated share-preview build test.',
   );
-  assert.equal(meta(postDoc, 'og:title'), 'The custom image preview');
+  assert.equal(
+    meta(postDoc, 'og:title'),
+    'A social description that differs from the article description.',
+  );
   assert.equal(meta(postDoc, 'twitter:title'), meta(postDoc, 'og:title'));
   assert.equal(
     meta(postDoc, 'og:description'),
