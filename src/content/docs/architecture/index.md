@@ -10,4 +10,4 @@ How the homelab grew and what I learnt along the way.
 
 It started with Home Assistant on a NAS. The first article follows five versions of the setup and the reasons behind each move. [From a NAS VM to Proxmox: five versions of my homelab](/architecture/homelab-proxmox-journey/)
 
-The next story follows a working Kubernetes test cluster and the decisions that left it with fewer apps to run. [Why I left Kubernetes out of my Proxmox build](/architecture/proxmox-without-kubernetes/)
+The next story follows a working Kubernetes test cluster and the decisions that left it with fewer apps to run. [Why I chose not to use Kubernetes inside Proxmox](/architecture/proxmox-without-kubernetes/)
