@@ -1,44 +1,38 @@
 ---
 import DefaultHero from '@astrojs/starlight/components/Hero.astro';
-import { getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 const featuredId = 'architecture/homelab-proxmox-journey';
-const featuredArticle =
-  Astro.url.pathname === '/' ? await getEntry('docs', featuredId) : undefined;
-const topics = [
-  [
-    'Start Here',
-    '/start-here/',
-    'A map of the notes',
-    'Find your way through the publication.',
-  ],
-  [
-    'Architecture',
-    '/architecture/',
-    'Keep the boundaries clear',
-    'Understand responsibilities and design decisions.',
-  ],
-];
+const articles =
+  Astro.url.pathname === '/'
+    ? (
+        await getCollection(
+          'docs',
+          ({ data }) =>
+            ['guide', 'architecture', 'investigation', 'post'].includes(
+              data.articleType,
+            ) && !data.draft,
+        )
+      ).sort(
+        (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
+      )
+    : [];
+const featuredArticle = articles.find(({ id }) => id === featuredId);
+const moreArticles = articles.filter(({ id }) => id !== featuredId);
 ---
 
 {Astro.url.pathname === '/' ? (
   <div class="hl-home">
-    <nav class="hl-topics" aria-label="Publication sections">
-      {topics.map(([label, url]) => (
-        <a href={url}>{label}</a>
-      ))}
-    </nav>
     <section class="hl-hero" aria-labelledby="_top">
       <div>
-        <p class="hl-kicker">Notes from a curious homelab</p>
+        <p class="hl-kicker">Home automation &amp; self-hosting</p>
         <h1 id="_top" data-page-title>
-          Small systems.
-          <br />
-          Big understanding.
+          There’s always one more thing to build.
         </h1>
         <p class="hl-intro">
-          Practical guides and honest investigations by theaussiepom. Exploring
-          how small systems work, and sharing what the evidence tells us.
+          I’m Ben. I write about home automation, self-hosted services and the
+          decisions behind them, from the first useful setup to the engineering
+          that keeps it running.
         </p>
       </div>
       {featuredArticle && !featuredArticle.data.draft && (
@@ -57,7 +51,7 @@ const topics = [
               <rect x="320" y="35" width="50" height="50" />
             </g>
           </svg>
-          <p class="hl-kicker">Architecture</p>
+          <p class="hl-kicker">The story so far</p>
           <h2>
             <a href={`/${featuredId}/`}>{featuredArticle.data.title}</a>
           </h2>
@@ -68,20 +62,23 @@ const topics = [
         </div>
       )}
     </section>
-    <div class="hl-section-label">
-      <h2>Explore the notes</h2>
-    </div>
-    <div class="hl-discovery">
-      {topics.map(([label, url, title, description]) => (
-        <section>
-          <p class="hl-kicker">{label}</p>
-          <h3>
-            <a href={url}>{title}</a>
-          </h3>
-          <p>{description}</p>
-        </section>
-      ))}
-    </div>
+    {moreArticles.length > 0 && (
+      <>
+        <div class="hl-section-label">
+          <h2>Keep exploring</h2>
+        </div>
+        <div class="hl-discovery">
+          {moreArticles.map(({ id, data }) => (
+            <section>
+              <h3>
+                <a href={`/${id}/`}>{data.title}</a>
+              </h3>
+              <p>{data.description}</p>
+            </section>
+          ))}
+        </div>
+      </>
+    )}
   </div>
 ) : (
   <DefaultHero>

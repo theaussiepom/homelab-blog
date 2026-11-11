@@ -1,6 +1,6 @@
-# HomeLab Notes: visual style and layout guide
+# The Curious Engineer: visual style and layout guide
 
-Version 1.4 | 11 November 2026 | Approved design direction: 04 + 05 hybrid
+Version 1.5 | 11 November 2026 | Approved design direction: 04 + 05 hybrid
 
 ## 1. Direction and authority
 
@@ -14,7 +14,7 @@ Keep the bold sans-serif masthead, dark opening panel and lilac featured article
 
 ![Approved hybrid homepage reference](assets/hybrid-home.png)
 
-The reference image shows the visual intent. The numeric rules below take precedence where they deliberately improve the prototype, especially small labels, code size, tablet layout and mobile navigation. Dark mode is specified below. Editorial templates now apply this guide; final branding and real article content remain separate decisions.
+The reference image illustrates typography, palette and visual pacing. Follow the publication name, shared sidebar and responsive rules specified below for the current composition. Dark mode is specified below. Editorial templates apply this guide alongside the voice and publishing requirements.
 
 <!-- pagebreak -->
 
@@ -40,7 +40,7 @@ Use genuine available weights. Arial commonly provides regular and bold; use 700
 
 | Element                | Desktop size / line height | Mobile size / line height            |
 | ---------------------- | -------------------------- | ------------------------------------ |
-| Masthead               | 29px / 1.15                | 25px / 1.15                          |
+| Masthead               | 29px / 1.15                | 21px / 1.15                          |
 | Homepage headline      | 60px / 1.03                | 36-45px / 1.03                       |
 | Article title          | 48px / 1.08                | 32px / 1.08                          |
 | Featured article title | 33px / 1.15                | 29px / 1.15                          |
@@ -120,21 +120,21 @@ Light, Dark and Auto must remain usable on desktop and mobile. In Auto, changing
 
 ### Desktop: 1100px and wider
 
-Use a centred homepage content wrapper with a maximum width of 1160px. Native Starlight outer gutters surround it; the hero adds 42px internal side padding. The header is at least 102px tall and may grow with content. Place the masthead at left, native search in the middle and theme/social controls at right. Put links to Start Here and sections with published articles in a wrapping row above the hero. Add links to Guides, Investigations and the Blog archive when they have published content. Keep editorial samples as drafts.
+Use a centred homepage content wrapper with a maximum width of 1160px in the space beside the shared 240px sidebar. Native Starlight outer gutters surround it; the hero adds 42px internal side padding when there is enough space. The header is 80px tall. Place the masthead at left, native search in the middle and theme/social controls at right. The masthead contains the publication name, The Curious Engineer, with no subtitle. Use the sidebar for Home and direct links to published stories. Keep editorial samples as drafts. The homepage has no separate topic navigation or section landing-page cards.
 
-The hero spans the wrapper's full width. Use two columns with a 1.18:1 ratio, a 46px gap and 34px vertical padding. Align the introduction and featured article near their vertical centres. The left column contains a short context label, a strong headline and a concise personal introduction. Limit the introduction to about 455px. Avoid fixed heights or manual line breaks that fail at intermediate widths.
+The hero spans the wrapper's full width. Above 960px of available container width, use two columns with a 1.18:1 ratio, a 46px gap and 34px vertical padding. Stack them when the sidebar leaves less space. Align the introduction and featured article near their vertical centres. The left column contains a short context label, a strong headline and a concise personal introduction. Limit the introduction to about 455px. Avoid fixed heights or manual line breaks that fail at intermediate widths.
 
 The lilac feature uses 24-28px padding, one representative diagram or image, a serif article title, a short summary, metadata and a clear reading link. Its image should support the subject. Abstract graphics in the reference are placeholders, not a permanent brand asset.
 
-Below the hero, show an understated section label and a discovery row with columns for the linked sections. Use 24-32px gaps or internal padding, serif card titles and short summaries. Avoid enclosing every item in a heavy card. Surface topic categories and a route to the archive as content grows.
+Below the hero, show the other published articles under an understated Keep exploring label. Link their actual titles and show their summaries. Use 24-32px gaps, serif titles and simple rows or columns. Omit the section when there are no other published articles. Drafts receive no homepage card or public navigation link.
 
 ### Tablet: 701-1099px
 
-Use the native outer gutters and 28px internal hero padding. The native header changes at 800px; keep the homepage theme control visible below that width. Stack the hero by default; a two-column hero is permitted only if both columns remain readable and test content fits. Discovery rows may use two columns, with the remaining item taking a natural next row. Do not shrink text to preserve a desktop composition.
+Use the native outer gutters and 28px internal hero padding. The shared sidebar changes to the native labelled Menu control below 800px on the homepage and article pages. Theme and social controls remain accessible through the mobile menu. Stack the hero by default; use two columns only when the available container width supports them. Article rows may use two columns. Do not shrink text to preserve a desktop composition.
 
 ### Mobile: up to 700px
 
-Use native outer gutters and 22px internal hero side padding. Stack the hero and discovery content. Use 28px hero vertical padding, 20px feature padding and about 26px between the introduction and feature. The homepage has visible wrapping topic links, search and a theme selector, so it needs no menu drawer. Documentation and blog pages retain the native labelled Menu button and sidebar. On mobile the homepage header is 132px tall to accommodate the theme selector.
+Use native outer gutters and 22px internal hero side padding. Stack the hero and article rows. Use 28px hero vertical padding, 20px feature padding and about 26px between the introduction and feature. The homepage uses the same labelled Menu button, sidebar and 80px masthead as article pages. Keep search visible and theme selection available in the menu. Do not add a second homepage navigation row.
 
 ### Shared spacing and geometry
 
@@ -152,7 +152,7 @@ Cap the reading column at 700px inside Starlight's native article shell. For a l
 
 Below 800px, preserve the native **On this page** disclosure and labelled **Menu** control. Contents links must reach the correct heading, preserve visible focus and leave the reading area usable after selection. Keep search, theme selection and site navigation accessible. Test either side of the 800px breakpoint as well as the normal mobile and desktop widths. Section landing pages retain their normal site navigation.
 
-Apply this navigation consistently to guides, architecture articles, investigations and blog posts with article contents. Use the shared article components so a newly written article receives the layout automatically. Homepage, section landing pages and archive navigation retain their own documented treatments.
+Apply this navigation consistently to guides, architecture articles, investigations and blog posts with article contents. Use the shared article components so a newly written article receives the layout automatically. The homepage exposes the shared story navigation directly in its sidebar. Article pages retain their contents list with the same story navigation under Browse the site. Archive navigation retains its documented treatment.
 
 For guides, architecture articles and investigations, use the native title followed by a description lede and a compact metadata row: type, author, publication date, optional update date, estimated reading time and topics. A local draft notice appears after the title when needed. Blog pages retain the plugin's native author, date, reading metrics and tags; do not duplicate that metadata. Landing pages have no article introduction. Use a single H1 followed by a logical heading hierarchy. Keep paragraphs and diagrams in the reading column. Wide tables or code may scroll within their own container, never force horizontal scrolling of the page.
 

@@ -3,6 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 const story = '/architecture/homelab-proxmox-journey/';
 const storyTitle = 'From a NAS VM to Proxmox: five versions of my homelab';
+const retiredPages = ['/start-here/', '/architecture/'];
 const samples = [
   '/guides/',
   '/guides/placeholder/',
@@ -14,8 +15,6 @@ const samples = [
 ];
 const pages = [
   '/',
-  '/start-here/',
-  '/architecture/',
   story,
   '/architecture/proxmox-without-kubernetes/',
   '/blog/',
@@ -35,6 +34,41 @@ for (const path of pages) {
     expect(results.violations).toEqual([]);
   });
 }
+test('homepage uses the shared sidebar and links directly to published stories', async ({
+  page,
+}, testInfo) => {
+  await page.setViewportSize({ width: 1200, height: 900 });
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('data-has-sidebar', '');
+  const sidebar = page.locator('#starlight__sidebar');
+  await expect(sidebar).toBeVisible();
+  await expect(
+    sidebar.getByRole('link', { name: 'Home', exact: true }),
+  ).toHaveAttribute('href', '/');
+  await expect(
+    sidebar.getByRole('link', { name: storyTitle, exact: true }),
+  ).toHaveAttribute('href', story);
+  await expect(
+    sidebar.getByRole('link', {
+      name: 'Why I chose not to use Kubernetes inside Proxmox',
+      exact: true,
+    }),
+  ).toHaveAttribute('href', '/architecture/proxmox-without-kubernetes/');
+  await expect(page.locator('.hl-topics')).toHaveCount(0);
+  await expect(page.locator('.hl-brand')).toHaveText('The Curious Engineer');
+  await expect(page).toHaveTitle('Home | The Curious Engineer');
+  await expect(page.locator('.hl-brand small')).toHaveCount(0);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+  await expect(page.locator('.hl-discovery a')).toHaveCount(1);
+  for (const path of retiredPages) {
+    await expect(page.locator(`a[href="${path}"]`)).toHaveCount(0);
+  }
+  await page.screenshot({
+    path: testInfo.outputPath('homepage.png'),
+    fullPage: true,
+  });
+});
+
 test('search returns the published homelab story', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: /search/i }).click();
@@ -62,7 +96,7 @@ test('the story has a table of contents and metadata', async ({ page }) => {
 });
 test('mobile navigation and layout', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/start-here/');
+  await page.goto('/');
   await page.getByRole('button', { name: /menu/i }).click();
   // Starlight's nav wrapper uses display: contents; test the native popover and usable link.
   await expect(page.locator('#starlight__sidebar')).toBeVisible();
@@ -94,6 +128,15 @@ test('the sitemap and feed omit unpublished samples', async ({ request }) => {
   for (const path of samples) {
     expect(sitemapBody).not.toContain(path);
     expect(rssBody).not.toContain(path);
+  }
+  // Retire the exact landing URLs; published stories keep their /architecture/ paths.
+  for (const path of retiredPages) {
+    expect(sitemapBody).not.toContain(
+      `<loc>https://theaussiepom.me${path}</loc>`,
+    );
+    expect(rssBody).not.toContain(
+      `<link>https://theaussiepom.me${path}</link>`,
+    );
   }
 });
 
@@ -156,10 +199,15 @@ test('theme choice persists and auto follows the system', async ({ page }) => {
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
 });
 
-test('mobile homepage exposes theme selection', async ({ page }) => {
+test('mobile homepage menu exposes navigation and theme selection', async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 320, height: 844 });
   await page.goto('/');
-  const select = page.locator('starlight-theme-select select').first();
+  await page.getByRole('button', { name: 'Menu', exact: true }).click();
+  const select = page.locator(
+    '#starlight__sidebar starlight-theme-select select',
+  );
   await expect(select).toBeVisible();
   await select.selectOption('dark');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
@@ -209,6 +257,7 @@ test('drafts have no production routes, discovery pages or search entries', asyn
     '/blog/tags/draft-canary/',
     '/blog/authors/draft-canary-author/',
     ...samples,
+    ...retiredPages,
   ]) {
     expect((await request.get(path)).status(), path).toBe(404);
   }
@@ -259,9 +308,13 @@ test('article introduction exposes shared metadata in both themes', async ({
 });
 
 test('public navigation links to published pages', async ({ page }) => {
-  for (const path of ['/', '/start-here/', '/architecture/', story]) {
+  for (const path of [
+    '/',
+    story,
+    '/architecture/proxmox-without-kubernetes/',
+  ]) {
     await page.goto(path);
-    for (const sample of [...samples, '/blog/']) {
+    for (const sample of [...samples, ...retiredPages, '/blog/']) {
       await expect(page.locator(`a[href="${sample}"]`)).toHaveCount(0);
     }
   }

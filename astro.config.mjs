@@ -25,7 +25,7 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: 'HomeLab Notes',
+      title: 'The Curious Engineer',
       customCss: ['./src/styles/hybrid.css'],
       components: {
         Hero: './src/components/HomeHero.astro',
@@ -50,19 +50,16 @@ export default defineConfig({
         { tag: 'meta', attrs: { name: 'robots', content: 'index,follow' } },
       ],
       sidebar: [
+        { label: 'Home', link: '/' },
         {
-          label: 'Start Here',
-          items: [{ autogenerate: { directory: 'start-here' } }],
-        },
-        {
-          label: 'Architecture',
+          label: 'Stories',
           items: [{ autogenerate: { directory: 'architecture' } }],
         },
       ],
       plugins: [
         starlightBlog({
-          title: 'HomeLab Blog',
-          description: 'Shorter notes from HomeLab Notes.',
+          title: 'The Curious Engineer',
+          description: 'Shorter notes from Ben’s homelab.',
           navigation: 'none',
         }),
       ],

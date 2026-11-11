@@ -14,7 +14,7 @@
   --sl-content-width: 43.75rem;
   --sl-sidebar-width: 15rem;
   --sl-text-h1: clamp(2rem, 4vw, 3rem);
-  --sl-nav-height: 6.375rem;
+  --sl-nav-height: 5rem;
   --sl-text-code: 0.875rem;
   --sl-text-code-sm: 0.875rem;
   --sl-color-white: #f1eee8;
@@ -76,11 +76,7 @@
   font-weight: 700;
   letter-spacing: -0.04em;
 }
-.hl-brand small {
-  display: block;
-  font-size: 0.75rem;
-  margin-top: 0.5rem;
-}
+
 h1 {
   font-weight: 700;
   line-height: 1.08;
@@ -148,23 +144,13 @@ h1 {
 :root:not([data-has-sidebar]) .content-panel .sl-container {
   max-width: 72.5rem;
 }
+:root:has(.hl-home) {
+  --sl-content-width: 72.5rem;
+}
 .hl-home {
+  container-type: inline-size;
   max-width: 72.5rem;
   margin: auto;
-}
-.hl-topics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-  margin-bottom: 1.25rem;
-}
-.hl-topics a {
-  min-height: 2.75rem;
-  display: inline-flex;
-  align-items: center;
-  color: var(--hl-ink);
-  text-underline-offset: 0.25em;
-  font-size: 0.875rem;
 }
 .hl-hero {
   display: grid;
@@ -253,7 +239,7 @@ h1 {
 }
 .hl-discovery {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
   gap: 2rem;
   padding-block: 1.5rem;
 }
@@ -277,6 +263,13 @@ h1 {
   padding-top: 1.25rem;
   border-top: 1px solid var(--hl-rule);
 }
+@container (max-width: 60rem) {
+  .hl-hero {
+    grid-template-columns: 1fr;
+    padding: 1.75rem;
+    gap: 1.625rem;
+  }
+}
 @media (max-width: 68.75rem) {
   .hl-hero {
     grid-template-columns: 1fr;
@@ -288,14 +281,8 @@ h1 {
   }
 }
 @media (max-width: 43.75rem) {
-  :root {
-    --sl-nav-height: 5.625rem;
-  }
   .hl-brand span {
-    font-size: 1.5625rem;
-  }
-  .hl-brand small {
-    max-width: 13rem;
+    font-size: 1.3125rem;
   }
   .hl-hero {
     padding: 1.75rem 1.375rem;
