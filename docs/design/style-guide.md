@@ -1,6 +1,6 @@
 # HomeLab Notes: visual style and layout guide
 
-Version 1.3 | 11 November 2026 | Approved design direction: 04 + 05 hybrid
+Version 1.4 | 11 November 2026 | Approved design direction: 04 + 05 hybrid
 
 ## 1. Direction and authority
 
@@ -154,7 +154,7 @@ Below 800px, preserve the native **On this page** disclosure and labelled **Menu
 
 Apply this navigation consistently to guides, architecture articles, investigations and blog posts with article contents. Use the shared article components so a newly written article receives the layout automatically. Homepage, section landing pages and archive navigation retain their own documented treatments.
 
-For guides, architecture articles and investigations, use the native title followed by a description lede and a compact metadata row: type, author, publication date, optional update date and topics. A local draft notice appears after the title when needed. Blog pages retain the plugin's native author, date, reading metrics and tags; do not duplicate that metadata. Landing pages have no article introduction. Use a single H1 followed by a logical heading hierarchy. Keep paragraphs and diagrams in the reading column. Wide tables or code may scroll within their own container, never force horizontal scrolling of the page.
+For guides, architecture articles and investigations, use the native title followed by a description lede and a compact metadata row: type, author, publication date, optional update date, estimated reading time and topics. A local draft notice appears after the title when needed. Blog pages retain the plugin's native author, date, reading metrics and tags; do not duplicate that metadata. Landing pages have no article introduction. Use a single H1 followed by a logical heading hierarchy. Keep paragraphs and diagrams in the reading column. Wide tables or code may scroll within their own container, never force horizontal scrolling of the page.
 
 Use sans-serif for the title, metadata and navigation; serif for the lede, body and section headings. The desktop title is 48px, the body is 18px with 1.7 line height. Mobile retains the body size. The table of contents may be sticky if it stays inside the viewport and does not obscure focus or headings.
 
@@ -225,7 +225,7 @@ Start with theme tokens and typography, then the custom homepage and shared arti
 
 This abbreviated light palette illustrates the roles. The authoritative mappings and both palettes are in `src/styles/hybrid.css`; its base tokens are dark and its `[data-theme="light"]` override is light. Native Starlight controls provide Light, Dark and Auto, persist an explicit choice, and follow system preference in Auto. No additional theme storage or custom switching script is required.
 
-`HomeHero.astro` supplies the homepage and falls back to the native hero elsewhere. `SiteTitle.astro` supplies the masthead. `ArticleTitle.astro` preserves the native title, adds the article lede and metadata, and labels local drafts. Keep its metadata at 14px with wrapping rows.
+`HomeHero.astro` supplies the homepage and falls back to the native hero elsewhere. `SiteTitle.astro` supplies the masthead. `ArticleTitle.astro` preserves the native title, adds the article lede and metadata, and labels local drafts. Keep its metadata at 14px with wrapping rows. Show estimated reading time as whole minutes rounded up, for example “7 min read”. Calculate it automatically from article text and code at 200 words per minute, with a minimum of one minute. Navigation, the author bio, comments, link destinations and source-only authoring notes are excluded. The estimate is a guide; diagrams and code can take longer to work through.
 
 Use the shared `ArticleSidebar.astro` and `ArticlePageSidebar.astro` for article contents and site browsing. Use native HTML/SVG diagrams and responsive image components with captions to meet the visual rules above. `ArticleFooter.astro` adds the shared author bio and comments while preserving the framework footer. Keep layout decisions in components and shared styles, with article prose and visual placement in Markdown/MDX. Do not require authors to select a route-specific layout to obtain the approved reading experience.
 
