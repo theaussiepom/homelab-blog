@@ -17,17 +17,21 @@
     "lint": "eslint .",
     "links": "node scripts/check-links.mjs",
     "test": "playwright test",
-    "validate": "npm run format:check && npm run lint && npm run check && npm run test:editorial && npm run build && npm run links && npm run test:guards && npm test",
+    "validate": "npm run format:check && npm run lint && npm run check && npm run test:editorial && npm run test:brand && npm run test:sharing && npm run build && npm run links && npm run test:guards && npm test",
     "deploy:production": "wrangler deploy",
     "deploy:preview": "wrangler versions upload",
     "test:guards": "node scripts/test-guards.mjs",
     "new:article": "node scripts/new-article.mjs",
-    "test:editorial": "node scripts/test-editorial.mjs && node scripts/test-new-article.mjs"
+    "test:editorial": "node scripts/test-editorial.mjs && node scripts/test-new-article.mjs",
+    "test:brand": "node scripts/check-brand-assets.mjs",
+    "test:sharing": "node scripts/test-sharing.mjs && node scripts/test-sharing-build.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.7",
     "@astrojs/starlight": "0.42.10",
     "astro": "7.4.8",
+    "opentype.js": "2.0.0",
+    "sharp": "0.35.5",
     "starlight-blog": "0.30.2"
   },
   "devDependencies": {

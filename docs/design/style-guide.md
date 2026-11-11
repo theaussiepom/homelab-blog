@@ -1,6 +1,6 @@
 # The Curious Engineer: visual style and layout guide
 
-Version 1.5 | 11 November 2026 | Approved design direction: 04 + 05 hybrid
+Version 1.8 | 11 November 2026 | Approved hybrid with v2 portrait identity and sharing cards
 
 ## 1. Direction and authority
 
@@ -12,6 +12,8 @@ The author-reviewed article **From a NAS VM to Proxmox: five versions of my home
 
 Keep the bold sans-serif masthead, dark opening panel and lilac featured article. Use warm paper surfaces and serif text for article summaries and extended reading. Carry purple accents consistently from discovery into the article. The homepage may be expressive; the article should give the text room to breathe.
 
+Use the supplied portrait identity according to the [brand identity guide](branding.md). The approved portrait with eyes and outlined wordmark form the shared masthead. Its face stays black on lilac in both themes; only the lettering changes colour. Reserve the eyeless micro portrait for favicons and home-screen icons. The brand suite preserves this palette and the typography roles below.
+
 ![Approved hybrid homepage reference](assets/hybrid-home.png)
 
 The reference image illustrates typography, palette and visual pacing. Follow the publication name, shared sidebar and responsive rules specified below for the current composition. Dark mode is specified below. Editorial templates apply this guide alongside the voice and publishing requirements.
@@ -21,6 +23,10 @@ The reference image illustrates typography, palette and visual pacing. Follow th
 ## 2. Typography
 
 Use local system fonts. No external font service or font download is required. Test fallback rendering because font availability and metrics vary by operating system.
+
+Logo lettering is supplied as outlined Liberation Sans Bold artwork. It is an asset, not a new website font dependency. The source font and its licence remain with the archived editing files.
+
+Sharing images use that bundled bold font for deterministic rendering. Published article cards follow the [brand identity](branding.md) and [URL preview](../sharing-previews.md) specifications: warm paper, dominant title, a small category label and an approved portrait signature. Titles must fit in full without clipping or silent truncation. This image-generation font does not change the website's typography roles below.
 
 | Role                                              | Font stack                                                           | Weight                                    |
 | ------------------------------------------------- | -------------------------------------------------------------------- | ----------------------------------------- |
@@ -40,7 +46,6 @@ Use genuine available weights. Arial commonly provides regular and bold; use 700
 
 | Element                | Desktop size / line height | Mobile size / line height            |
 | ---------------------- | -------------------------- | ------------------------------------ |
-| Masthead               | 29px / 1.15                | 21px / 1.15                          |
 | Homepage headline      | 60px / 1.03                | 36-45px / 1.03                       |
 | Article title          | 48px / 1.08                | 32px / 1.08                          |
 | Featured article title | 33px / 1.15                | 29px / 1.15                          |
@@ -120,7 +125,7 @@ Light, Dark and Auto must remain usable on desktop and mobile. In Auto, changing
 
 ### Desktop: 1100px and wider
 
-Use a centred homepage content wrapper with a maximum width of 1160px in the space beside the shared 240px sidebar. Native Starlight outer gutters surround it; the hero adds 42px internal side padding when there is enough space. The header is 80px tall. Place the masthead at left, native search in the middle and theme/social controls at right. The masthead contains the publication name, The Curious Engineer, with no subtitle. Use the sidebar for Home and direct links to published stories. Keep editorial samples as drafts. The homepage has no separate topic navigation or section landing-page cards.
+Use a centred homepage content wrapper with a maximum width of 1160px in the space beside the shared 240px sidebar. Native Starlight outer gutters surround it; the hero adds 42px internal side padding when there is enough space. The header is 80px tall. Place the masthead at left, native search in the middle and theme/social controls at right. Use the supplied approved portrait masthead with the publication name, The Curious Engineer, and no subtitle. Its light/dark lettering follows the native theme while the black portrait and lilac circle stay consistent. Scale the 644 × 104 artwork to at most 312px wide; at 448px and narrower, use the 745 × 240 compact lockup at 160px wide. Both fit the header content height and retain one accessible home-link name. See the [brand guide](branding.md) for asset paths and usage. Use the sidebar for Home and direct links to published stories. Keep editorial samples as drafts. The homepage has no separate topic navigation or section landing-page cards.
 
 The hero spans the wrapper's full width. Above 960px of available container width, use two columns with a 1.18:1 ratio, a 46px gap and 34px vertical padding. Stack them when the sidebar leaves less space. Align the introduction and featured article near their vertical centres. The left column contains a short context label, a strong headline and a concise personal introduction. Limit the introduction to about 455px. Avoid fixed heights or manual line breaks that fail at intermediate widths.
 

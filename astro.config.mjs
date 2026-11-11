@@ -3,6 +3,7 @@ import { satteri } from '@astrojs/markdown-satteri';
 import starlight from '@astrojs/starlight';
 import starlightBlog from 'starlight-blog';
 import { articleReadingTime } from './src/lib/reading-time.mjs';
+import { siteTitle } from './src/lib/site.mjs';
 
 const site = process.env.SITE_URL || 'https://theaussiepom.me';
 const url = new URL(site);
@@ -25,7 +26,9 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: 'The Curious Engineer',
+      title: siteTitle,
+      routeMiddleware: './src/shareRouteData.ts',
+      favicon: '/brand/favicons/favicon.ico?v=2',
       customCss: ['./src/styles/hybrid.css'],
       components: {
         Hero: './src/components/HomeHero.astro',
@@ -48,6 +51,39 @@ export default defineConfig({
       ],
       head: [
         { tag: 'meta', attrs: { name: 'robots', content: 'index,follow' } },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'icon',
+            type: 'image/png',
+            sizes: '32x32',
+            href: '/brand/favicons/favicon-32x32.png?v=2',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'icon',
+            type: 'image/svg+xml',
+            sizes: 'any',
+            href: '/brand/favicons/favicon.svg?v=2',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'apple-touch-icon',
+            sizes: '180x180',
+            href: '/brand/favicons/apple-touch-icon.png?v=2',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'manifest',
+            href: '/brand/favicons/site.webmanifest?v=2',
+          },
+        },
       ],
       sidebar: [
         { label: 'Home', link: '/' },
@@ -58,7 +94,7 @@ export default defineConfig({
       ],
       plugins: [
         starlightBlog({
-          title: 'The Curious Engineer',
+          title: siteTitle,
           description: 'Shorter notes from Ben’s homelab.',
           navigation: 'none',
         }),

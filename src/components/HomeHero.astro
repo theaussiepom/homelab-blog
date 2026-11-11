@@ -1,18 +1,13 @@
 ---
 import DefaultHero from '@astrojs/starlight/components/Hero.astro';
 import { getCollection } from 'astro:content';
+import { isPublishedArticle } from '../lib/editorial.mjs';
 
 const featuredId = 'architecture/homelab-proxmox-journey';
 const articles =
   Astro.url.pathname === '/'
     ? (
-        await getCollection(
-          'docs',
-          ({ data }) =>
-            ['guide', 'architecture', 'investigation', 'post'].includes(
-              data.articleType,
-            ) && !data.draft,
-        )
+        await getCollection('docs', ({ data }) => isPublishedArticle(data))
       ).sort(
         (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
       )
@@ -30,9 +25,8 @@ const moreArticles = articles.filter(({ id }) => id !== featuredId);
           There’s always one more thing to build.
         </h1>
         <p class="hl-intro">
-          I’m Ben. I write about home automation, self-hosted services and the
-          decisions behind them, from the first useful setup to the engineering
-          that keeps it running.
+          I’m Ben. My homelab started with a garage door and grew into an
+          obsession with what else might be possible.
         </p>
       </div>
       {featuredArticle && !featuredArticle.data.draft && (
