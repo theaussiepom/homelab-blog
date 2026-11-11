@@ -100,7 +100,7 @@ test('initial static HTML contains authoritative homepage and article previews',
     await sharp(bytes).raw().toBuffer();
   }
   expect((await readdir('dist/og')).sort()).toEqual([...generated].sort());
-  expect(
-    (await request.get('/architecture/what-i-built-on-proxmox/')).status(),
-  ).toBe(404);
+  expect((await request.get('/guides/editorial-draft-canary/')).status()).toBe(
+    404,
+  );
 });

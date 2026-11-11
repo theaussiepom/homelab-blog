@@ -131,7 +131,7 @@ The hero spans the wrapper's full width. Above 960px of available container widt
 
 The lilac feature uses 24-28px padding, one representative diagram or image, a serif article title, a short summary, metadata and a clear reading link. Its image should support the subject. Abstract graphics in the reference are placeholders, not a permanent brand asset.
 
-Below the hero, show the other published articles under an understated Keep exploring label. Link their actual titles and show their summaries. Use 24-32px gaps, serif titles and simple rows or columns. Omit the section when there are no other published articles. Drafts receive no homepage card or public navigation link.
+Below the hero, show the other published articles under an understated Keep exploring label. List them by publication date, newest first, then alphabetically by title when dates match. Link their actual titles and show their summaries. Use 24-32px gaps, serif titles and simple rows or columns. Omit the section when there are no other published articles. Drafts receive no homepage card or public navigation link.
 
 ### Tablet: 701-1099px
 

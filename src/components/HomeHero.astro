@@ -9,7 +9,9 @@ const articles =
     ? (
         await getCollection('docs', ({ data }) => isPublishedArticle(data))
       ).sort(
-        (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
+        (a, b) =>
+          (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0) ||
+          a.data.title.localeCompare(b.data.title),
       )
     : [];
 const featuredArticle = articles.find(({ id }) => id === featuredId);
