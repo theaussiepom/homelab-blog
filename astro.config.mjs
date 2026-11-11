@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
+import { satteri } from '@astrojs/markdown-satteri';
 import starlight from '@astrojs/starlight';
 import starlightBlog from 'starlight-blog';
+import { articleReadingTime } from './src/lib/reading-time.mjs';
 
 const site = process.env.SITE_URL || 'https://theaussiepom.me';
 const url = new URL(site);
@@ -18,6 +20,9 @@ export default defineConfig({
   site: url.origin,
   output: 'static',
   trailingSlash: 'always',
+  markdown: {
+    processor: satteri({ mdastPlugins: [articleReadingTime] }),
+  },
   integrations: [
     starlight({
       title: 'HomeLab Notes',

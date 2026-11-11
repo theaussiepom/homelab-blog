@@ -1,6 +1,27 @@
 import assert from 'node:assert/strict';
 import { z } from 'astro/zod';
 import { articleFields, validateArticle } from '../src/lib/editorial.mjs';
+import { createSatteriMarkdownProcessor } from '@astrojs/markdown-satteri';
+import { articleReadingTime } from '../src/lib/reading-time.mjs';
+
+const processor = await createSatteriMarkdownProcessor({
+  mdastPlugins: [articleReadingTime],
+});
+for (const [words, minutes] of [
+  [1, 1],
+  [200, 1],
+  [201, 2],
+  [400, 2],
+  [401, 3],
+]) {
+  const result = await processor.render('word '.repeat(words));
+  assert.equal(result.metadata.frontmatter.minutesRead, minutes);
+}
+const linkedText = await processor.render(
+  `[One word](https://example.com/${'ignored/'.repeat(500)})\n\n<!-- ${'ignored '.repeat(500)} -->`,
+);
+assert.equal(linkedText.metadata.frontmatter.minutesRead, 1);
+
 const schema = articleFields
   .extend({ draft: z.boolean().default(false) })
   .superRefine(validateArticle);

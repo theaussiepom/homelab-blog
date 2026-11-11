@@ -41,7 +41,7 @@ The command fills the title and date placeholders and creates an MDX file with `
 | `draft`       | Native Starlight boolean. Keep `true` while writing; change to `false` when ready for a public preview.                                                           |
 | `lastUpdated` | Optional explicit YAML date, no earlier than `date`, or `false`. Record a meaningful article update, not an automatic deployment timestamp.                       |
 
-Landing and generated pages default to `articleType: page` and do not need article authors, dates or tags. The four article templates set their type explicitly; preserve it so article validation applies. Do not add a competing publication-status field or manually maintained reading time. The blog integration calculates reading metrics. A future date does not schedule publication: `draft: false` makes an article eligible for the next production build regardless of its date.
+Landing and generated pages default to `articleType: page` and do not need article authors, dates or tags. The four article templates set their type explicitly; preserve it so article validation applies. Do not add a competing publication-status field or manually maintained reading time. The shared introduction calculates estimated reading time for guides, architecture articles and investigations at 200 words per minute, rounded up to whole minutes. Source-only notes and page furniture are excluded. The blog integration owns reading metrics for blog posts. A future date does not schedule publication: `draft: false` makes an article eligible for the next production build regardless of its date.
 
 ## Write and preview locally
 

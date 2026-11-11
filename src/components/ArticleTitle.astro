@@ -1,9 +1,14 @@
 ---
 import DefaultTitle from '@astrojs/starlight/components/PageTitle.astro';
-const { data } = Astro.locals.starlightRoute.entry;
+import { render } from 'astro:content';
+const { entry } = Astro.locals.starlightRoute;
+const { data } = entry;
 const showMetadata = ['guide', 'architecture', 'investigation'].includes(
   data.articleType,
 );
+const minutesRead = showMetadata
+  ? (await render(entry)).remarkPluginFrontmatter.minutesRead
+  : undefined;
 const formatDate = (value: Date) =>
   new Intl.DateTimeFormat('en-AU', {
     dateStyle: 'medium',
@@ -47,6 +52,12 @@ const formatDate = (value: Date) =>
               {formatDate(data.lastUpdated)}
             </time>
           </dd>
+        </div>
+      )}
+      {minutesRead && (
+        <div class="hl-reading-time">
+          <dt>Estimated reading time</dt>
+          <dd>{minutesRead} min read</dd>
         </div>
       )}
       <div>

@@ -233,18 +233,28 @@ test('article introduction exposes shared metadata in both themes', async ({
   page,
 }) => {
   for (const theme of ['light', 'dark']) {
-    await page.goto(story);
-    await page
-      .locator('starlight-theme-select select')
-      .first()
-      .selectOption(theme);
-    await expect(page.locator('h1')).toHaveCount(1);
-    await expect(page.locator('.hl-lede')).toContainText('garage door');
-    await expect(page.locator('.hl-article-meta')).toContainText('Ben');
-    await expect(page.locator('.hl-article-meta time')).toHaveAttribute(
-      'datetime',
-      '2026-11-11',
-    );
+    for (const path of [story, '/architecture/proxmox-without-kubernetes/']) {
+      await page.goto(path);
+      await page
+        .locator('starlight-theme-select select')
+        .first()
+        .selectOption(theme);
+      await expect(page.locator('h1')).toHaveCount(1);
+      if (path === story) {
+        await expect(page.locator('.hl-lede')).toContainText('garage door');
+      }
+      await expect(page.locator('.hl-article-meta')).toContainText('Ben');
+      await expect(page.locator('.hl-reading-time')).toContainText(
+        'Estimated reading time',
+      );
+      await expect(page.locator('.hl-reading-time dd')).toHaveText(
+        /^[1-9]\d* min read$/,
+      );
+      await expect(page.locator('.hl-article-meta time')).toHaveAttribute(
+        'datetime',
+        '2026-11-11',
+      );
+    }
   }
 });
 
