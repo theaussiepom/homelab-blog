@@ -44,4 +44,4 @@ This invented example exercises the publication layout. It makes no claim about 
 
 ## Next steps
 
-Return to [Start Here](/start-here/) or read the [placeholder blog post](/blog/foundation-placeholder/).
+Return to [home](/) or read the [placeholder blog post](/blog/foundation-placeholder/).

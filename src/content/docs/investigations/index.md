@@ -9,4 +9,4 @@ description: Placeholder investigations section for future evidence-led articles
 
 ## Evidence standards
 
-Future investigations will separate observed behaviour, hypotheses, tests and unresolved questions. Return to [Start Here](/start-here/).
+Future investigations will separate observed behaviour, hypotheses, tests and unresolved questions. Return to [home](/).

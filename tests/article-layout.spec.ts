@@ -55,7 +55,7 @@ for (const theme of ['light', 'dark']) {
       ).toHaveCount(1);
       await sidebar.locator('.hl-site-links > summary').click();
       await expect(
-        sidebar.getByRole('link', { name: 'Start Here', exact: true }).first(),
+        sidebar.getByRole('link', { name: 'Home', exact: true }).first(),
       ).toBeVisible();
     }
   });
@@ -88,11 +88,11 @@ for (const theme of ['light', 'dark']) {
       await page.locator('.hl-site-links > summary').click();
       const siteLink = page
         .locator('#starlight__sidebar')
-        .getByRole('link', { name: 'Start Here', exact: true })
+        .getByRole('link', { name: 'Home', exact: true })
         .first();
       await expect(siteLink).toBeVisible();
       await siteLink.click();
-      await expect(page).toHaveURL('/start-here/');
+      await expect(page).toHaveURL('/');
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth <= innerWidth,
@@ -105,7 +105,7 @@ for (const theme of ['light', 'dark']) {
 test('landing and archive pages retain their normal navigation', async ({
   page,
 }) => {
-  for (const path of ['/', '/start-here/', '/architecture/', '/blog/']) {
+  for (const path of ['/', '/blog/']) {
     await page.goto(path);
     await expect(page.locator('.hl-reader-sidebar')).toHaveCount(0);
     await expect(page.locator('.hl-mobile-contents')).toHaveCount(0);
@@ -116,7 +116,7 @@ test('the shared bio follows the story and precedes comments for its author', as
   page,
 }) => {
   const bio = page.getByRole('region', { name: 'About Ben' });
-  for (const path of ['/', '/architecture/']) {
+  for (const path of ['/', '/blog/']) {
     await page.goto(path);
     await expect(bio).toHaveCount(0);
   }

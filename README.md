@@ -1,6 +1,6 @@
-# HomeLab Notes
+# The Curious Engineer
 
-HomeLab Notes is a public, static publication for homelab guides, architecture stories and investigations. The first article follows Ben’s journey from a Home Assistant VM on a NAS to his current Proxmox build. [HomeLab Notes](https://theaussiepom.me/) · [First article](https://theaussiepom.me/architecture/homelab-proxmox-journey/)
+The Curious Engineer is a public, static publication for homelab guides, architecture stories and investigations. The first article follows Ben’s journey from a Home Assistant VM on a NAS to his current Proxmox build. [The Curious Engineer](https://theaussiepom.me/) · [First article](https://theaussiepom.me/architecture/homelab-proxmox-journey/)
 
 ## Visual design
 
@@ -46,7 +46,7 @@ The scanner guard deliberately generates a fake token in temporary storage and r
 
 ## Structure
 
-- `src/content/docs/`: homepage, Start Here, Guides, Architecture, Investigations and blog posts.
+- `src/content/docs/`: homepage, stories, future guides and investigations, and blog posts. The sidebar links directly to published stories; the homepage also lists them.
 - `src/content.config.ts`: Starlight and blog content schemas.
 - `astro.config.mjs`: presentation, navigation and canonical origin.
 - `public/`: static assets and HTTP security headers.

@@ -1,4 +1,7 @@
-<a class="hl-brand" href="/">
-  <span>HomeLab Notes</span>
-  <small>A personal technical publication</small>
+---
+const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
+---
+
+<a class="hl-brand" href={siteTitleHref}>
+  <span translate="no">{siteTitle}</span>
 </a>

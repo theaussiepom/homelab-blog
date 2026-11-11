@@ -12,7 +12,7 @@ test('landing pages have no comment widget; local previews do not load Giscus', 
       thirdPartyRequests.push(request.url());
     }
   });
-  for (const path of ['/', '/architecture/', '/blog/']) {
+  for (const path of ['/', '/blog/']) {
     await page.goto(path);
     await expect(page.locator('.hl-comments')).toHaveCount(0);
   }
