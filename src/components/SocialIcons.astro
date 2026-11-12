@@ -12,6 +12,15 @@ import { Icon } from '@astrojs/starlight/components';
     rel={icon === 'rss' ? 'alternate' : 'me'}
   >
     <Icon name={icon} aria-hidden="true" />
+    <span class="hl-social-text" aria-hidden="true">
+      {icon === 'rss'
+        ? 'RSS'
+        : icon === 'github'
+          ? 'GitHub'
+          : icon === 'linkedin'
+            ? 'LinkedIn'
+            : label}
+    </span>
   </a>
 ))}
 
@@ -20,11 +29,14 @@ import { Icon } from '@astrojs/starlight/components';
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    inline-size: 2.75rem;
-    block-size: 2.75rem;
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
     flex-shrink: 0;
     color: var(--sl-color-text-accent);
     border-radius: 0.25rem;
+  }
+  .hl-social-text {
+    display: none;
   }
   .hl-social-link:hover {
     color: var(--sl-color-white);

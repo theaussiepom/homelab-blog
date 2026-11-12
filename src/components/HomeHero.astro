@@ -2,7 +2,8 @@
 import DefaultHero from '@astrojs/starlight/components/Hero.astro';
 import { getCollection } from 'astro:content';
 import { isPublishedArticle } from '../lib/editorial.mjs';
-import { supportingLine } from '../lib/site.mjs';
+import HeroNote from './HeroNote.astro';
+import { supportingLine, brandAsset } from '../lib/site.mjs';
 import { author } from '../lib/author.mjs';
 
 const featuredId = 'architecture/homelab-proxmox-journey';
@@ -23,44 +24,64 @@ const moreArticles = articles.filter(({ id }) => id !== featuredId);
 {Astro.url.pathname === '/' ? (
   <div class="hl-home">
     <section class="hl-hero" aria-labelledby="_top">
-      <div>
-        <p class="hl-supporting-line">{supportingLine}</p>
+      <div class="hl-hero-decoration" aria-hidden="true"></div>
+      <div class="hl-hero-copy">
+        <div class="hl-hero-author">
+          <img
+            src={brandAsset('icons/svg/tap-portrait-lilac.svg')}
+            width="512"
+            height="512"
+            alt=""
+          />
+          <span>{author.name}</span>
+        </div>
         <h1 id="_top" data-page-title>
           There’s always one more thing to build.
         </h1>
+        <p class="hl-supporting-line">{supportingLine}</p>
         <p class="hl-intro">
-          I’m Ben. My homelab started with a garage door and grew into an
-          obsession with what else might be possible.
+          I’m Ben, a software engineer who likes understanding how things work,
+          trying ideas and making them useful.
         </p>
         <a class="hl-about-link" href={author.aboutPath}>
-          About Ben
+          More about me <span aria-hidden="true">→</span>
         </a>
       </div>
-      {featuredArticle && !featuredArticle.data.draft && (
-        <div class="hl-feature">
-          <svg
-            viewBox="0 0 400 120"
-            class="hl-motif"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <g fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M55 60H345M150 20V100M250 20V100M150 20H250M150 100H250" />
-              <circle cx="55" cy="60" r="25" />
-              <rect x="125" y="35" width="50" height="50" />
-              <circle cx="250" cy="60" r="25" />
-              <rect x="320" y="35" width="50" height="50" />
-            </g>
-          </svg>
-          <p class="hl-kicker">The story so far</p>
-          <h2>
-            <a href={`/${featuredId}/`}>{featuredArticle.data.title}</a>
-          </h2>
-          <p>{featuredArticle.data.description}</p>
-          <a class="hl-read" href={`/${featuredId}/`}>
-            Read the homelab story <span aria-hidden="true">→</span>
-          </a>
-        </div>
+      {featuredArticle && (
+        <>
+          <HeroNote />
+          <div class="hl-feature">
+            <p class="hl-kicker">The story so far</p>
+            <h2>
+              <a href={`/${featuredId}/`}>{featuredArticle.data.title}</a>
+            </h2>
+            <p class="hl-feature-meta">
+              <span>{featuredArticle.data.articleType}</span>
+              {featuredArticle.data.date && (
+                <>
+                  {' '}
+                  ·{' '}
+                  <time
+                    datetime={featuredArticle.data.date
+                      .toISOString()
+                      .slice(0, 10)}
+                  >
+                    {new Intl.DateTimeFormat('en-AU', {
+                      dateStyle: 'long',
+                      timeZone: 'UTC',
+                    }).format(featuredArticle.data.date)}
+                  </time>
+                </>
+              )}
+            </p>
+            <p class="hl-feature-description">
+              {featuredArticle.data.description}
+            </p>
+            <a class="hl-read" href={`/${featuredId}/`}>
+              Read the homelab story <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </>
       )}
     </section>
     {moreArticles.length > 0 && (

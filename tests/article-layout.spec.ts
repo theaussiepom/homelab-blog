@@ -85,7 +85,7 @@ for (const theme of ['light', 'dark']) {
       );
       await expect(page).toHaveURL(new RegExp(`${target}$`));
       await page.getByRole('button', { name: 'Menu', exact: true }).click();
-      await page.locator('.hl-site-links > summary').click();
+      await expect(page.locator('.hl-site-links')).toHaveAttribute('open');
       const siteLink = page
         .locator('#starlight__sidebar')
         .getByRole('link', { name: 'Home', exact: true })
@@ -93,6 +93,8 @@ for (const theme of ['light', 'dark']) {
       await expect(siteLink).toBeVisible();
       await siteLink.click();
       await expect(page).toHaveURL('/');
+      // Hosted navigation can update the URL before the new stylesheet loads.
+      await page.waitForLoadState('load');
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth <= innerWidth,

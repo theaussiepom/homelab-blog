@@ -126,3 +126,6 @@ web/brand-tokens.json,json,,,1021,19cefa73f3a8205bf1aa55eb7fdc41960fb8f990d50b01
 web/brand.css,css,,,1113,affc8548a6a8b2e868e9ff706a2f9b660be2326870d6b652ec4e34b3b0692106
 web/head-snippet.html,html,,,2026,dd51bb6ea29c78ec7f553f84387371cd7f17b9fd1317e4b8107b2d70b3cc9821
 web/header-example.html,html,,,739,e019df272a7794b9445782f52ea3671ad0dc975c5a0c289e4de37c43a00815eb
+decor/tap-arrow-desktop.svg,SVG,,,251,704bcad075e126796e925b3815b6295428ec96c9e058e0eb6819fcaf90804c9d
+decor/tap-arrow-mobile.svg,SVG,,,251,36938908d418909fcbcc12d41bb9124079926666c4ddd9a28e475c7e6152f0a4
+decor/tap-curiosity-note.svg,SVG,,,1996,086ebfeff7cf73c25f6f1d1bfaf01369f634f63e25bd5a4270e9b12f98ca86ca

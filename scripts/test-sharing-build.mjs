@@ -157,7 +157,25 @@ try {
     (await readFile(guide, 'utf8')).replace('draft: false', 'draft: true'),
   );
   await unlink(post);
+  const heroSource = join(scratch, 'src/components/HomeHero.astro');
+  await writeFile(
+    heroSource,
+    (await readFile(heroSource, 'utf8')).replace(
+      "const featuredId = 'architecture/homelab-proxmox-journey';",
+      "const featuredId = 'architecture/not-a-published-story';",
+    ),
+  );
   build();
+  const noFeature = await parse('index.html');
+  assert.equal(
+    noFeature.querySelectorAll('.hl-feature, .hl-curiosity').length,
+    0,
+    'No orphan card or note without a published feature',
+  );
+  assert.ok(
+    noFeature.querySelectorAll('.hl-discovery a').length > 0,
+    'Other published stories remain discoverable',
+  );
   assert.deepEqual(
     (await cards()).sort(),
     retained,

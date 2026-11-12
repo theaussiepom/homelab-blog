@@ -78,7 +78,10 @@ for (const theme of ['light', 'dark']) {
         if (width < 800) {
           await page.getByRole('button', { name: 'Menu', exact: true }).click();
           const browse = page.locator('.hl-site-links');
-          if (await browse.count())
+          if (
+            (await browse.count()) &&
+            (await browse.locator(':scope > summary').isVisible())
+          )
             await browse.locator(':scope > summary').click();
           await expect(
             page
@@ -114,7 +117,9 @@ for (const theme of ['light', 'dark']) {
           ),
         ).toBe(true);
         if (width < 800)
-          await page.getByRole('button', { name: 'Menu', exact: true }).click();
+          await page
+            .getByRole('button', { name: 'Close', exact: true })
+            .click();
         if (path !== '/blog/' && (width === 390 || width === 1200)) {
           const name =
             path === '/' ? 'home' : path === '/about/' ? 'about' : 'article';

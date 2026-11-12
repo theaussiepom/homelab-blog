@@ -23,6 +23,18 @@ const isArticle =
   </DefaultSidebar>
 )}
 
+<script>
+  // Keep the same native navigation visible in the phone menu and collapsed
+  // beneath desktop contents. There is no second menu or navigation store.
+  const desktop = matchMedia('(min-width: 50em)');
+  const browse = document.querySelector<HTMLDetailsElement>('.hl-site-links');
+  const resetBrowse = () => {
+    if (browse) browse.open = !desktop.matches;
+  };
+  resetBrowse();
+  desktop.addEventListener('change', resetBrowse);
+</script>
+
 <style>
   .hl-reader-sidebar :global(starlight-toc h2) {
     margin-block: 0 0.75rem;
