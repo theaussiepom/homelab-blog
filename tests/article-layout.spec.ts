@@ -93,6 +93,8 @@ for (const theme of ['light', 'dark']) {
       await expect(siteLink).toBeVisible();
       await siteLink.click();
       await expect(page).toHaveURL('/');
+      // Hosted navigation can update the URL before the new stylesheet loads.
+      await page.waitForLoadState('load');
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth <= innerWidth,
