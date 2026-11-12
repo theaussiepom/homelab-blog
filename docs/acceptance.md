@@ -18,7 +18,7 @@ Full-page and viewport captures were compared at the handoff's 320×900 light, 3
 
 All 66 supplied website-facing brand files match the existing originals byte-for-byte. Only the required hero portrait is added as a runtime copy. The three new native SVG decorations are archived with checksums and inlined with hidden, non-focusable semantics. There is one authoritative kit with 130 manifest-listed files and 19 selected runtime exports. The SVG portrait, wordmark and favicon geometry are unchanged. The source-of-truth guides now describe this implementation and label the earlier homepage concept as superseded.
 
-Local review completed before the author separately authorised pushing the finished branch. No PR, merge, hosted preview or deployment is included in that authority. Firefox, Safari and screen-reader coverage are not claimed. Receiving-platform preview caches and any future live deployment remain outside this local handoff.
+Local review completed before the author separately authorised pushing the finished branch, then deployment. The integrating PR and GitHub Actions runs record hosted validation and delivery. Firefox, Safari and screen-reader coverage are not claimed. Receiving-platform presentation and preview caches require separate verification.
 
 ## The Aussie Pom rebrand, local review, 12 November 2026
 
