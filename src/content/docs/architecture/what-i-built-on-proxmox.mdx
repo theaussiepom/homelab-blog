@@ -225,9 +225,7 @@ The application’s storage binding supplies the data path. Home Assistant’s p
 
 The full job also permits Home Assistant and Node-RED to be paused while their files and MariaDB’s database export are captured. That gives me a coordinated copy of the application’s files and history. The profiles describe how the data needs to be saved; the site provides the bindings and permission to do it.
 
-PBS server configuration gets its own Deploy job, alongside the one for the Domain Name System (DNS) resolver. The separate backup-activation job waits for that server configuration and the enrolled guest deployments before it installs the coordinated schedule.
-
-The [complete backup setup](https://github.com/theaussiepom/homelab/blob/cbc7c0118a39239c90379d8654f0841781607bcf/docs/backup/README.md) covers the credentials, recovery keys and checks omitted from the excerpt. Installing the software and setting the timer are steps towards protection; a successful capture and restore establish what I can actually recover.
+The Configure backups job prepares the PBS host policy and nightly schedule before the guests deploy. Each enrolled guest then enrols its backup client, installs its backup configuration and checks that it’s ready. Backups run each night on their own schedule. The [complete setup guide](https://github.com/theaussiepom/homelab/blob/cbc7c0118a39239c90379d8654f0841781607bcf/docs/backup/README.md) covers the credentials and recovery keys left out of this example.
 
 My live application files and databases use local guest storage. The [network-attached storage (NAS)](https://www.synology.com/en-global/dsm/solution/what-is-nas/for-home) box is now the destination for PBS backups. The application can work on its files locally, with its backup going elsewhere.
 
