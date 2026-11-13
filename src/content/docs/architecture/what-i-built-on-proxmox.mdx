@@ -23,7 +23,7 @@ export const authoringBrief = {
   assumedKnowledge:
     'An interest in running services at home. Explain configuration references, guests and CI/CD as they become relevant. This stands alone and does not retell the NAS-to-Proxmox or Kubernetes investigations.',
   evidence:
-    'Author-supplied design and experiences, public framework and library source, and six source-checked configuration excerpts. Naming and backup-default refinements compile together locally; that is source compatibility, not a deployed combined release or a full recovery test. The existing screenshot is evidence of the earlier successful 17-job workflow. Update it when an approved replacement is available.',
+    'Author-supplied design and experiences, public framework and library source, and six source-checked configuration excerpts. Naming and backup-default refinements compile together locally; that is source compatibility, not a deployed combined release or a full recovery test. The screenshot records a successful 17-job deployment workflow, including 14 guest jobs; it does not establish a full recovery test.',
   voice:
     'Follow the warmth and pace of the two approved stories. Start with the author’s wish to make each new project benefit from work already done, then follow that through concrete examples. Keep configuration-driven CI/CD as the premise. Use conversational Australian English, varied sentence lengths and natural transitions. Explain a consequence once, let the diagrams help, and avoid abstract benefit summaries, a platform recap, a Git tutorial or a service inventory.',
 };
@@ -235,12 +235,12 @@ There’s a whole article in setting up PBS and restoring a service. Here, the u
 
 ## Seventeen green ticks, and the next test
 
-I’ve already had the homelab’s Deploy workflow complete with all 17 jobs green, from validation and guest checks through service jobs and backup.
+I’ve already had the homelab’s Deploy workflow complete with all 17 jobs green: two validation jobs, backup configuration and 14 guest deployments.
 
 <ArticleScreenshot
   src={deploymentRun}
-  alt="GitHub Actions Deploy workflow graph with green checks on all 17 jobs, including validation, guest checks, services and backup."
-  caption="A successful homelab deployment. The jobs cover guest checks, services and backup."
+  alt="GitHub Actions Deploy workflow graph with green checks on all 17 jobs: two validation jobs, Configure backups and 14 guest deployments."
+  caption="A successful homelab deployment. The jobs cover validation, backup configuration and 14 guest deployments."
   fullSizeLabel="View the deployment at full size"
 />
 
