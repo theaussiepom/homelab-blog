@@ -90,6 +90,8 @@ See [deployment and rollback](docs/deployment.md), [architecture decision](docs/
 
 Published articles display [Giscus comments](https://giscus.app/), backed by this repository’s GitHub Discussions. Anyone can read them; posting requires GitHub sign-in. Drafts and review previews do not connect to live comments. Cloudflare Web Analytics already collects page views and visits for the public domain. See [comments, moderation and traffic reporting](docs/comments-and-analytics.md) for configuration and dashboard instructions.
 
+Production CD applies the operator IP exclusion from encrypted GitHub production parameters using a separate, zone-scoped Cloudflare token. Real addresses stay outside the public source and build. See [analytics exclusion configuration](docs/deployment.md#analytics-exclusion-configuration) for setup, updates and live verification. `npm run test:analytics` checks input validation, idempotency, rule ownership, preservation of other rules and redacted failures using a mocked API.
+
 ## Security and remaining setup
 
 Treat every commit as permanently public. Use only synthetic examples; follow the [sanitisation policy](docs/editorial/sanitisation.md). Report vulnerabilities privately through GitHub's security reporting when available; never open an issue containing a secret.

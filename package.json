@@ -17,14 +17,15 @@
     "lint": "eslint .",
     "links": "node scripts/check-links.mjs",
     "test": "playwright test",
-    "validate": "npm run format:check && npm run lint && npm run check && npm run test:editorial && npm run test:brand && npm run test:sharing && npm run build && npm run links && npm run test:guards && npm test",
+    "validate": "npm run format:check && npm run lint && npm run check && npm run test:editorial && npm run test:brand && npm run test:sharing && npm run test:analytics && npm run build && npm run links && npm run test:guards && npm test",
     "deploy:production": "wrangler deploy",
     "deploy:preview": "wrangler versions upload",
     "test:guards": "node scripts/test-guards.mjs",
     "new:article": "node scripts/new-article.mjs",
     "test:editorial": "node scripts/test-editorial.mjs && node scripts/test-new-article.mjs",
     "test:brand": "node scripts/check-brand-assets.mjs",
-    "test:sharing": "node scripts/test-sharing.mjs && node scripts/test-sharing-build.mjs"
+    "test:sharing": "node scripts/test-sharing.mjs && node scripts/test-sharing-build.mjs",
+    "test:analytics": "node --test scripts/analytics-exclusions.test.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.7",
