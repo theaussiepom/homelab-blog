@@ -24,4 +24,6 @@ In the Cloudflare dashboard, open **Observability → Analytics → Web analytic
 
 Browser analytics can miss readers who block the beacon or leave before it runs. Referrers may be absent or reduced by browsers and other sites. Local drafts are not readership traffic. Use trends and article-level comparisons rather than treating these figures as an exact audience census.
 
+Operator IP exclusions are managed by production CD using the encrypted GitHub production parameter `ANALYTICS_EXCLUDED_IPS`. The [deployment configuration](deployment.md#analytics-exclusion-configuration) describes the separate zone-scoped credential, rule ownership, verification and address updates. This prevents future Web Analytics collection from the configured public addresses on the blog hostname; it does not filter old data or all requests in Cloudflare's other analytics products. No exclusion link or preferences page is published.
+
 References: [Cloudflare metric definitions](https://developers.cloudflare.com/web-analytics/data-metrics/high-level-metrics/), [available dimensions](https://developers.cloudflare.com/web-analytics/data-metrics/dimensions/), [Giscus configuration](https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md).
