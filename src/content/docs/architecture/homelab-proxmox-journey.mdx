@@ -3,6 +3,7 @@ title: 'From a NAS VM to Proxmox: five versions of my homelab'
 description: I came to Home Assistant looking for a way to automate my garage door. What followed was about five years of learning, finding a community with the same obsession, and building my own solutions when existing tools couldn’t do what I wanted.
 articleType: architecture
 date: 2026-11-11
+lastUpdated: 2026-11-16
 authors:
   - name: Ben
 tags:
@@ -28,9 +29,11 @@ export const authoringBrief = {
     'Conversational Australian English, supported first-person experience, occasional dry humour. Give discovery, learning, practical payoffs and consequences room in the narrative. Graphics support the story at the point of need. Preserve the author’s humour and avoid invented scenes or dialogue.',
 };
 
-About five years ago, I discovered [Home Assistant](https://www.home-assistant.io/) through [digiblur](https://digiblur.com/2021/12/01/diy-smart-garage-opener-local-shelly-plus/). I’d been having problems with off-the-shelf products and wanted to automate my garage door.
+About five years ago, I wanted a reliable way to automate my garage door. I’d been having problems with off-the-shelf products when I found [a garage-door tutorial from digiblur](https://digiblur.com/2021/12/01/diy-smart-garage-opener-local-shelly-plus/).
 
-What caught my attention was being able to bring different ecosystems together in one automation system. The garage door was the immediate project, but the possibilities went much further.
+He’s a home automation creator who takes hardware apart, finds new uses for it and shows others how to do the same. He shares that work through [YouTube](https://www.youtube.com/@digiblurDIY/videos), [his blog](https://digiblur.com/) and [his Discord community](https://discord.com/invite/dgRZSw6).
+
+That tutorial introduced me to [Home Assistant](https://www.home-assistant.io/). What caught my attention was being able to bring different ecosystems together in one automation system. The garage door was the immediate project, but the possibilities went much further.
 
 Home Assistant changed my life. I no longer have any time for myself.
 
@@ -141,8 +144,8 @@ For this build, I also want the configuration written in files and kept in [Git]
 
 <ArticleScreenshot
   src={deploymentRun}
-  alt="GitHub Actions workflow graph with green checks on all 17 jobs: two validation jobs, Configure backups and 14 guest deployments."
-  caption="A run of my homelab’s Deploy workflow in GitHub Actions. All 17 jobs passed: two validation jobs, backup configuration and 14 guest deployments."
+  alt="GitHub Actions workflow graph with green checks on all 19 jobs: two validation jobs, Configure backups and 16 guest deployments."
+  caption="A run of my homelab’s Deploy workflow in GitHub Actions. All 19 jobs passed: two validation jobs, backup configuration and 16 guest deployments."
   fullSizeLabel="View the workflow at full size"
 />
 
