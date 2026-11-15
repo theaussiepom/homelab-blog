@@ -342,10 +342,27 @@ test('article introduction exposes shared metadata in both themes', async ({
       await expect(page.locator('.hl-reading-time dd')).toHaveText(
         /^[1-9]\d* min read$/,
       );
-      await expect(page.locator('.hl-article-meta time')).toHaveAttribute(
+      const metadata = page.locator('.hl-article-meta');
+      const published = metadata.locator('div').filter({
+        has: page.getByText('Published', { exact: true }),
+      });
+      await expect(published.locator('time')).toHaveAttribute(
         'datetime',
         '2026-11-11',
       );
+      const updated = metadata.locator('div').filter({
+        has: page.getByText('Updated', { exact: true }),
+      });
+      if (path === '/architecture/proxmox-without-kubernetes/') {
+        await expect(updated).toHaveCount(0);
+        await expect(metadata.locator('time')).toHaveCount(1);
+      } else {
+        await expect(updated.locator('time')).toHaveAttribute(
+          'datetime',
+          '2026-11-16',
+        );
+        await expect(metadata.locator('time')).toHaveCount(2);
+      }
     }
   }
 });
