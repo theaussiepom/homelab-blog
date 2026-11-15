@@ -12,8 +12,9 @@ import {
 import { tmpdir } from 'node:os';
 import { basename, join, relative, sep } from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { parseHTML } from 'linkedom';
+import { DOMParser, parseHTML } from 'linkedom';
 import sharp from 'sharp';
+import { checkRss } from './check-rss.mjs';
 
 // Exercise the actual Astro pipeline without adding fixtures to the author's working tree.
 const root = process.cwd();
@@ -65,12 +66,17 @@ try {
   };
   const guide = join(scratch, 'src/content/docs/guides/share-build-check.md');
   const post = join(scratch, 'src/content/docs/blog/share-build-check.mdx');
+  const investigation = join(
+    scratch,
+    'src/content/docs/investigations/rss-build-check.md',
+  );
   const header = (type, share) =>
     `---\narticleType: ${type}\ntitle: 'A real title with punctuation: “quotes” & choices'\ndescription: A synthetic article used only in the isolated share-preview build test.\ndate: 2026-11-10\nlastUpdated: 2026-11-11\nauthors:\n  - name: Synthetic Preview Author\ntags:\n  - share-build-check\ndraft: false\n${share}\n---\n\nSynthetic preview fixture.\n`;
   await writeFile(
     guide,
     header('guide', 'share:\n  title: A shorter “share” title & its route'),
   );
+  await writeFile(investigation, header('investigation', ''));
   await writeFile(
     post,
     header(
@@ -84,6 +90,51 @@ try {
     .png()
     .toFile(join(scratch, 'public/share-build-check.png'));
   build();
+  const feedPath = join(scratch, 'dist/blog/rss.xml');
+  const initialFeed = await readFile(feedPath, 'utf8');
+  const feedItems = await checkRss(join(scratch, 'dist'));
+  for (const path of [
+    '/guides/share-build-check/',
+    '/blog/custom-share-route/',
+    '/investigations/rss-build-check/',
+  ]) {
+    const item = feedItems.find(
+      (item) => item.querySelector('link').textContent === `${origin}${path}`,
+    );
+    assert(item, `Published ${path} is missing from RSS`);
+    assert.equal(
+      item.querySelector('title').textContent,
+      'A real title with punctuation: “quotes” & choices',
+    );
+    assert.equal(
+      item.querySelector('description').textContent,
+      'A synthetic article used only in the isolated share-preview build test.',
+      'RSS uses article metadata, not social overrides',
+    );
+    assert.equal(
+      item.querySelector('category').textContent,
+      'share-build-check',
+    );
+  }
+  // Prove a missing article and a duplicate entry block a deployment build.
+  const brokenFeed = new DOMParser().parseFromString(initialFeed, 'text/xml');
+  const firstItem = brokenFeed.querySelector('item');
+  firstItem.remove();
+  await writeFile(feedPath, brokenFeed.toString());
+  await assert.rejects(checkRss(join(scratch, 'dist')), /every built article/);
+  const duplicateFeed = new DOMParser().parseFromString(
+    initialFeed,
+    'text/xml',
+  );
+  duplicateFeed
+    .querySelector('channel')
+    .append(duplicateFeed.querySelector('item').cloneNode(true));
+  await writeFile(feedPath, duplicateFeed.toString());
+  await assert.rejects(
+    checkRss(join(scratch, 'dist')),
+    /Duplicate RSS article/,
+  );
+  await writeFile(feedPath, initialFeed);
   const cards = () => readdir(join(scratch, 'dist/og'));
   const first = await cards();
   const parse = async (path) =>
@@ -166,6 +217,13 @@ try {
     ),
   );
   build();
+  const remainingItems = await checkRss(join(scratch, 'dist'));
+  const remainingLinks = remainingItems.map(
+    (item) => item.querySelector('link').textContent,
+  );
+  assert(!remainingLinks.includes(`${origin}/guides/share-build-check/`));
+  assert(!remainingLinks.includes(`${origin}/blog/custom-share-route/`));
+  assert(remainingLinks.includes(`${origin}/investigations/rss-build-check/`));
   const noFeature = await parse('index.html');
   assert.equal(
     noFeature.querySelectorAll('.hl-feature, .hl-curiosity').length,
@@ -192,7 +250,7 @@ try {
   }
   assert.equal(meta(await parse('index.html'), 'og:url'), `${origin}/`);
   console.log(
-    'Two isolated Astro builds verified real overrides, custom routes, plugin ordering, PNG decoding, alternate site origin, draft exclusion and stale-card cleanup.',
+    'Two isolated Astro builds verified real overrides, custom routes, plugin ordering, PNG decoding, alternate site origin, RSS coverage of all article types, missing/duplicate feed rejection, draft exclusion and stale-content cleanup.',
   );
 } finally {
   await rm(scratch, { recursive: true, force: true });

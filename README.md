@@ -39,6 +39,8 @@ npm audit --audit-level=low
 
 `npm run validate` runs formatting, lint, Astro/TypeScript checks, the production build, all generated internal links/fragments/assets, editorial/scaffold negative cases, draft-exclusion guards and browser tests. Browser tests cover representative pages, search results, mobile navigation, RSS, sitemap and automated WCAG A/AA checks. Automated accessibility testing is not a complete accessibility audit.
 
+Every build regenerates `/blog/rss.xml` from all published article types. The build fails if the feed differs from the generated article routes or their metadata, so newly published stories enter RSS automatically and drafts stay out. See the [editorial workflow](docs/editorial/workflow.md#publish-and-verify).
+
 Secret scanning uses the checksum-pinned official Gitleaks 8.30.1 binary, scanning both the current tree and complete reachable Git history with redacted diagnostics. Initialise Git before scanning and retain full history in CI:
 
 ```sh
