@@ -62,8 +62,22 @@ export default defineConfig({
           label: `${author.name} on LinkedIn`,
           href: author.linkedin,
         },
+        {
+          icon: 'rss',
+          label: 'RSS',
+          href: new URL('/blog/rss.xml', url).href,
+        },
       ],
       head: [
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'alternate',
+            type: 'application/rss+xml',
+            title: siteTitle,
+            href: new URL('/blog/rss.xml', url).href,
+          },
+        },
         { tag: 'meta', attrs: { name: 'robots', content: 'index,follow' } },
         {
           tag: 'link',
@@ -110,6 +124,8 @@ export default defineConfig({
         starlightBlog({
           title: 'Notes',
           navigation: 'none',
+          // The shared feed includes every published article type, not only posts.
+          rss: false,
         }),
       ],
     }),

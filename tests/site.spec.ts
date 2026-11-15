@@ -119,11 +119,38 @@ test('mobile navigation and layout', async ({ page }) => {
     ),
   ).toBe(true);
 });
-test('the sitemap and feed omit unpublished samples', async ({ request }) => {
+test('the feed includes all published stories and omits unpublished samples', async ({
+  request,
+  page,
+}) => {
   const rss = await request.get('/blog/rss.xml');
   expect(rss.status()).toBe(200);
   const rssBody = await rss.text();
   expect(rssBody).toContain('<rss');
+  await page.goto('/');
+  const articleLinks = await page
+    .locator('.hl-feature h2 a, .hl-discovery h3 a')
+    .evaluateAll((links) =>
+      links.map((link) => (link as HTMLAnchorElement).href),
+    );
+  const feedLinks = await page.evaluate((body) => {
+    const feed = new DOMParser().parseFromString(body, 'application/xml');
+    if (feed.querySelector('parsererror'))
+      throw new Error('RSS is invalid XML');
+    return [...feed.querySelectorAll('item > link')].map(
+      (link) => link.textContent,
+    );
+  }, rssBody);
+  // The local preview renders production assets whose canonical origin is public.
+  expect(feedLinks.map((link) => new URL(link!).pathname).sort()).toEqual(
+    articleLinks.map((link) => new URL(link).pathname).sort(),
+  );
+  await expect(
+    page.locator('head link[rel="alternate"][type="application/rss+xml"]'),
+  ).toHaveCount(1);
+  await expect(
+    page.getByRole('link', { name: 'RSS', exact: true }).first(),
+  ).toHaveAttribute('href', 'https://theaussiepom.me/blog/rss.xml');
   const index = await request.get('/sitemap-index.xml');
   expect(index.status()).toBe(200);
   expect(await index.text()).toContain('sitemap-0.xml');

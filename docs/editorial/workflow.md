@@ -75,6 +75,8 @@ The review should cover voice, audience fit, evidence, metadata, links, sources,
 
 ## Publish and verify
 
-Squash merge only after required checks pass and review threads are resolved. GitHub Actions validates `main` and deploys production. A merged PR is not proof that deployment succeeded: check the production job and inspect the live article, navigation and search. For blog posts, also check the blog index and RSS.
+Squash merge only after required checks pass and review threads are resolved. GitHub Actions validates `main` and deploys production. A merged PR is not proof that deployment succeeded: check the production job and inspect the live article, navigation, search and RSS. For blog posts, also check the blog index.
+
+The shared feed at `/blog/rss.xml` is generated from the content collection on every build. It includes every published guide, architecture article, investigation and post, newest first, using the original title, description, publication date, tags and canonical route. Drafts and landing pages are excluded. No feed entry needs to be maintained by hand. `npm run build` compares the feed against the generated article pages and fails on missing, extra or duplicate entries, mismatched metadata or missing feed-discovery links. Preview and production deployments both run this check.
 
 Use the [deployment guide](../deployment.md) for delivery boundaries and rollback. Record local checks, hosted checks and live verification separately. Correct subsequent content errors through a new PR; update `lastUpdated` when the substantive article changes. If a secret is exposed, follow the revocation and history-remediation procedure in the public-content policy rather than relying on a content deletion.
